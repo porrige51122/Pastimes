@@ -12,7 +12,7 @@ Everything runs client-side in the browser using React from CDN + Babel standalo
 
 ## How It Is Wired
 
-- `src/Pastimes.html`
+- `src/index.html`
 	- Landing page / game selector.
 - `src/Crossings.html`
 	- Entry point for Crossings.
@@ -62,7 +62,7 @@ npx serve .
 
 Then open:
 
-- `http://localhost:8000/src/Pastimes.html` for the hub
+- `http://localhost:8000/src/index.html` for the hub
 - `http://localhost:8000/src/Crossings.html` for Crossings
 - `http://localhost:8000/src/Hatch.html` for Hatch
 
