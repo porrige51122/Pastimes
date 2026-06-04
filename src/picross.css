@@ -1,0 +1,63 @@
+/* ============================================================
+   Hatch — nonogram board styling
+   Reuses tokens + fonts + chrome from styles.css
+   ============================================================ */
+
+.pic-board-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* 5x5 checker shading behind the grid */
+.pic-shade { fill: var(--ink); opacity: 0.035; }
+
+/* hover crosshair */
+.pic-hl { fill: var(--accent); opacity: 0.07; pointer-events: none; }
+
+/* cells */
+.pic-cell {
+  fill: transparent;
+  cursor: pointer;
+  transition: fill .1s ease;
+}
+.pic-cell.fill { fill: var(--ink); }
+.pic-cell.err  { fill: var(--error); }
+.pic-cell.won  { fill: var(--accent); animation: pic-pop .5s cubic-bezier(.2,.9,.3,1.5) both; }
+@keyframes pic-pop {
+  0%   { transform: scale(.55); }
+  100% { transform: scale(1); }
+}
+.pic-board-svg.won .pic-cell.won { transform-box: fill-box; transform-origin: center; }
+
+/* X marks */
+.pic-x line {
+  stroke: var(--ink-soft);
+  stroke-width: 3.4;
+  stroke-linecap: round;
+  opacity: .68;
+  pointer-events: none;
+}
+
+/* grid lines */
+.pic-grid { stroke: var(--line); stroke-width: 1.4; pointer-events: none; }
+.pic-grid.major { stroke: var(--isl-border); stroke-width: 2.4; opacity: .9; }
+
+/* clue numbers */
+.pic-clue {
+  font-family: "Nunito", sans-serif;
+  font-weight: 800;
+  font-size: 17px;
+  fill: var(--ink);
+  pointer-events: none;
+  user-select: none;
+  transition: fill .2s ease;
+}
+.pic-clue.done { fill: #b4bfd0; }
+
+@media (max-width: 600px) {
+  .pic-clue { font-size: 15px; }
+}
