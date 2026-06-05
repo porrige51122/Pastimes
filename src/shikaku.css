@@ -1,0 +1,73 @@
+/* ============================================================
+   Shikaku — board styling
+   Reuses tokens + fonts + chrome from styles.css
+   ============================================================ */
+
+.sk-board-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* grid lines */
+.sk-grid { stroke: var(--line); stroke-width: 1.2; pointer-events: none; }
+
+/* hit cells */
+.sk-hit { fill: transparent; cursor: crosshair; }
+
+/* player rectangles */
+.sk-rect {
+  fill: var(--accent);
+  fill-opacity: 0.12;
+  stroke: var(--accent);
+  stroke-width: 2.4;
+  transition: fill-opacity .15s ease, stroke .15s ease;
+}
+.sk-rect.ok  { fill: var(--done);  fill-opacity: 0.15; stroke: var(--done); }
+.sk-rect.bad { fill: var(--error); fill-opacity: 0.12; stroke: var(--error); }
+
+/* drag preview */
+.sk-preview {
+  fill: var(--accent);
+  fill-opacity: 0.16;
+  stroke: var(--accent-deep);
+  stroke-width: 2.4;
+  stroke-dasharray: 6 5;
+  pointer-events: none;
+}
+.sk-preview-area {
+  font-family: "Spectral", serif;
+  font-weight: 800;
+  font-size: 22px;
+  fill: var(--accent-deep);
+  opacity: .6;
+}
+
+/* clue chips */
+.sk-clue-chip {
+  fill: #fff;
+  stroke: var(--isl-border);
+  stroke-width: 2;
+}
+.sk-clue-num {
+  font-family: "Nunito", sans-serif;
+  font-weight: 900;
+  font-size: 20px;
+  fill: var(--ink);
+}
+.sk-clue.ok  .sk-clue-chip { fill: var(--done-tint);  stroke: var(--done-deep); }
+.sk-clue.ok  .sk-clue-num  { fill: var(--done-deep); }
+.sk-clue.bad .sk-clue-chip { fill: var(--error-tint); stroke: var(--error-deep); }
+.sk-clue.bad .sk-clue-num  { fill: var(--error-deep); }
+
+/* win shimmer */
+.sk-board-svg.won .sk-rect { animation: sk-glow 2s ease-in-out infinite; }
+@keyframes sk-glow { 0%,100% { fill-opacity: .15; } 50% { fill-opacity: .3; } }
+
+@media (max-width: 600px) {
+  .sk-clue-num { font-size: 17px; }
+  .sk-preview-area { font-size: 18px; }
+}
