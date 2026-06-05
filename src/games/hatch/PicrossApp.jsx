@@ -1,24 +1,18 @@
 /* ============================================================
-   App.jsx — game shell, state, controls, win
+   PicrossApp.jsx — game shell, state, controls, win
    ============================================================ */
-const Hashi = window.Hashi;
-const BoardCmp = window.Board;
+const Picross = window.Picross;
+const PicrossBoardCmp = window.PicrossBoard;
 const { useState, useEffect, useRef, useCallback, useLayoutEffect } = React;
 
-const DIFFS = {
-  easy:   { label: "Easy",   rows: 7,  cols: 7,  islands: 9,  maxW: 720  },
-  medium: { label: "Medium", rows: 9,  cols: 9,  islands: 16, maxW: 980  },
-  hard:   { label: "Hard",   rows: 11, cols: 11, islands: 24, maxW: 1200 },
+const PDIFFS = {
+  easy:   { label: "Easy",   rows: 5,  cols: 5,  density: 0.58, maxW: 720 },
+  medium: { label: "Medium", rows: 10, cols: 10, density: 0.55, maxW: 980 },
+  hard:   { label: "Hard",   rows: 15, cols: 15, density: 0.52, maxW: 1200 },
 };
 
-function edgeMapOf(puzzle) {
-  const m = {};
-  puzzle.edges.forEach((e, i) => { m[e.a + "-" + e.b] = i; });
-  return m;
-}
-
 /* ---- tiny inline icons ---- */
-const Icon = {
+const PIcon = {
   refresh: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M3 21v-5h5"/></svg>,
   undo: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h11a6 6 0 0 1 0 12H9"/></svg>,
   reset: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M6 6l1 14h10l1-14"/></svg>,
@@ -27,18 +21,23 @@ const Icon = {
   info: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M12 16v-4"/><path d="M12 8h.01"/><circle cx="12" cy="12" r="9"/></svg>,
 };
 
-function fmtTime(s) {
+function pFmtTime(s) {
   const m = Math.floor(s / 60);
   const ss = s % 60;
   return m + ":" + (ss < 10 ? "0" : "") + ss;
 }
 
-function App() {
+const blankGrid = (rows, cols) => {
+  const g = [];
+  for (let r = 0; r < rows; r++) g.push(new Array(cols).fill(0));
+  return g;
+};
+const cloneGrid = (g) => g.map((row) => row.slice());
+
+function PicrossApp() {
   const [difficulty, setDifficulty] = useState("easy");
   const [puzzle, setPuzzle] = useState(null);
-  const [crosses, setCrosses] = useState([]);
-  const [counts, setCounts] = useState([]);
-  const [selected, setSelected] = useState(null);
+  const [state, setState] = useState([]);
   const [history, setHistory] = useState([]);
   const [moves, setMoves] = useState(0);
   const [seconds, setSeconds] = useState(0);
@@ -50,8 +49,12 @@ function App() {
   const [motes, setMotes] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const edgeMap = useRef({});
+  const stateRef = useRef([]);
+  const dragRef = useRef(null);
+  const wonRef = useRef(false);
   const toastTimer = useRef(null);
+  useEffect(() => { stateRef.current = state; }, [state]);
+  useEffect(() => { wonRef.current = won; }, [won]);
 
   const showToast = useCallback((msg, warn) => {
     setToast({ id: Date.now() + Math.random(), msg, warn: !!warn });
@@ -60,18 +63,16 @@ function App() {
   }, []);
 
   const newPuzzle = useCallback((diff) => {
-    const cfg = DIFFS[diff];
+    const cfg = PDIFFS[diff];
     setLoading(true);
-    // generate (sync, fast) — defer a tick so loading paints
     setTimeout(() => {
       let p = null, tries = 0;
-      while (!p && tries < 4) { p = Hashi.generate(cfg); tries++; }
+      while (!p && tries < 5) { p = Picross.generate(cfg); tries++; }
       if (!p) { showToast("Couldn't build a puzzle — try again", true); setLoading(false); return; }
-      edgeMap.current = edgeMapOf(p);
+      const blank = blankGrid(p.rows, p.cols);
+      stateRef.current = blank;
       setPuzzle(p);
-      setCrosses(Hashi.computeCrossings(p.edges, p.islands));
-      setCounts(new Array(p.edges.length).fill(0));
-      setSelected(null);
+      setState(blank);
       setHistory([]);
       setMoves(0);
       setSeconds(0);
@@ -82,7 +83,6 @@ function App() {
     }, 30);
   }, [showToast]);
 
-  // init + difficulty change
   useEffect(() => { newPuzzle(difficulty); }, [difficulty]);
 
   // timer
@@ -92,18 +92,20 @@ function App() {
     return () => clearInterval(t);
   }, [running, won]);
 
-  const validation = puzzle ? Hashi.validate(puzzle, counts) : { islandStatus: [], deg: [], solved: false };
+  const validation = puzzle ? Picross.validate(puzzle, state) : { errGrid: [], solved: false, errors: 0, correct: 0, totalFill: 0 };
   const showErrors = autoCheck || Date.now() < flashUntil;
 
-  // dev/test hook: instantly fill the solution
+  // dev/test hook: fill the solution
   useEffect(() => {
     if (!puzzle) return;
     window.__solveNow = () => {
-      setHistory((h) => [...h, counts.slice()]);
-      setCounts(puzzle.solution.slice());
+      const g = puzzle.solution.map((row) => row.map((v) => (v ? 1 : 0)));
+      setHistory((h) => [...h, cloneGrid(stateRef.current)]);
+      stateRef.current = g;
+      setState(g);
       setRunning(true);
     };
-  }, [puzzle, counts]);
+  }, [puzzle]);
 
   // win detection
   useEffect(() => {
@@ -111,135 +113,96 @@ function App() {
     if (validation.solved) {
       setWon(true);
       setRunning(false);
-      setSelected(null);
-      // confetti
       const colors = ["#2f6bff", "#15a05a", "#f5a623", "#e23b2e", "#283353"];
       const arr = [];
       for (let i = 0; i < 70; i++) {
         arr.push({
-          id: i,
-          left: Math.random() * 100,
-          size: 7 + Math.random() * 9,
-          color: colors[i % colors.length],
-          delay: Math.random() * 0.7,
-          dur: 2.4 + Math.random() * 2.2,
-          rot: Math.random() * 360,
+          id: i, left: Math.random() * 100, size: 7 + Math.random() * 9,
+          color: colors[i % colors.length], delay: Math.random() * 0.7,
+          dur: 2.4 + Math.random() * 2.2, rot: Math.random() * 360,
         });
       }
       setMotes(arr);
     }
-  }, [counts, puzzle, won]);
-
-  const pushHistory = useCallback(() => {
-    setHistory((h) => [...h, counts.slice()]);
-  }, [counts]);
+  }, [state, puzzle, won]);
 
   const ensureRunning = useCallback(() => {
-    if (!running && !won) setRunning(true);
-  }, [running, won]);
+    if (!running && !wonRef.current) setRunning(true);
+  }, [running]);
 
-  const setEdge = useCallback((ei, val) => {
-    setHistory((h) => [...h, counts.slice()]);
-    setCounts((cs) => { const n = cs.slice(); n[ei] = val; return n; });
+  const applyCell = useCallback((r, c, val) => {
+    const cur = stateRef.current;
+    if (cur[r][c] === val) return;
+    const n = cloneGrid(cur);
+    n[r][c] = val;
+    stateRef.current = n;
+    setState(n);
     setMoves((m) => m + 1);
     ensureRunning();
-  }, [counts, ensureRunning]);
+  }, [ensureRunning]);
 
-  // returns true if a bridge was added/maxed (consume), false if illegal target
-  const tryBuild = useCallback((a, b) => {
-    if (a === b) return "self";
-    const ei = edgeMap.current[Math.min(a, b) + "-" + Math.max(a, b)];
-    if (ei === undefined) {
-      showToast("No straight line between those islands", true);
-      return "illegal";
-    }
-    const cur = counts[ei] || 0;
-    if (cur >= 2) {
-      showToast("That link already has two bridges — click it to remove", true);
-      return "done";
-    }
-    // crossing check
-    const cr = crosses[ei] || [];
-    for (let k = 0; k < cr.length; k++) {
-      if ((counts[cr[k]] || 0) > 0) {
-        showToast("A bridge already crosses there", true);
-        return "done";
-      }
-    }
-    setEdge(ei, cur + 1);
-    return "built";
-  }, [counts, crosses, setEdge, showToast]);
+  const onBeginDrag = useCallback((r, c, button) => {
+    if (wonRef.current) return;
+    const cur = stateRef.current[r][c];
+    let val;
+    if (button === 2) val = cur === 2 ? 0 : 2;       // right click: X
+    else val = cur === 1 ? 0 : 1;                    // left click: fill
+    setHistory((h) => [...h, cloneGrid(stateRef.current)]);
+    dragRef.current = { val };
+    applyCell(r, c, val);
+  }, [applyCell]);
 
-  const onIslandClick = useCallback((id) => {
-    if (won) return;
-    if (id == null) { setSelected(null); return; }
-    if (selected == null) { setSelected(id); return; }
-    if (selected === id) { setSelected(null); return; }
-    const res = tryBuild(selected, id);
-    if (res === "illegal") { setSelected(id); }   // chain from the new island
-    else { setSelected(null); }
-  }, [won, selected, tryBuild]);
+  const onDragOver = useCallback((r, c) => {
+    if (!dragRef.current || wonRef.current) return;
+    applyCell(r, c, dragRef.current.val);
+  }, [applyCell]);
 
-  const onEdgeClick = useCallback((ei) => {
-    if (won) return;
-    const cur = counts[ei] || 0;
-    if (cur <= 0) return;
-    setEdge(ei, cur - 1);   // click a bridge to remove one span
-    setSelected(null);
-  }, [won, counts, setEdge]);
-
-  const onEdgeRightClick = useCallback((ei) => {
-    if (won) return;
-    if ((counts[ei] || 0) === 0) return;
-    setEdge(ei, 0);
-    setSelected(null);
-  }, [won, counts, setEdge]);
+  const onEndDrag = useCallback(() => { dragRef.current = null; }, []);
 
   const undo = useCallback(() => {
     setHistory((h) => {
       if (!h.length) return h;
       const prev = h[h.length - 1];
-      setCounts(prev);
-      setSelected(null);
+      stateRef.current = prev;
+      setState(prev);
       return h.slice(0, -1);
     });
   }, []);
 
-  const reset = useCallback(() => {
+  const clearAll = useCallback(() => {
     if (!puzzle) return;
-    if (counts.some((c) => c > 0)) {
-      setHistory((h) => [...h, counts.slice()]);
-      setCounts(new Array(puzzle.edges.length).fill(0));
+    const cur = stateRef.current;
+    if (cur.some((row) => row.some((v) => v !== 0))) {
+      setHistory((h) => [...h, cloneGrid(cur)]);
+      const blank = blankGrid(puzzle.rows, puzzle.cols);
+      stateRef.current = blank;
+      setState(blank);
     }
-    setSelected(null);
-  }, [puzzle, counts]);
+  }, [puzzle]);
 
   const runCheck = useCallback(() => {
     setFlashUntil(Date.now() + 1700);
-    setTimeout(() => setFlashUntil((f) => f), 1750); // force re-render after flash
-    const v = Hashi.validate(puzzle, counts);
-    if (v.solved) return; // win effect handles it
-    const over = v.islandStatus.filter((s) => s === "over").length;
-    const placed = counts.some((c) => c > 0);
-    if (!placed) showToast("Tap an island, then a neighbour, to lay a bridge");
-    else if (over) showToast(over + (over > 1 ? " islands have" : " island has") + " too many bridges", true);
-    else if (v.allMatch && !v.connected) showToast("All counts match — but the islands aren't all connected yet", true);
-    else showToast("Looking good — keep going");
-  }, [puzzle, counts, showToast]);
+    const v = Picross.validate(puzzle, state);
+    if (v.solved) return;
+    const placed = state.some((row) => row.some((c) => c === 1));
+    if (!placed) showToast("Use the number clues — click cells to fill them in");
+    else if (v.errors) showToast(v.errors + (v.errors > 1 ? " filled cells don't" : " filled cell doesn't") + " belong — they're marked red", true);
+    else showToast("No mistakes so far — keep filling");
+  }, [puzzle, state, showToast]);
 
-  // re-render tick so flash window expiry updates colours
+  // re-render tick so the flash window expiry updates colours
   useEffect(() => {
     if (Date.now() < flashUntil) {
-      const t = setTimeout(() => setFlashUntil((f) => f - 0), flashUntil - Date.now() + 30);
+      const t = setTimeout(() => setFlashUntil((f) => f), flashUntil - Date.now() + 30);
       return () => clearTimeout(t);
     }
   }, [flashUntil]);
 
   // ---- fit the board to the viewport so it never needs scrolling ----
-  const [frameW, setFrameW] = useState(DIFFS.easy.maxW);
+  const [frameW, setFrameW] = useState(PDIFFS.easy.maxW);
   useLayoutEffect(() => {
     const fit = () => {
-      const svg = document.querySelector(".board-svg");
+      const svg = document.querySelector(".pic-board-svg");
       if (!svg || !svg.viewBox || !svg.viewBox.baseVal.width) return;
       const A = svg.viewBox.baseVal.width / svg.viewBox.baseVal.height;
       const frame = svg.closest(".board-frame");
@@ -251,7 +214,7 @@ function App() {
       const padH = 35, padV = 35;
       const wByHeight = (availH - padV) * A + padH;
       const wByWidth = window.innerWidth - 24;
-      const w = Math.max(160, Math.floor(Math.min(DIFFS[difficulty].maxW, wByWidth, wByHeight)));
+      const w = Math.max(160, Math.floor(Math.min(PDIFFS[difficulty].maxW, wByWidth, wByHeight)));
       setFrameW((prev) => (Math.abs(prev - w) > 1 ? w : prev));
     };
     fit();
@@ -259,79 +222,91 @@ function App() {
     return () => window.removeEventListener("resize", fit);
   }, [difficulty, puzzle]);
 
+  // per-line completion for clue greying
+  let rowDone = [], colDone = [];
+  if (puzzle) {
+    rowDone = puzzle.rowClues.map((cl, r) =>
+      Picross.lineComplete(state[r].map((v) => v === 1), cl));
+    colDone = puzzle.colClues.map((cl, c) => {
+      const col = [];
+      for (let r = 0; r < puzzle.rows; r++) col.push(state[r][c] === 1);
+      return Picross.lineComplete(col, cl);
+    });
+  }
+
   if (!puzzle) {
-    return <div className="wrap"><div className="masthead"><h1 className="wordmark">Crossings</h1></div></div>;
+    return <div className="wrap"><div className="masthead"><h1 className="wordmark">Hatch</h1></div></div>;
   }
 
   return (
     <div className="wrap">
-      <a className="backlink" href="index.html">
+      <a className="backlink" href="../../index.html">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></svg>
         All puzzles
       </a>
       <div className="masthead">
         <div className="brandmark">
           <svg width="36" height="36" viewBox="0 0 44 44">
-            <line x1="9" y1="22" x2="35" y2="22" stroke="#2b3550" strokeWidth="3" strokeLinecap="round"/>
-            <line x1="9" y1="16" x2="35" y2="16" stroke="#2b3550" strokeWidth="3" strokeLinecap="round"/>
-            <circle cx="9" cy="19" r="8" fill="#fff" stroke="#283353" strokeWidth="2.5"/>
-            <circle cx="35" cy="19" r="8" fill="#2f6bff" stroke="#283353" strokeWidth="2.5"/>
+            <rect x="6" y="6" width="32" height="32" rx="5" fill="#fff" stroke="#283353" strokeWidth="2.5"/>
+            <rect x="6" y="6" width="16" height="16" fill="#283353"/>
+            <rect x="22" y="22" width="16" height="16" fill="#2f6bff"/>
           </svg>
-          <h1 className="wordmark">Crossings</h1>
+          <h1 className="wordmark">Hatch</h1>
         </div>
-        <div className="tagline">Connect every island</div>
+        <div className="tagline">Paint the grid by numbers</div>
       </div>
 
       <div className="controls">
         <div className="segmented">
-          {Object.keys(DIFFS).map((k) => (
+          {Object.keys(PDIFFS).map((k) => (
             <button key={k} className={difficulty === k ? "active" : ""}
               onClick={() => { if (k !== difficulty) setDifficulty(k); else newPuzzle(k); }}>
-              {DIFFS[k].label}
+              {PDIFFS[k].label}
             </button>
           ))}
         </div>
         <button className="btn primary" onClick={() => newPuzzle(difficulty)} disabled={loading}>
-          {Icon.refresh} New
+          {PIcon.refresh} New
         </button>
-        <button className="btn" onClick={undo} disabled={!history.length}>{Icon.undo} Undo</button>
-        <button className="btn" onClick={reset}>{Icon.reset} Clear</button>
+        <button className="btn" onClick={undo} disabled={!history.length}>{PIcon.undo} Undo</button>
+        <button className="btn" onClick={clearAll}>{PIcon.reset} Clear</button>
         <div className={"toggle" + (autoCheck ? " on" : "")} onClick={() => setAutoCheck((a) => !a)}>
           <span className="switch"></span> Auto-check
         </div>
-        {!autoCheck && <button className="btn" onClick={runCheck}>{Icon.check} Check</button>}
+        {!autoCheck && <button className="btn" onClick={runCheck}>{PIcon.check} Check</button>}
       </div>
 
       <div className="statsbar">
-        <div className="stat"><div className="num">{fmtTime(seconds)}</div><div className="lbl">Time</div></div>
+        <div className="stat"><div className="num">{pFmtTime(seconds)}</div><div className="lbl">Time</div></div>
         <div className="stat"><div className="num">{moves}</div><div className="lbl">Moves</div></div>
-        <div className="stat"><div className="num">{puzzle.islands.length}</div><div className="lbl">Islands</div></div>
+        <div className="stat"><div className="num">{puzzle.rows}×{puzzle.cols}</div><div className="lbl">Grid</div></div>
       </div>
 
       <div className="board-frame" style={{ width: frameW + "px" }}>
         <div className="board-inner">
-          <BoardCmp
+          <PicrossBoardCmp
             puzzle={puzzle}
-            counts={counts}
-            validation={validation}
-            selected={selected}
+            state={state}
+            errGrid={validation.errGrid}
             showErrors={showErrors}
             won={won}
-            onIslandClick={onIslandClick}
-            onEdgeClick={onEdgeClick}
-            onEdgeRightClick={onEdgeRightClick}
+            rowDone={rowDone}
+            colDone={colDone}
+            onBeginDrag={onBeginDrag}
+            onDragOver={onDragOver}
+            onEndDrag={onEndDrag}
           />
         </div>
       </div>
 
       <div className="helpline">
-        Tap an <b>island</b>, then a neighbour, to lay a bridge — tap again for a second. <b>Click a bridge</b> to remove it. Join every island into one connected network.
+        Clues give the lengths of the filled runs in each line, in order. <b>Click or drag</b> to fill cells; <b>right-click</b> to mark a blank with ×.
       </div>
 
       {toast && (
         <div className="toast-zone" key={toast.id}>
           <div className={"toast" + (toast.warn ? " warn" : "")}>
-            {toast.warn ? Icon.warn : Icon.info}{toast.msg}
+            {toast.warn ? PIcon.warn : PIcon.info}{toast.msg}
           </div>
         </div>
       )}
@@ -345,22 +320,21 @@ function App() {
       ))}
 
       {won && (
-        <div className="win-overlay" onClick={() => {}}>
+        <div className="win-overlay">
           <div className="win-card">
             <svg width="58" height="58" viewBox="0 0 44 44" style={{margin:"0 auto"}}>
-              <line x1="9" y1="22" x2="35" y2="22" stroke="#2f6bff" strokeWidth="3.4" strokeLinecap="round"/>
-              <line x1="9" y1="15" x2="35" y2="15" stroke="#2f6bff" strokeWidth="3.4" strokeLinecap="round"/>
-              <circle cx="9" cy="18.5" r="8.5" fill="#e4f6ec" stroke="#15a05a" strokeWidth="2.6"/>
-              <circle cx="35" cy="18.5" r="8.5" fill="#e4f6ec" stroke="#15a05a" strokeWidth="2.6"/>
+              <rect x="6" y="6" width="32" height="32" rx="5" fill="#e4f6ec" stroke="#15a05a" strokeWidth="2.6"/>
+              <rect x="6" y="6" width="16" height="16" fill="#15a05a"/>
+              <rect x="22" y="22" width="16" height="16" fill="#2f6bff"/>
             </svg>
             <h2>Solved!</h2>
-            <p>Every island is connected into one network.</p>
+            <p>You revealed the hidden picture.</p>
             <div className="win-stats">
-              <div><div className="num">{fmtTime(seconds)}</div><div className="lbl">Time</div></div>
+              <div><div className="num">{pFmtTime(seconds)}</div><div className="lbl">Time</div></div>
               <div><div className="num">{moves}</div><div className="lbl">Moves</div></div>
             </div>
             <button className="btn primary" style={{fontSize:15, padding:"12px 22px"}} onClick={() => newPuzzle(difficulty)}>
-              {Icon.refresh} New puzzle
+              {PIcon.refresh} New puzzle
             </button>
           </div>
         </div>
@@ -369,4 +343,4 @@ function App() {
   );
 }
 
-ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+ReactDOM.createRoot(document.getElementById("root")).render(<PicrossApp />);

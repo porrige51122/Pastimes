@@ -3,20 +3,21 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Hatch — a nonogram puzzle</title>
+<title>Skyscrapers — a skyline logic puzzle</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@600;700;800&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css" />
-<link rel="stylesheet" href="picross.css" />
+<link rel="stylesheet" href="../../shared/styles.css" />
+<link rel="stylesheet" href="skyscrapers.css" />
 </head>
 <body>
 <template id="__bundler_thumbnail">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
     <rect width="100" height="100" fill="#e7ebf1"/>
-    <rect x="28" y="28" width="44" height="44" rx="5" fill="#fff" stroke="#283353" stroke-width="3"/>
-    <rect x="28" y="28" width="22" height="22" fill="#283353"/>
-    <rect x="50" y="50" width="22" height="22" fill="#2f6bff"/>
+    <rect x="20" y="58" width="14" height="24" rx="2" fill="#cfe0ff" stroke="#283353" stroke-width="2.5"/>
+    <rect x="36" y="34" width="14" height="48" rx="2" fill="#2f6bff" stroke="#283353" stroke-width="2.5"/>
+    <rect x="52" y="46" width="14" height="36" rx="2" fill="#9bc0ff" stroke="#283353" stroke-width="2.5"/>
+    <rect x="68" y="64" width="12" height="18" rx="2" fill="#cfe0ff" stroke="#283353" stroke-width="2.5"/>
   </svg>
 </template>
 
@@ -26,8 +27,7 @@
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 
-<script src="picross-logic.js"></script>
-<script type="text/babel" src="PicrossBoard.jsx"></script>
-<script type="text/babel" src="PicrossApp.jsx"></script>
+<script src="skyscrapers-logic.js"></script>
+<script type="text/babel" src="SkyscrapersApp.jsx"></script>
 </body>
 </html>
