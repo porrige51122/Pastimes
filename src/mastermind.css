@@ -1,0 +1,138 @@
+/* ============================================================
+   mastermind.css — colour code-breaker
+   ============================================================ */
+
+.mm-wrap { width: 100%; display: flex; flex-direction: column; align-items: center; }
+
+/* ---------- secret row ---------- */
+.mm-secret {
+  display: flex; align-items: center; gap: 14px;
+  background: var(--ink);
+  border-radius: 14px;
+  padding: 12px 18px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-card);
+}
+.mm-secret .lbl {
+  font-size: 11px; font-weight: 800; letter-spacing: 1.8px; text-transform: uppercase;
+  color: #aeb8d0;
+}
+.mm-secret .pegs { display: flex; gap: 10px; }
+.mm-hidden {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: #39456b;
+  border: 2px solid #4d5b86;
+  display: grid; place-items: center;
+  color: #8693b8; font-weight: 900; font-size: 17px;
+}
+
+/* ---------- guess board ---------- */
+.mm-board {
+  display: flex; flex-direction: column; gap: 8px;
+  position: relative;
+  background: var(--panel);
+  border: 1.5px solid var(--line);
+  border-radius: 16px;
+  padding: 12px;
+  box-shadow: var(--shadow-card);
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+.mm-board::-webkit-scrollbar { width: 8px; }
+.mm-board::-webkit-scrollbar-thumb { background: #cdd6e2; border-radius: 8px; }
+.mm-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 5px 8px; border-radius: 10px;
+  transition: background .15s;
+}
+.mm-row.active { background: var(--accent-tint); box-shadow: inset 0 0 0 1.5px rgba(47,107,255,.35); }
+.mm-row.done { opacity: 0.92; }
+.mm-rownum {
+  width: 20px; text-align: center;
+  font-family: "Nunito", sans-serif; font-weight: 800; font-size: 12px;
+  color: var(--ink-soft); font-variant-numeric: tabular-nums;
+}
+.mm-slots { display: flex; gap: 9px; }
+
+.mm-slot {
+  width: var(--peg, 40px); height: var(--peg, 40px);
+  border-radius: 50%;
+  border: 2px solid var(--line);
+  background: var(--bg);
+  cursor: pointer; position: relative;
+  transition: transform .1s, box-shadow .14s, border-color .14s;
+}
+.mm-row:not(.active) .mm-slot { cursor: default; }
+.mm-slot.empty { background: repeating-linear-gradient(45deg, #eef1f6, #eef1f6 5px, #e6eaf1 5px, #e6eaf1 10px); }
+.mm-slot.cur { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(47,107,255,.2); }
+.mm-slot.filled { border-color: rgba(0,0,0,.18); animation: mm-pop .22s cubic-bezier(.2,.9,.3,1.5); }
+@keyframes mm-pop { from { transform: scale(.4); } to { transform: scale(1); } }
+.mm-slot .gloss {
+  position: absolute; top: 16%; left: 20%; width: 34%; height: 28%;
+  border-radius: 50%; background: rgba(255,255,255,.45); pointer-events: none;
+}
+
+/* colour swatches */
+.c0 { background: #2f6bff; } .c1 { background: #15a05a; }
+.c2 { background: #f5a623; } .c3 { background: #e23b2e; }
+.c4 { background: #7a5af0; } .c5 { background: #19b6c9; }
+.c6 { background: #ec5fae; } .c7 { background: #2b3550; }
+
+/* feedback pegs */
+.mm-feedback {
+  display: grid; gap: 4px; margin-left: auto;
+  align-content: center;
+}
+.mm-fpeg {
+  width: 11px; height: 11px; border-radius: 50%;
+  background: var(--bg); border: 1.5px solid #c2ccda;
+}
+.mm-fpeg.black { background: var(--ink); border-color: var(--ink); }
+.mm-fpeg.white { background: #fff; border-color: var(--ink-soft); box-shadow: inset 0 0 0 1px #fff; }
+.mm-fpeg.pop { animation: mm-fpop .3s cubic-bezier(.2,.9,.3,1.5) both; }
+@keyframes mm-fpop { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+/* ---------- palette + submit ---------- */
+.mm-tray {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+  gap: 10px; margin-top: 18px;
+}
+.mm-palette { display: flex; gap: 10px; }
+.mm-swatch {
+  width: 44px; height: 44px; border-radius: 50%;
+  border: 2.5px solid rgba(0,0,0,.12);
+  cursor: pointer; position: relative;
+  box-shadow: var(--shadow);
+  transition: transform .12s;
+}
+.mm-swatch:hover { transform: translateY(-3px); }
+.mm-swatch .gloss {
+  position: absolute; top: 16%; left: 20%; width: 34%; height: 28%;
+  border-radius: 50%; background: rgba(255,255,255,.5);
+}
+.mm-erase {
+  width: 44px; height: 44px; border-radius: 12px;
+  border: 1.5px solid var(--line); background: var(--panel);
+  color: var(--ink-soft); cursor: pointer; display: grid; place-items: center;
+  box-shadow: var(--shadow); transition: transform .12s, border-color .14s;
+}
+.mm-erase:hover { transform: translateY(-3px); border-color: #b9c6da; }
+
+.mm-legend {
+  margin-top: 14px; display: flex; gap: 18px; justify-content: center;
+  font-size: 12.5px; font-weight: 700; color: var(--ink-soft);
+}
+.mm-legend span { display: inline-flex; align-items: center; gap: 7px; }
+.mm-legend .dot { width: 12px; height: 12px; border-radius: 50%; }
+.mm-legend .dot.black { background: var(--ink); }
+.mm-legend .dot.white { background: #fff; border: 1.5px solid var(--ink-soft); }
+
+.win-card.lose { }
+.win-card.lose h2 { color: var(--error-deep); }
+.mm-reveal { display: flex; gap: 10px; justify-content: center; margin: 4px 0 22px; }
+.mm-reveal .mm-slot { cursor: default; --peg: 38px; }
+
+@media (max-width: 600px) {
+  .mm-slot { --peg: 34px; }
+  .mm-swatch, .mm-erase { width: 40px; height: 40px; }
+}
