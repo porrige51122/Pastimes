@@ -1,0 +1,89 @@
+/* ============================================================
+   Tents — board styling
+   Reuses tokens + fonts + chrome from styles.css
+   ============================================================ */
+
+.tn-board-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* checker shading */
+.tn-shade { fill: var(--ink); opacity: 0.035; }
+
+/* hover crosshair */
+.tn-hl { fill: var(--accent); opacity: 0.06; pointer-events: none; }
+
+/* grid lines */
+.tn-grid { stroke: var(--line); stroke-width: 1.3; pointer-events: none; }
+
+/* hit targets */
+.tn-hit { fill: transparent; cursor: pointer; }
+.tn-hit.tree { cursor: pointer; }
+
+/* trees */
+.tn-trunk { fill: #9a6533; }
+.tn-canopy { fill: #2f9e63; transition: fill .25s ease; }
+.tn-tree.ok .tn-canopy { fill: #15a05a; }
+
+/* tents */
+.tn-tent-body { fill: var(--accent); transition: fill .15s ease; }
+.tn-tent-door { fill: #1b49ad; }
+.tn-tent.err .tn-tent-body { fill: var(--error); }
+.tn-tent.err .tn-tent-door { fill: var(--error-deep); }
+.tn-tent { animation: tn-pop .28s cubic-bezier(.2,.9,.3,1.5) both; transform-box: fill-box; transform-origin: bottom center; }
+@keyframes tn-pop { 0% { transform: scale(.4); } 100% { transform: scale(1); } }
+
+/* grass marks */
+.tn-grass { stroke: #8c9bad; }
+
+/* ---- pairing aids (visual only) ---- */
+.tn-link-tint { fill: var(--gold); opacity: 0.16; }
+.tn-link-line { stroke: var(--gold); stroke-linecap: round; opacity: 0.9; }
+.tn-link-node { fill: var(--gold); }
+.tn-target {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 2;
+  stroke-dasharray: 4 4;
+  opacity: 0.85;
+  animation: tn-target 1s linear infinite;
+}
+@keyframes tn-target { to { stroke-dashoffset: -8; } }
+.tn-seltree {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 2.6;
+  animation: tn-selpulse 1.3s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+@keyframes tn-selpulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50%     { opacity: .55; transform: scale(1.04); }
+}
+
+/* clues */
+.tn-clue {
+  font-family: "Nunito", sans-serif;
+  font-weight: 900;
+  font-size: 19px;
+  fill: var(--ink);
+  pointer-events: none;
+  user-select: none;
+  transition: fill .2s ease;
+}
+.tn-clue.done { fill: #15a05a; }
+.tn-clue.over { fill: var(--error); }
+
+/* win celebration */
+.tn-board-svg.won .tn-tent { animation: tn-bob 1.8s ease-in-out infinite; }
+@keyframes tn-bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+
+@media (max-width: 600px) {
+  .tn-clue { font-size: 16px; }
+}
