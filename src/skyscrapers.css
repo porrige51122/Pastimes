@@ -1,0 +1,97 @@
+/* ============================================================
+   skyscrapers.css — Latin-square board with edge clues
+   ============================================================ */
+
+.sk-board {
+  display: grid;
+  gap: 0;
+  margin: 0 auto;
+  --cell: 64px;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+/* every slot in the (n+2) grid */
+.sk-slot {
+  width: var(--cell); height: var(--cell);
+  display: grid; place-items: center;
+  position: relative;
+}
+
+/* edge clue */
+.sk-clue {
+  font-family: "Spectral", serif; font-weight: 800;
+  font-size: calc(var(--cell) * 0.42);
+  color: var(--ink-soft);
+  transition: color .18s ease;
+}
+.sk-clue.ok  { color: var(--done-deep); }
+.sk-clue.bad { color: var(--error); }
+
+/* playable cell */
+.sk-cell {
+  width: calc(var(--cell) - 6px); height: calc(var(--cell) - 6px);
+  border-radius: 10px;
+  border: 1.5px solid var(--line);
+  background: var(--panel);
+  display: grid; place-items: center;
+  position: relative; overflow: hidden;
+  cursor: pointer;
+  transition: border-color .14s, background .14s, transform .1s, box-shadow .14s;
+}
+.sk-cell:hover { border-color: #b9c6da; }
+.sk-cell.sel {
+  border-color: var(--accent); background: var(--accent-tint);
+  box-shadow: 0 0 0 3px rgba(47,107,255,.18);
+  z-index: 2;
+}
+.sk-cell.err { border-color: var(--error); background: var(--error-tint); }
+.sk-cell.err.sel { box-shadow: 0 0 0 3px rgba(226,59,46,.22); }
+
+/* building height bar */
+.sk-bar {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(180deg, rgba(47,107,255,.20), rgba(47,107,255,.30));
+  transition: height .2s cubic-bezier(.2,.9,.3,1.3);
+  pointer-events: none;
+}
+.sk-cell.err .sk-bar { background: linear-gradient(180deg, rgba(226,59,46,.18), rgba(226,59,46,.28)); }
+
+.sk-val {
+  position: relative; z-index: 1;
+  font-family: "Spectral", serif; font-weight: 800;
+  font-size: calc(var(--cell) * 0.46);
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  animation: sk-pop .22s cubic-bezier(.2,.9,.3,1.5);
+}
+@keyframes sk-pop { from { transform: scale(.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+/* highlight the row/col of the selected cell faintly */
+.sk-cell.peer { background: #f3f6fc; }
+
+/* ---------- number pad ---------- */
+.sk-pad {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
+  margin-top: 18px;
+}
+.sk-key {
+  width: 50px; height: 50px; border-radius: 12px;
+  border: 1.5px solid var(--line); background: var(--panel);
+  font-family: "Spectral", serif; font-weight: 800; font-size: 22px;
+  color: var(--ink); cursor: pointer; box-shadow: var(--shadow);
+  display: grid; place-items: center;
+  transition: transform .1s, background .14s, border-color .14s, color .14s;
+}
+.sk-key:hover { transform: translateY(-2px); border-color: #b9c6da; }
+.sk-key:active { transform: translateY(0); }
+.sk-key.erase { color: var(--ink-soft); }
+.sk-key.erase svg { display: block; }
+
+.win .sk-cell { animation: sk-bob 2s ease-in-out infinite; }
+@keyframes sk-bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+
+@media (max-width: 600px) {
+  .sk-board { --cell: 50px; }
+  .sk-key { width: 44px; height: 44px; font-size: 19px; }
+}

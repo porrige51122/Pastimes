@@ -1,0 +1,140 @@
+/* ============================================================
+   countdown.css — numbers-round tiles, operators, worklog
+   Reuses tokens + chrome from styles.css
+   ============================================================ */
+
+.cd-wrap { width: 100%; display: flex; flex-direction: column; align-items: center; }
+
+/* ---------- target ---------- */
+.cd-target {
+  display: flex; flex-direction: column; align-items: center;
+  margin-bottom: 18px;
+}
+.cd-target .lbl {
+  font-size: 11px; font-weight: 800; letter-spacing: 2.2px; text-transform: uppercase;
+  color: var(--ink-soft); margin-bottom: 8px;
+}
+.cd-target .val {
+  font-family: "Spectral", serif; font-weight: 800;
+  font-size: 64px; line-height: 1; letter-spacing: -1px;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  min-width: 200px; text-align: center;
+  padding: 10px 26px;
+  background: var(--panel);
+  border: 2px solid var(--ink);
+  border-radius: 16px;
+  box-shadow: var(--shadow-card);
+}
+.cd-target.hit .val { color: var(--done-deep); border-color: var(--done); background: var(--done-tint); }
+
+/* ---------- tile pool ---------- */
+.cd-pool {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;
+  margin-bottom: 18px; min-height: 76px; align-items: center;
+}
+.cd-tile {
+  position: relative;
+  width: 76px; height: 76px;
+  border-radius: 14px;
+  border: 2px solid var(--line);
+  background: var(--panel);
+  font-family: "Spectral", serif; font-weight: 800; font-size: 30px;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  display: grid; place-items: center;
+  box-shadow: var(--shadow);
+  transition: transform .12s ease, border-color .15s, background .15s, box-shadow .15s, opacity .2s;
+  user-select: none;
+}
+.cd-tile:hover:not(:disabled) { transform: translateY(-3px); border-color: #b9c6da; }
+.cd-tile:active:not(:disabled) { transform: translateY(0); }
+.cd-tile.big { color: var(--accent-deep); }
+.cd-tile.result { background: var(--accent-tint); border-color: var(--accent); color: var(--accent-deep); }
+.cd-tile.result::after {
+  content: ""; position: absolute; top: 6px; right: 6px;
+  width: 7px; height: 7px; border-radius: 50%; background: var(--accent);
+}
+.cd-tile.sel {
+  border-color: var(--ink); background: var(--ink); color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 26px -12px rgba(29,39,64,.7);
+}
+.cd-tile.sel.big, .cd-tile.sel.result { color: #fff; }
+.cd-tile.used { opacity: .26; pointer-events: none; filter: grayscale(.4); }
+.cd-tile.pop { animation: cd-pop .32s cubic-bezier(.2,.9,.3,1.5) both; }
+@keyframes cd-pop { 0% { transform: scale(.3); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+
+/* ---------- operators ---------- */
+.cd-ops { display: flex; gap: 10px; margin-bottom: 16px; }
+.cd-op {
+  width: 56px; height: 56px; border-radius: 13px;
+  border: 2px solid var(--line); background: var(--panel);
+  font-size: 26px; font-weight: 800; color: var(--ink);
+  cursor: pointer; display: grid; place-items: center;
+  box-shadow: var(--shadow);
+  transition: transform .12s ease, border-color .15s, background .15s, color .15s;
+}
+.cd-op:hover:not(:disabled) { transform: translateY(-3px); border-color: #b9c6da; }
+.cd-op:disabled { opacity: .38; cursor: not-allowed; }
+.cd-op.armed { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+/* ---------- worklog ---------- */
+.cd-log {
+  width: 100%; max-width: 420px;
+  background: var(--panel);
+  border: 1.5px solid var(--line);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.cd-log-head {
+  font-size: 11px; font-weight: 800; letter-spacing: 1.6px; text-transform: uppercase;
+  color: var(--ink-soft);
+  padding: 12px 16px; border-bottom: 1.5px solid var(--line);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.cd-log-head .away { font-size: 13px; letter-spacing: 0; text-transform: none; }
+.cd-log-head .away b { color: var(--ink); }
+.cd-log-head .away.hit b { color: var(--done-deep); }
+.cd-steps { list-style: none; margin: 0; padding: 8px 0; min-height: 56px; }
+.cd-steps:empty::after {
+  content: "Pick a number, an operator, then another number.";
+  display: block; text-align: center; color: var(--ink-soft);
+  font-size: 13px; font-weight: 600; padding: 16px 18px; line-height: 1.5;
+}
+.cd-step {
+  display: flex; align-items: center; gap: 10px;
+  padding: 7px 18px;
+  font-family: "Spectral", serif; font-weight: 700; font-size: 18px;
+  color: var(--ink); font-variant-numeric: tabular-nums;
+  animation: cd-slide .26s ease both;
+}
+@keyframes cd-slide { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: none; } }
+.cd-step .eq { color: var(--ink-soft); }
+.cd-step .res { color: var(--accent-deep); font-weight: 800; }
+.cd-step.target .res { color: var(--done-deep); }
+.cd-step .idx {
+  flex: none; width: 22px; height: 22px; border-radius: 50%;
+  background: var(--bg); color: var(--ink-soft);
+  font-family: "Nunito", sans-serif; font-size: 11px; font-weight: 800;
+  display: grid; place-items: center;
+}
+
+/* ---------- solution reveal ---------- */
+.cd-solution {
+  margin-top: 14px; max-width: 460px; text-align: center;
+  font-size: 14px; font-weight: 700; color: var(--ink-soft); line-height: 1.6;
+}
+.cd-solution code {
+  font-family: "Spectral", serif; font-weight: 800; font-size: 16px;
+  color: var(--ink); background: var(--bg); padding: 2px 8px; border-radius: 7px;
+}
+.cd-solution b { color: var(--done-deep); }
+
+@media (max-width: 600px) {
+  .cd-target .val { font-size: 50px; padding: 8px 18px; min-width: 150px; }
+  .cd-tile { width: 64px; height: 64px; font-size: 26px; }
+  .cd-op { width: 50px; height: 50px; font-size: 23px; }
+}
