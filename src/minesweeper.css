@@ -1,0 +1,80 @@
+/* ============================================================
+   Sweep — minesweeper board styling
+   Reuses tokens + fonts + chrome from styles.css
+   ============================================================ */
+
+.ms-board-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* hidden raised tile */
+.ms-tile {
+  fill: #eef2f8;
+  stroke: #cfd8e6;
+  stroke-width: 1.2;
+  cursor: pointer;
+  transition: fill .08s ease;
+}
+.ms-board-svg.status-ready .ms-tile:hover,
+.ms-board-svg.status-playing .ms-tile:hover { fill: #e2e9f4; }
+
+/* hidden tile that turns out to be a mine (revealed on loss) */
+.ms-tile.reveal-mine { fill: #f1e3e1; stroke: #e6b9b3; }
+
+/* revealed / opened cell */
+.ms-open {
+  fill: #fbfcfe;
+  cursor: default;
+}
+.ms-open.boom { fill: var(--error); animation: ms-boom .4s ease both; }
+@keyframes ms-boom { 0% { fill: #ff7a6e; } 100% { fill: var(--error); } }
+
+/* grid lines */
+.ms-grid { stroke: #d2dae5; stroke-width: 1; pointer-events: none; }
+
+/* number labels */
+.ms-num {
+  font-family: "Nunito", sans-serif;
+  font-weight: 900;
+  font-size: 22px;
+  pointer-events: auto;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* question-mark mark */
+.ms-query {
+  font-family: "Nunito", sans-serif;
+  font-weight: 900;
+  font-size: 22px;
+  fill: var(--ink-soft);
+  pointer-events: none;
+  user-select: none;
+}
+
+.ms-flag, .ms-mine { user-select: none; }
+
+/* gentle hint pulse (reserved) */
+.ms-hint {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.4;
+  animation: ms-hintpulse 1.2s ease-in-out infinite;
+}
+@keyframes ms-hintpulse { 0%,100% { opacity: .3; } 50% { opacity: 1; } }
+
+/* win shimmer on flags */
+.ms-board-svg.status-won .ms-flag polygon { animation: ms-wave 1.6s ease-in-out infinite; transform-box: fill-box; transform-origin: left center; }
+@keyframes ms-wave { 0%,100% { transform: scaleX(1); } 50% { transform: scaleX(.82); } }
+
+/* lose-state card accent */
+.win-card.lose h2 { color: var(--error-deep); }
+
+@media (max-width: 600px) {
+  .ms-num, .ms-query { font-size: 19px; }
+}

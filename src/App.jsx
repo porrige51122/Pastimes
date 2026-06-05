@@ -6,9 +6,9 @@ const BoardCmp = window.Board;
 const { useState, useEffect, useRef, useCallback, useLayoutEffect } = React;
 
 const DIFFS = {
-  easy: { label: "Easy", rows: 7, cols: 7, islands: 9, maxW: 720 },
-  medium: { label: "Medium", rows: 9, cols: 9, islands: 16, maxW: 980 },
-  hard: { label: "Hard", rows: 11, cols: 11, islands: 24, maxW: 1200 },
+  easy:   { label: "Easy",   rows: 7,  cols: 7,  islands: 9,  maxW: 720  },
+  medium: { label: "Medium", rows: 9,  cols: 9,  islands: 16, maxW: 980  },
+  hard:   { label: "Hard",   rows: 11, cols: 11, islands: 24, maxW: 1200 },
 };
 
 function edgeMapOf(puzzle) {
@@ -19,12 +19,12 @@ function edgeMapOf(puzzle) {
 
 /* ---- tiny inline icons ---- */
 const Icon = {
-  refresh: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12a9 9 0 0 1 15-6.7L21 8" /><path d="M21 3v5h-5" /><path d="M21 12a9 9 0 0 1-15 6.7L3 16" /><path d="M3 21v-5h5" /></svg>,
-  undo: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M9 14 4 9l5-5" /><path d="M4 9h11a6 6 0 0 1 0 12H9" /></svg>,
-  reset: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18" /><path d="M8 6V4h8v2" /><path d="M6 6l1 14h10l1-14" /></svg>,
-  check: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>,
-  warn: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M12 9v4" /><path d="M12 17h.01" /><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" /></svg>,
-  info: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M12 16v-4" /><path d="M12 8h.01" /><circle cx="12" cy="12" r="9" /></svg>,
+  refresh: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M3 21v-5h5"/></svg>,
+  undo: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h11a6 6 0 0 1 0 12H9"/></svg>,
+  reset: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M6 6l1 14h10l1-14"/></svg>,
+  check: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg>,
+  warn: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>,
+  info: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M12 16v-4"/><path d="M12 8h.01"/><circle cx="12" cy="12" r="9"/></svg>,
 };
 
 function fmtTime(s) {
@@ -43,7 +43,7 @@ function App() {
   const [moves, setMoves] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const [running, setRunning] = useState(false);
-  const [autoCheck, setAutoCheck] = useState(true);
+  const [autoCheck, setAutoCheck] = useState(false);
   const [flashUntil, setFlashUntil] = useState(0);
   const [toast, setToast] = useState(null);
   const [won, setWon] = useState(false);
@@ -266,16 +266,16 @@ function App() {
   return (
     <div className="wrap">
       <a className="backlink" href="index.html">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5" /><path d="m11 18-6-6 6-6" /></svg>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></svg>
         All puzzles
       </a>
       <div className="masthead">
         <div className="brandmark">
           <svg width="36" height="36" viewBox="0 0 44 44">
-            <line x1="9" y1="22" x2="35" y2="22" stroke="#2b3550" strokeWidth="3" strokeLinecap="round" />
-            <line x1="9" y1="16" x2="35" y2="16" stroke="#2b3550" strokeWidth="3" strokeLinecap="round" />
-            <circle cx="9" cy="19" r="8" fill="#fff" stroke="#283353" strokeWidth="2.5" />
-            <circle cx="35" cy="19" r="8" fill="#2f6bff" stroke="#283353" strokeWidth="2.5" />
+            <line x1="9" y1="22" x2="35" y2="22" stroke="#2b3550" strokeWidth="3" strokeLinecap="round"/>
+            <line x1="9" y1="16" x2="35" y2="16" stroke="#2b3550" strokeWidth="3" strokeLinecap="round"/>
+            <circle cx="9" cy="19" r="8" fill="#fff" stroke="#283353" strokeWidth="2.5"/>
+            <circle cx="35" cy="19" r="8" fill="#2f6bff" stroke="#283353" strokeWidth="2.5"/>
           </svg>
           <h1 className="wordmark">Crossings</h1>
         </div>
@@ -345,13 +345,13 @@ function App() {
       ))}
 
       {won && (
-        <div className="win-overlay" onClick={() => { }}>
+        <div className="win-overlay" onClick={() => {}}>
           <div className="win-card">
-            <svg width="58" height="58" viewBox="0 0 44 44" style={{ margin: "0 auto" }}>
-              <line x1="9" y1="22" x2="35" y2="22" stroke="#2f6bff" strokeWidth="3.4" strokeLinecap="round" />
-              <line x1="9" y1="15" x2="35" y2="15" stroke="#2f6bff" strokeWidth="3.4" strokeLinecap="round" />
-              <circle cx="9" cy="18.5" r="8.5" fill="#e4f6ec" stroke="#15a05a" strokeWidth="2.6" />
-              <circle cx="35" cy="18.5" r="8.5" fill="#e4f6ec" stroke="#15a05a" strokeWidth="2.6" />
+            <svg width="58" height="58" viewBox="0 0 44 44" style={{margin:"0 auto"}}>
+              <line x1="9" y1="22" x2="35" y2="22" stroke="#2f6bff" strokeWidth="3.4" strokeLinecap="round"/>
+              <line x1="9" y1="15" x2="35" y2="15" stroke="#2f6bff" strokeWidth="3.4" strokeLinecap="round"/>
+              <circle cx="9" cy="18.5" r="8.5" fill="#e4f6ec" stroke="#15a05a" strokeWidth="2.6"/>
+              <circle cx="35" cy="18.5" r="8.5" fill="#e4f6ec" stroke="#15a05a" strokeWidth="2.6"/>
             </svg>
             <h2>Solved!</h2>
             <p>Every island is connected into one network.</p>
@@ -359,7 +359,7 @@ function App() {
               <div><div className="num">{fmtTime(seconds)}</div><div className="lbl">Time</div></div>
               <div><div className="num">{moves}</div><div className="lbl">Moves</div></div>
             </div>
-            <button className="btn primary" style={{ fontSize: 15, padding: "12px 22px" }} onClick={() => newPuzzle(difficulty)}>
+            <button className="btn primary" style={{fontSize:15, padding:"12px 22px"}} onClick={() => newPuzzle(difficulty)}>
               {Icon.refresh} New puzzle
             </button>
           </div>
