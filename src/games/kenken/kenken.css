@@ -1,0 +1,107 @@
+/* ============================================================
+   kenken.css — Latin-square board carved into arithmetic cages
+   Reuses tokens, fonts and chrome from styles.css
+   ============================================================ */
+
+.kk-board {
+  --cell: 64px;
+  --cage: var(--isl-border);
+  display: grid;
+  margin: 0 auto;
+  background: var(--panel);
+  border: 3px solid var(--cage);
+  border-radius: 8px;
+  overflow: hidden;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.kk-cell {
+  position: relative;
+  width: var(--cell); height: var(--cell);
+  display: grid; place-items: center;
+  /* thin interior grid line by default; cage edges override inline */
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  cursor: pointer;
+  background: var(--panel);
+  transition: background .12s ease;
+}
+
+.kk-cell.peer { background: #eef3fb; }
+.kk-cell.same { background: #d7e4ff; }
+.kk-cell.sel  { background: var(--accent-tint); box-shadow: inset 0 0 0 2.5px var(--accent); z-index: 3; }
+.kk-cell.err  { background: var(--error-tint); }
+.kk-cell.err.sel { box-shadow: inset 0 0 0 2.5px var(--error); }
+
+/* cage clue, tucked into the top-left of the cage's anchor cell */
+.kk-clue {
+  position: absolute;
+  top: 3px; left: 5px;
+  font-family: "Nunito", sans-serif;
+  font-weight: 900;
+  font-size: calc(var(--cell) * 0.235);
+  line-height: 1;
+  color: var(--ink);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.kk-val {
+  font-family: "Spectral", serif;
+  font-weight: 700;
+  font-size: calc(var(--cell) * 0.5);
+  line-height: 1;
+  color: var(--accent-deep);
+  font-variant-numeric: tabular-nums;
+  animation: kk-pop .18s cubic-bezier(.2,.9,.3,1.5);
+}
+.kk-cell.err .kk-val { color: var(--error-deep); }
+@keyframes kk-pop { from { transform: scale(.55); opacity: .3; } to { transform: scale(1); opacity: 1; } }
+
+/* pencil candidates */
+.kk-marks {
+  position: absolute; inset: 8% 8% 8% 8%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-content: end; justify-items: center; align-items: center;
+  pointer-events: none;
+}
+.kk-marks span {
+  font-family: "Nunito", sans-serif;
+  font-weight: 800;
+  font-size: calc(var(--cell) * 0.2);
+  line-height: 1;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.win .kk-cell .kk-val { animation: kk-bob 2s ease-in-out infinite; }
+@keyframes kk-bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
+
+/* ---------- number pad ---------- */
+.kk-pad {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
+  margin-top: 18px; max-width: 460px;
+}
+.kk-key {
+  width: 50px; height: 50px; border-radius: 12px;
+  border: 1.5px solid var(--line); background: var(--panel);
+  font-family: "Spectral", serif; font-weight: 800; font-size: 22px;
+  color: var(--ink); cursor: pointer; box-shadow: var(--shadow);
+  display: grid; place-items: center;
+  transition: transform .1s, background .14s, border-color .14s, color .14s;
+}
+.kk-key:hover:not(:disabled) { transform: translateY(-2px); border-color: #b9c6da; }
+.kk-key:active { transform: translateY(0); }
+.kk-key:disabled { opacity: .42; cursor: not-allowed; }
+.kk-key.erase { color: var(--ink-soft); }
+.kk-key.erase svg { display: block; }
+.kk-pad.pencil .kk-key:not(.erase) {
+  color: var(--accent-deep); border-color: #bcd0ff; background: var(--accent-tint);
+}
+
+@media (max-width: 600px) {
+  .kk-board { --cell: 52px; }
+  .kk-key { width: 44px; height: 44px; font-size: 19px; }
+}

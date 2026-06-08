@@ -36,51 +36,116 @@
       </svg>
       <h1 class="hub-title">Pastimes</h1>
     </div>
-    <div class="hub-sub">A small collection of logic puzzles.</div>
+    <div class="hub-sub">A small collection of logic puzzles, sorted by the kind of thinking they ask for.</div>
     <div class="hub-date" id="hubDate"></div>
   </header>
 
   <div class="game-grid">
 
-    <a class="game-card" href="games/crossings/Crossings.html">
-      <div class="card-art">
-        <svg class="mini" width="200" height="150" viewBox="0 0 200 158" aria-hidden="true">
-          <!-- bridges (drawn under islands) -->
-          <!-- top double -->
-          <line x1="34" y1="36" x2="166" y2="36" stroke="#2b3550" stroke-width="3.4" stroke-linecap="round"/>
-          <line x1="34" y1="44" x2="166" y2="44" stroke="#2b3550" stroke-width="3.4" stroke-linecap="round"/>
-          <!-- left double -->
-          <line x1="30" y1="40" x2="30" y2="118" stroke="#2b3550" stroke-width="3.4" stroke-linecap="round"/>
-          <line x1="38" y1="40" x2="38" y2="118" stroke="#2b3550" stroke-width="3.4" stroke-linecap="round"/>
-          <!-- right single -->
-          <line x1="166" y1="40" x2="166" y2="118" stroke="#2b3550" stroke-width="3.4" stroke-linecap="round"/>
-          <!-- bottom single -->
-          <line x1="34" y1="118" x2="166" y2="118" stroke="#2b3550" stroke-width="3.4" stroke-linecap="round"/>
-          <!-- islands -->
-          <g font-family="Nunito, sans-serif" font-weight="900" font-size="18" text-anchor="middle" fill="#1d2740">
-            <circle cx="34" cy="40" r="17" fill="#fff" stroke="#283353" stroke-width="3"/><text x="34" y="41" dominant-baseline="central">4</text>
-            <circle cx="166" cy="40" r="17" fill="#fff" stroke="#283353" stroke-width="3"/><text x="166" y="41" dominant-baseline="central">3</text>
-            <circle cx="166" cy="118" r="17" fill="#fff" stroke="#283353" stroke-width="3"/><text x="166" y="119" dominant-baseline="central">2</text>
-            <circle cx="34" cy="118" r="17" fill="#fff" stroke="#283353" stroke-width="3"/><text x="34" y="119" dominant-baseline="central">3</text>
+    <a class="game-card" href="categories/numbers.html">
+      <div class="cat-art">
+        <div class="cat-tiles">
+          <div class="cat-tile"><svg class="mini" width="200" height="158" viewBox="0 0 200 158" aria-hidden="true">
+          <!-- thin grid -->
+          <g stroke="#cdd6e2" stroke-width="1">
+            <line x1="69" y1="38" x2="69" y2="119"/><line x1="78" y1="38" x2="78" y2="119"/>
+            <line x1="96" y1="38" x2="96" y2="119"/><line x1="105" y1="38" x2="105" y2="119"/>
+            <line x1="123" y1="38" x2="123" y2="119"/><line x1="132" y1="38" x2="132" y2="119"/>
+            <line x1="60" y1="47" x2="141" y2="47"/><line x1="60" y1="56" x2="141" y2="56"/>
+            <line x1="60" y1="74" x2="141" y2="74"/><line x1="60" y1="83" x2="141" y2="83"/>
+            <line x1="60" y1="101" x2="141" y2="101"/><line x1="60" y1="110" x2="141" y2="110"/>
           </g>
-        </svg>
+          <!-- thick box borders -->
+          <g stroke="#283353" stroke-width="2.3" fill="none">
+            <rect x="60" y="38" width="81" height="81" rx="3"/>
+            <line x1="87" y1="38" x2="87" y2="119"/><line x1="114" y1="38" x2="114" y2="119"/>
+            <line x1="60" y1="65" x2="141" y2="65"/><line x1="60" y1="92" x2="141" y2="92"/>
+          </g>
+          <!-- numbers -->
+          <g font-family="Spectral, serif" font-weight="800" font-size="8.5" text-anchor="middle" dominant-baseline="central">
+            <text x="64.5" y="42.5" fill="#1d2740">5</text>
+            <text x="100.5" y="42.5" fill="#1d2740">3</text>
+            <text x="82.5" y="51.5" fill="#1f51d6">7</text>
+            <text x="91.5" y="69.5" fill="#1d2740">8</text>
+            <text x="100.5" y="78.5" fill="#1d2740">1</text>
+            <text x="127.5" y="87.5" fill="#1f51d6">2</text>
+            <text x="73.5" y="105.5" fill="#1d2740">4</text>
+            <text x="136.5" y="114.5" fill="#1d2740">6</text>
+          </g>
+        </svg></div>
+          <div class="cat-tile"><svg class="mini" width="200" height="158" viewBox="0 0 200 158" aria-hidden="true">
+          <!-- top clues -->
+          <g font-family="Spectral, serif" font-weight="800" font-size="13" fill="#66718c" text-anchor="middle">
+            <text x="73" y="40">2</text><text x="95" y="40">3</text><text x="117" y="40">1</text><text x="139" y="40">2</text>
+          </g>
+          <!-- left clues -->
+          <g font-family="Spectral, serif" font-weight="800" font-size="13" fill="#66718c" text-anchor="middle">
+            <text x="50" y="59">2</text><text x="50" y="81">1</text><text x="50" y="103">3</text><text x="50" y="125">2</text>
+          </g>
+          <!-- cells with height bars -->
+          <g>
+            <!-- row,col bars proportional to value -->
+            <g>
+              <rect x="62" y="48" width="22" height="22" fill="#fff" stroke="#cdd6e2" stroke-width="1.2"/>
+              <rect x="62" y="58" width="22" height="12" fill="#cfe0ff"/>
+              <rect x="84" y="48" width="22" height="22" fill="#fff" stroke="#cdd6e2" stroke-width="1.2"/>
+              <rect x="84" y="62" width="22" height="8" fill="#e6eeff"/>
+              <rect x="106" y="48" width="22" height="22" fill="#fff" stroke="#cdd6e2" stroke-width="1.2"/>
+              <rect x="106" y="52" width="22" height="18" fill="#2f6bff" opacity="0.55"/>
+              <rect x="128" y="48" width="22" height="22" fill="#fff" stroke="#cdd6e2" stroke-width="1.2"/>
+              <rect x="128" y="64" width="22" height="6" fill="#e6eeff"/>
+            </g>
+          </g>
+          <!-- full faint grid 4x4 -->
+          <g stroke="#cdd6e2" stroke-width="1.2" fill="none">
+            <rect x="62" y="48" width="88" height="88"/>
+            <line x1="84" y1="48" x2="84" y2="136"/><line x1="106" y1="48" x2="106" y2="136"/><line x1="128" y1="48" x2="128" y2="136"/>
+            <line x1="62" y1="70" x2="150" y2="70"/><line x1="62" y1="92" x2="150" y2="92"/><line x1="62" y1="114" x2="150" y2="114"/>
+          </g>
+          <!-- a few placed numbers -->
+          <g font-family="Spectral, serif" font-weight="800" font-size="14" fill="#1d2740" text-anchor="middle" dominant-baseline="central">
+            <text x="73" y="59">2</text><text x="117" y="59">4</text>
+            <text x="95" y="103">3</text><text x="139" y="125">1</text>
+          </g>
+        </svg></div>
+          <div class="cat-tile"><svg class="mini" width="200" height="158" viewBox="0 0 200 158" aria-hidden="true">
+          <!-- target -->
+          <rect x="73" y="26" width="54" height="34" rx="9" fill="#fff" stroke="#283353" stroke-width="3"/>
+          <text x="100" y="44" font-family="Spectral, serif" font-weight="800" font-size="19" fill="#1d2740" text-anchor="middle" dominant-baseline="central">527</text>
+          <!-- tiles -->
+          <g>
+            <rect x="34" y="86" width="33" height="40" rx="8" fill="#e6eeff" stroke="#2f6bff" stroke-width="2.6"/>
+            <rect x="73" y="86" width="33" height="40" rx="8" fill="#e6eeff" stroke="#2f6bff" stroke-width="2.6"/>
+            <rect x="112" y="86" width="26" height="40" rx="8" fill="#fff" stroke="#283353" stroke-width="2.6"/>
+            <rect x="146" y="86" width="26" height="40" rx="8" fill="#fff" stroke="#283353" stroke-width="2.6"/>
+          </g>
+          <g font-family="Spectral, serif" font-weight="800" font-size="16" text-anchor="middle" dominant-baseline="central">
+            <text x="50.5" y="107" fill="#1f51d6">100</text>
+            <text x="89.5" y="107" fill="#1f51d6">75</text>
+            <text x="125" y="107" fill="#1d2740">8</text>
+            <text x="159" y="107" fill="#1d2740">3</text>
+          </g>
+          <g font-family="Nunito, sans-serif" font-weight="900" font-size="13" fill="#66718c" text-anchor="middle">
+            <text x="70" y="107">×</text><text x="109" y="107">−</text><text x="142.5" y="107">+</text>
+          </g>
+        </svg></div>
+        </div>
       </div>
       <div class="card-body">
-        <div class="card-kicker">Bridges · Logic</div>
-        <h2 class="card-title">Crossings</h2>
-        <p class="card-desc">Link every island with the right number of bridges, until the whole map joins into one connected network.</p>
+        <div class="card-kicker">Sudoku · KenKen · Killer · Futoshiki</div>
+        <h2 class="card-title">Numbers</h2>
+        <p class="card-desc">Digits and arithmetic — place every number, read the skyline, or reach an exact total.</p>
         <div class="card-foot">
-          <span class="play">Play <span class="arrow">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
-          </span></span>
-          <span class="card-meta"><span class="chip">3 sizes</span></span>
+          <span class="play">Browse <span class="arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span></span>
+          <span class="card-meta"><span class="chip">6 puzzles</span></span>
         </div>
       </div>
     </a>
 
-    <a class="game-card" href="games/hatch/Hatch.html">
-      <div class="card-art">
-        <svg class="mini" width="200" height="158" viewBox="0 0 200 158" aria-hidden="true">
+    <a class="game-card" href="categories/pictures-regions.html">
+      <div class="cat-art">
+        <div class="cat-tiles">
+          <div class="cat-tile"><svg class="mini" width="200" height="158" viewBox="0 0 200 158" aria-hidden="true">
           <!-- filled cells (diamond) -->
           <g fill="#283353">
             <rect x="108" y="46" width="19" height="19"/>
@@ -100,24 +165,139 @@
             <text x="59" y="59.5">1</text><text x="59" y="78.5">3</text><text x="59" y="97.5">5</text><text x="59" y="116.5">3</text><text x="59" y="135.5">1</text>
             <text x="79.5" y="38">1</text><text x="98.5" y="38">3</text><text x="117.5" y="38">5</text><text x="136.5" y="38">3</text><text x="155.5" y="38">1</text>
           </g>
-        </svg>
+        </svg></div>
+          <div class="cat-tile"><svg class="mini" width="200" height="158" viewBox="0 0 200 158" aria-hidden="true">
+          <!-- region fills -->
+          <rect x="70" y="44" width="20" height="80" fill="#e6eeff"/>
+          <rect x="90" y="44" width="60" height="20" fill="#fff"/>
+          <rect x="90" y="64" width="40" height="40" fill="#e6eeff"/>
+          <rect x="130" y="64" width="20" height="40" fill="#fff"/>
+          <rect x="90" y="104" width="60" height="20" fill="#e6eeff"/>
+          <!-- faint inner grid -->
+          <g stroke="#cdd6e2" stroke-width="1">
+            <line x1="90" y1="44" x2="90" y2="124"/><line x1="110" y1="44" x2="110" y2="124"/><line x1="130" y1="44" x2="130" y2="124"/>
+            <line x1="70" y1="64" x2="150" y2="64"/><line x1="70" y1="84" x2="150" y2="84"/><line x1="70" y1="104" x2="150" y2="104"/>
+          </g>
+          <!-- region borders -->
+          <g fill="none" stroke="#283353" stroke-width="2.6">
+            <rect x="70" y="44" width="20" height="80" rx="2.5"/>
+            <rect x="90" y="44" width="60" height="20" rx="2.5"/>
+            <rect x="90" y="64" width="40" height="40" rx="2.5"/>
+            <rect x="130" y="64" width="20" height="40" rx="2.5"/>
+            <rect x="90" y="104" width="60" height="20" rx="2.5"/>
+          </g>
+          <!-- numbers -->
+          <g font-family="Nunito, sans-serif" font-weight="900" font-size="15" text-anchor="middle" dominant-baseline="central">
+            <text x="80" y="74" fill="#2f6bff">4</text>
+            <text x="120" y="54" fill="#1d2740">3</text>
+            <text x="110" y="84" fill="#1d2740">4</text>
+            <text x="140" y="84" fill="#1d2740">2</text>
+            <text x="120" y="114" fill="#1d2740">3</text>
+          </g>
+        </svg></div>
+          <div class="cat-tile"><svg class="mini" width="200" height="158" viewBox="0 0 200 158" aria-hidden="true">
+          <rect x="62" y="46" width="38" height="38" fill="#dce8ff"/>
+          <rect x="100" y="46" width="38" height="19" fill="#d8f0e2"/>
+          <rect x="100" y="65" width="38" height="19" fill="#fdeac4"/>
+          <rect x="62" y="84" width="76" height="38" fill="#fad9d4"/>
+          <g stroke="#cdd6e2" stroke-width="1">
+            <line x1="62" y1="46" x2="62" y2="122"/><line x1="81" y1="46" x2="81" y2="122"/><line x1="100" y1="46" x2="100" y2="122"/><line x1="119" y1="46" x2="119" y2="122"/><line x1="138" y1="46" x2="138" y2="122"/>
+            <line x1="62" y1="46" x2="138" y2="46"/><line x1="62" y1="65" x2="138" y2="65"/><line x1="62" y1="84" x2="138" y2="84"/><line x1="62" y1="103" x2="138" y2="103"/><line x1="62" y1="122" x2="138" y2="122"/>
+          </g>
+          <g fill="none" stroke="#283353" stroke-width="2.8" stroke-linejoin="round">
+            <rect x="62" y="46" width="38" height="38" rx="2.5"/>
+            <rect x="100" y="46" width="38" height="19" rx="2.5"/>
+            <rect x="100" y="65" width="38" height="19" rx="2.5"/>
+            <rect x="62" y="84" width="76" height="38" rx="2.5"/>
+          </g>
+          <g>
+            <circle cx="100" cy="84" r="6" fill="#fff" stroke="#2f6bff" stroke-width="2.4"/><circle cx="100" cy="84" r="2.8" fill="#2f6bff"/>
+            <circle cx="119" cy="55.5" r="6" fill="#fff" stroke="#15a05a" stroke-width="2.4"/><circle cx="119" cy="55.5" r="2.8" fill="#15a05a"/>
+            <circle cx="119" cy="74.5" r="6" fill="#fff" stroke="#d98a1f" stroke-width="2.4"/><circle cx="119" cy="74.5" r="2.8" fill="#d98a1f"/>
+            <circle cx="100" cy="103" r="6" fill="#fff" stroke="#e23b2e" stroke-width="2.4"/><circle cx="100" cy="103" r="2.8" fill="#e23b2e"/>
+          </g>
+        </svg></div>
+        </div>
       </div>
       <div class="card-body">
-        <div class="card-kicker">Nonogram · Logic</div>
-        <h2 class="card-title">Hatch</h2>
-        <p class="card-desc">Use the number clues along each row and column to fill the right runs of cells — and reveal the hidden picture.</p>
+        <div class="card-kicker">Hatch · Shikaku · Galaxies · Mosaic</div>
+        <h2 class="card-title">Pictures &amp; Regions</h2>
+        <p class="card-desc">Fill and carve the grid — uncover a hidden picture, split it into rectangles, or find the symmetric galaxies.</p>
         <div class="card-foot">
-          <span class="play">Play <span class="arrow">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
-          </span></span>
-          <span class="card-meta"><span class="chip">3 sizes</span></span>
+          <span class="play">Browse <span class="arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span></span>
+          <span class="card-meta"><span class="chip">4 puzzles</span></span>
         </div>
       </div>
     </a>
 
-    <a class="game-card" href="games/sweep/Sweep.html">
-      <div class="card-art">
-        <svg class="mini" width="200" height="158" viewBox="0 0 200 158" aria-hidden="true">
+    <a class="game-card" href="categories/place-connect.html">
+      <div class="cat-art">
+        <div class="cat-tiles">
+          <div class="cat-tile"><svg class="mini" width="200" height="158" viewBox="0 0 200 158" aria-hidden="true">
+          <!-- grid -->
+          <g stroke="#cdd6e2" stroke-width="1.2">
+            <line x1="66" y1="40" x2="66" y2="116"/><line x1="85" y1="40" x2="85" y2="116"/><line x1="104" y1="40" x2="104" y2="116"/><line x1="123" y1="40" x2="123" y2="116"/><line x1="142" y1="40" x2="142" y2="116"/>
+            <line x1="66" y1="40" x2="142" y2="40"/><line x1="66" y1="59" x2="142" y2="59"/><line x1="66" y1="78" x2="142" y2="78"/><line x1="66" y1="97" x2="142" y2="97"/><line x1="66" y1="116" x2="142" y2="116"/>
+          </g>
+          <!-- trees (trunk + canopy) -->
+          <g>
+            <g transform="translate(75.5,68.5)">
+              <rect x="-1.6" y="2" width="3.2" height="6" fill="#8a5a2b"/>
+              <circle cx="0" cy="-1.5" r="6.5" fill="#15a05a"/>
+            </g>
+            <g transform="translate(132.5,49.5)">
+              <rect x="-1.6" y="2" width="3.2" height="6" fill="#8a5a2b"/>
+              <circle cx="0" cy="-1.5" r="6.5" fill="#15a05a"/>
+            </g>
+          </g>
+          <!-- tents (triangles), each pitched directly beside a tree -->
+          <g fill="#2f6bff">
+            <polygon points="75.5,80 70,94 81,94"/>
+            <polygon points="132.5,61 127,75 138,75"/>
+          </g>
+          <!-- clues: tents per column (top) and per row (left) -->
+          <g font-family="Nunito, sans-serif" font-weight="900" font-size="13" fill="#66718c" text-anchor="middle">
+            <text x="75.5" y="32">1</text><text x="132.5" y="32">1</text>
+            <text x="56" y="72">1</text><text x="56" y="91">1</text>
+          </g>
+        </svg></div>
+          <div class="cat-tile"><svg class="mini" width="200" height="150" viewBox="0 0 200 158" aria-hidden="true">
+          <!-- bridges (drawn under islands) -->
+          <!-- top double -->
+          <line x1="34" y1="36" x2="166" y2="36" stroke="#2b3550" stroke-width="3.4" stroke-linecap="round"/>
+          <line x1="34" y1="44" x2="166" y2="44" stroke="#2b3550" stroke-width="3.4" stroke-linecap="round"/>
+          <!-- left double -->
+          <line x1="30" y1="40" x2="30" y2="118" stroke="#2b3550" stroke-width="3.4" stroke-linecap="round"/>
+          <line x1="38" y1="40" x2="38" y2="118" stroke="#2b3550" stroke-width="3.4" stroke-linecap="round"/>
+          <!-- right single -->
+          <line x1="166" y1="40" x2="166" y2="118" stroke="#2b3550" stroke-width="3.4" stroke-linecap="round"/>
+          <!-- bottom single -->
+          <line x1="34" y1="118" x2="166" y2="118" stroke="#2b3550" stroke-width="3.4" stroke-linecap="round"/>
+          <!-- islands -->
+          <g font-family="Nunito, sans-serif" font-weight="900" font-size="18" text-anchor="middle" fill="#1d2740">
+            <circle cx="34" cy="40" r="17" fill="#fff" stroke="#283353" stroke-width="3"/><text x="34" y="41" dominant-baseline="central">4</text>
+            <circle cx="166" cy="40" r="17" fill="#fff" stroke="#283353" stroke-width="3"/><text x="166" y="41" dominant-baseline="central">3</text>
+            <circle cx="166" cy="118" r="17" fill="#fff" stroke="#283353" stroke-width="3"/><text x="166" y="119" dominant-baseline="central">2</text>
+            <circle cx="34" cy="118" r="17" fill="#fff" stroke="#283353" stroke-width="3"/><text x="34" y="119" dominant-baseline="central">3</text>
+          </g>
+        </svg></div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-kicker">Tents · Crossings</div>
+        <h2 class="card-title">Place &amp; Connect</h2>
+        <p class="card-desc">Arrange things across a map — pitch a tent beside every tree, or link the islands with bridges.</p>
+        <div class="card-foot">
+          <span class="play">Browse <span class="arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span></span>
+          <span class="card-meta"><span class="chip">2 puzzles</span></span>
+        </div>
+      </div>
+    </a>
+
+    <a class="game-card" href="categories/deduction.html">
+      <div class="cat-art">
+        <div class="cat-tiles">
+          <div class="cat-tile"><svg class="mini" width="200" height="158" viewBox="0 0 200 158" aria-hidden="true">
           <!-- revealed (light) background, boom cell, and a few covered tiles -->
           <rect x="62" y="46" width="76" height="76" fill="#eef2f8"/>
           <rect x="62" y="103" width="19" height="19" fill="#fdeae8"/>
@@ -155,201 +335,8 @@
             <circle r="5.5" fill="#283353" stroke="none"/>
             <circle cx="-1.8" cy="-1.8" r="1.5" fill="#fff" stroke="none"/>
           </g>
-        </svg>
-      </div>
-      <div class="card-body">
-        <div class="card-kicker">Minesweeper · Logic</div>
-        <h2 class="card-title">Sweep</h2>
-        <p class="card-desc">Clear every safe square using the number clues — flag the hidden mines and never click one. Middle-click to chord.</p>
-        <div class="card-foot">
-          <span class="play">Play <span class="arrow">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
-          </span></span>
-          <span class="card-meta"><span class="chip">3 sizes</span></span>
-        </div>
-      </div>
-    </a>
-
-    <a class="game-card" href="games/tents/Tents.html">
-      <div class="card-art">
-        <svg class="mini" width="200" height="158" viewBox="0 0 200 158" aria-hidden="true">
-          <!-- grid -->
-          <g stroke="#cdd6e2" stroke-width="1.2">
-            <line x1="66" y1="40" x2="66" y2="116"/><line x1="85" y1="40" x2="85" y2="116"/><line x1="104" y1="40" x2="104" y2="116"/><line x1="123" y1="40" x2="123" y2="116"/><line x1="142" y1="40" x2="142" y2="116"/>
-            <line x1="66" y1="40" x2="142" y2="40"/><line x1="66" y1="59" x2="142" y2="59"/><line x1="66" y1="78" x2="142" y2="78"/><line x1="66" y1="97" x2="142" y2="97"/><line x1="66" y1="116" x2="142" y2="116"/>
-          </g>
-          <!-- trees (trunk + canopy) -->
-          <g>
-            <g transform="translate(75.5,68.5)">
-              <rect x="-1.6" y="2" width="3.2" height="6" fill="#8a5a2b"/>
-              <circle cx="0" cy="-1.5" r="6.5" fill="#15a05a"/>
-            </g>
-            <g transform="translate(132.5,49.5)">
-              <rect x="-1.6" y="2" width="3.2" height="6" fill="#8a5a2b"/>
-              <circle cx="0" cy="-1.5" r="6.5" fill="#15a05a"/>
-            </g>
-          </g>
-          <!-- tents (triangles), each pitched directly beside a tree -->
-          <g fill="#2f6bff">
-            <polygon points="75.5,80 70,94 81,94"/>
-            <polygon points="132.5,61 127,75 138,75"/>
-          </g>
-          <!-- clues: tents per column (top) and per row (left) -->
-          <g font-family="Nunito, sans-serif" font-weight="900" font-size="13" fill="#66718c" text-anchor="middle">
-            <text x="75.5" y="32">1</text><text x="132.5" y="32">1</text>
-            <text x="56" y="72">1</text><text x="56" y="91">1</text>
-          </g>
-        </svg>
-      </div>
-      <div class="card-body">
-        <div class="card-kicker">Trees &amp; Tents · Logic</div>
-        <h2 class="card-title">Tents</h2>
-        <p class="card-desc">Pitch one tent beside every tree. Tents never touch — not even diagonally — and the clues count the tents in each line.</p>
-        <div class="card-foot">
-          <span class="play">Play <span class="arrow">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
-          </span></span>
-          <span class="card-meta"><span class="chip">3 sizes</span></span>
-        </div>
-      </div>
-    </a>
-
-    <a class="game-card" href="games/shikaku/Shikaku.html">
-      <div class="card-art">
-        <svg class="mini" width="200" height="158" viewBox="0 0 200 158" aria-hidden="true">
-          <!-- region fills -->
-          <rect x="70" y="44" width="20" height="80" fill="#e6eeff"/>
-          <rect x="90" y="44" width="60" height="20" fill="#fff"/>
-          <rect x="90" y="64" width="40" height="40" fill="#e6eeff"/>
-          <rect x="130" y="64" width="20" height="40" fill="#fff"/>
-          <rect x="90" y="104" width="60" height="20" fill="#e6eeff"/>
-          <!-- faint inner grid -->
-          <g stroke="#cdd6e2" stroke-width="1">
-            <line x1="90" y1="44" x2="90" y2="124"/><line x1="110" y1="44" x2="110" y2="124"/><line x1="130" y1="44" x2="130" y2="124"/>
-            <line x1="70" y1="64" x2="150" y2="64"/><line x1="70" y1="84" x2="150" y2="84"/><line x1="70" y1="104" x2="150" y2="104"/>
-          </g>
-          <!-- region borders -->
-          <g fill="none" stroke="#283353" stroke-width="2.6">
-            <rect x="70" y="44" width="20" height="80" rx="2.5"/>
-            <rect x="90" y="44" width="60" height="20" rx="2.5"/>
-            <rect x="90" y="64" width="40" height="40" rx="2.5"/>
-            <rect x="130" y="64" width="20" height="40" rx="2.5"/>
-            <rect x="90" y="104" width="60" height="20" rx="2.5"/>
-          </g>
-          <!-- numbers -->
-          <g font-family="Nunito, sans-serif" font-weight="900" font-size="15" text-anchor="middle" dominant-baseline="central">
-            <text x="80" y="74" fill="#2f6bff">4</text>
-            <text x="120" y="54" fill="#1d2740">3</text>
-            <text x="110" y="84" fill="#1d2740">4</text>
-            <text x="140" y="84" fill="#1d2740">2</text>
-            <text x="120" y="114" fill="#1d2740">3</text>
-          </g>
-        </svg>
-      </div>
-      <div class="card-body">
-        <div class="card-kicker">Rectangles · Logic</div>
-        <h2 class="card-title">Shikaku</h2>
-        <p class="card-desc">Carve the grid into rectangles — one number in each, and that number is exactly how many cells the rectangle covers.</p>
-        <div class="card-foot">
-          <span class="play">Play <span class="arrow">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
-          </span></span>
-          <span class="card-meta"><span class="chip">3 sizes</span></span>
-        </div>
-      </div>
-    </a>
-
-    <a class="game-card" href="games/countdown/Countdown.html">
-      <div class="card-art">
-        <svg class="mini" width="200" height="158" viewBox="0 0 200 158" aria-hidden="true">
-          <!-- target -->
-          <rect x="73" y="26" width="54" height="34" rx="9" fill="#fff" stroke="#283353" stroke-width="3"/>
-          <text x="100" y="44" font-family="Spectral, serif" font-weight="800" font-size="19" fill="#1d2740" text-anchor="middle" dominant-baseline="central">527</text>
-          <!-- tiles -->
-          <g>
-            <rect x="34" y="86" width="33" height="40" rx="8" fill="#e6eeff" stroke="#2f6bff" stroke-width="2.6"/>
-            <rect x="73" y="86" width="33" height="40" rx="8" fill="#e6eeff" stroke="#2f6bff" stroke-width="2.6"/>
-            <rect x="112" y="86" width="26" height="40" rx="8" fill="#fff" stroke="#283353" stroke-width="2.6"/>
-            <rect x="146" y="86" width="26" height="40" rx="8" fill="#fff" stroke="#283353" stroke-width="2.6"/>
-          </g>
-          <g font-family="Spectral, serif" font-weight="800" font-size="16" text-anchor="middle" dominant-baseline="central">
-            <text x="50.5" y="107" fill="#1f51d6">100</text>
-            <text x="89.5" y="107" fill="#1f51d6">75</text>
-            <text x="125" y="107" fill="#1d2740">8</text>
-            <text x="159" y="107" fill="#1d2740">3</text>
-          </g>
-          <g font-family="Nunito, sans-serif" font-weight="900" font-size="13" fill="#66718c" text-anchor="middle">
-            <text x="70" y="107">×</text><text x="109" y="107">−</text><text x="142.5" y="107">+</text>
-          </g>
-        </svg>
-      </div>
-      <div class="card-body">
-        <div class="card-kicker">Numbers · Arithmetic</div>
-        <h2 class="card-title">Countdown</h2>
-        <p class="card-desc">Combine six numbers with +, −, × and ÷ to land exactly on the target — then check how close you came.</p>
-        <div class="card-foot">
-          <span class="play">Play <span class="arrow">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
-          </span></span>
-          <span class="card-meta"><span class="chip">3 modes</span></span>
-        </div>
-      </div>
-    </a>
-
-    <a class="game-card" href="games/skyscrapers/Skyscrapers.html">
-      <div class="card-art">
-        <svg class="mini" width="200" height="158" viewBox="0 0 200 158" aria-hidden="true">
-          <!-- top clues -->
-          <g font-family="Spectral, serif" font-weight="800" font-size="13" fill="#66718c" text-anchor="middle">
-            <text x="73" y="40">2</text><text x="95" y="40">3</text><text x="117" y="40">1</text><text x="139" y="40">2</text>
-          </g>
-          <!-- left clues -->
-          <g font-family="Spectral, serif" font-weight="800" font-size="13" fill="#66718c" text-anchor="middle">
-            <text x="50" y="59">2</text><text x="50" y="81">1</text><text x="50" y="103">3</text><text x="50" y="125">2</text>
-          </g>
-          <!-- cells with height bars -->
-          <g>
-            <!-- row,col bars proportional to value -->
-            <g>
-              <rect x="62" y="48" width="22" height="22" fill="#fff" stroke="#cdd6e2" stroke-width="1.2"/>
-              <rect x="62" y="58" width="22" height="12" fill="#cfe0ff"/>
-              <rect x="84" y="48" width="22" height="22" fill="#fff" stroke="#cdd6e2" stroke-width="1.2"/>
-              <rect x="84" y="62" width="22" height="8" fill="#e6eeff"/>
-              <rect x="106" y="48" width="22" height="22" fill="#fff" stroke="#cdd6e2" stroke-width="1.2"/>
-              <rect x="106" y="52" width="22" height="18" fill="#2f6bff" opacity="0.55"/>
-              <rect x="128" y="48" width="22" height="22" fill="#fff" stroke="#cdd6e2" stroke-width="1.2"/>
-              <rect x="128" y="64" width="22" height="6" fill="#e6eeff"/>
-            </g>
-          </g>
-          <!-- full faint grid 4x4 -->
-          <g stroke="#cdd6e2" stroke-width="1.2" fill="none">
-            <rect x="62" y="48" width="88" height="88"/>
-            <line x1="84" y1="48" x2="84" y2="136"/><line x1="106" y1="48" x2="106" y2="136"/><line x1="128" y1="48" x2="128" y2="136"/>
-            <line x1="62" y1="70" x2="150" y2="70"/><line x1="62" y1="92" x2="150" y2="92"/><line x1="62" y1="114" x2="150" y2="114"/>
-          </g>
-          <!-- a few placed numbers -->
-          <g font-family="Spectral, serif" font-weight="800" font-size="14" fill="#1d2740" text-anchor="middle" dominant-baseline="central">
-            <text x="73" y="59">2</text><text x="117" y="59">4</text>
-            <text x="95" y="103">3</text><text x="139" y="125">1</text>
-          </g>
-        </svg>
-      </div>
-      <div class="card-body">
-        <div class="card-kicker">Latin square · Logic</div>
-        <h2 class="card-title">Skyscrapers</h2>
-        <p class="card-desc">Build a skyline where each row and column holds every height once — and the edge clues count the buildings you can see.</p>
-        <div class="card-foot">
-          <span class="play">Play <span class="arrow">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
-          </span></span>
-          <span class="card-meta"><span class="chip">3 sizes</span></span>
-        </div>
-      </div>
-    </a>
-
-    <a class="game-card" href="games/mastermind/Mastermind.html">
-      <div class="card-art">
-        <svg class="mini" width="200" height="158" viewBox="0 0 200 158" aria-hidden="true">
+        </svg></div>
+          <div class="cat-tile"><svg class="mini" width="200" height="158" viewBox="0 0 200 158" aria-hidden="true">
           <!-- secret row -->
           <g>
             <circle cx="64" cy="40" r="9" fill="#2b3550"/><circle cx="86" cy="40" r="9" fill="#2b3550"/>
@@ -371,83 +358,29 @@
             <circle cx="152" cy="108" r="3.4" fill="#2b3550"/><circle cx="161" cy="108" r="3.4" fill="#2b3550"/>
             <circle cx="152" cy="117" r="3.4" fill="#fff" stroke="#66718c" stroke-width="1.2"/>
           </g>
-        </svg>
+        </svg></div>
+        </div>
       </div>
       <div class="card-body">
-        <div class="card-kicker">Code-breaker · Deduction</div>
-        <h2 class="card-title">Mastermind</h2>
-        <p class="card-desc">Crack the hidden colour code from the peg clues — a dark peg for a perfect match, a light one for the right colour astray.</p>
+        <div class="card-kicker">Sweep · Mastermind</div>
+        <h2 class="card-title">Deduction</h2>
+        <p class="card-desc">Read the clues, rule things out, and crack what's hidden behind them.</p>
         <div class="card-foot">
-          <span class="play">Play <span class="arrow">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
-          </span></span>
-          <span class="card-meta"><span class="chip">4–6 pegs</span></span>
+          <span class="play">Browse <span class="arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span></span>
+          <span class="card-meta"><span class="chip">2 puzzles</span></span>
         </div>
       </div>
     </a>
-
-    <a class="game-card" href="games/sudoku/Sudoku.html">
-      <div class="card-art">
-        <svg class="mini" width="200" height="158" viewBox="0 0 200 158" aria-hidden="true">
-          <!-- thin grid -->
-          <g stroke="#cdd6e2" stroke-width="1">
-            <line x1="69" y1="38" x2="69" y2="119"/><line x1="78" y1="38" x2="78" y2="119"/>
-            <line x1="96" y1="38" x2="96" y2="119"/><line x1="105" y1="38" x2="105" y2="119"/>
-            <line x1="123" y1="38" x2="123" y2="119"/><line x1="132" y1="38" x2="132" y2="119"/>
-            <line x1="60" y1="47" x2="141" y2="47"/><line x1="60" y1="56" x2="141" y2="56"/>
-            <line x1="60" y1="74" x2="141" y2="74"/><line x1="60" y1="83" x2="141" y2="83"/>
-            <line x1="60" y1="101" x2="141" y2="101"/><line x1="60" y1="110" x2="141" y2="110"/>
-          </g>
-          <!-- thick box borders -->
-          <g stroke="#283353" stroke-width="2.3" fill="none">
-            <rect x="60" y="38" width="81" height="81" rx="3"/>
-            <line x1="87" y1="38" x2="87" y2="119"/><line x1="114" y1="38" x2="114" y2="119"/>
-            <line x1="60" y1="65" x2="141" y2="65"/><line x1="60" y1="92" x2="141" y2="92"/>
-          </g>
-          <!-- numbers -->
-          <g font-family="Spectral, serif" font-weight="800" font-size="8.5" text-anchor="middle" dominant-baseline="central">
-            <text x="64.5" y="42.5" fill="#1d2740">5</text>
-            <text x="100.5" y="42.5" fill="#1d2740">3</text>
-            <text x="82.5" y="51.5" fill="#1f51d6">7</text>
-            <text x="91.5" y="69.5" fill="#1d2740">8</text>
-            <text x="100.5" y="78.5" fill="#1d2740">1</text>
-            <text x="127.5" y="87.5" fill="#1f51d6">2</text>
-            <text x="73.5" y="105.5" fill="#1d2740">4</text>
-            <text x="136.5" y="114.5" fill="#1d2740">6</text>
-          </g>
-        </svg>
-      </div>
-      <div class="card-body">
-        <div class="card-kicker">Number placement · Logic</div>
-        <h2 class="card-title">Sudoku</h2>
-        <p class="card-desc">Fill every row, column and 3×3 box with the digits 1–9 — and pencil in your candidates as you reason it out.</p>
-        <div class="card-foot">
-          <span class="play">Play <span class="arrow">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
-          </span></span>
-          <span class="card-meta"><span class="chip">3 levels</span></span>
-        </div>
-      </div>
-    </a>
-
-    <div class="game-card soon">
-      <div class="soon-glyph">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
-      </div>
-      <p class="soon-title">A new puzzle</p>
-      <div class="soon-note">Coming soon</div>
-    </div>
-
   </div>
 
-  <div class="hub-foot">More games will appear here as they’re added.</div>
+  <div class="hub-foot">Pick a category to see its puzzles. More will appear here as they're added.</div>
 </div>
 
 <script>
   (function () {
     var d = new Date();
     var opts = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
-    var s = d.toLocaleDateString("en-US", opts); // e.g. "Wednesday, June 3, 2026"
+    var s = d.toLocaleDateString("en-US", opts);
     document.getElementById("hubDate").textContent = s.replace(",", " ·");
   })();
 </script>

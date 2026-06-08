@@ -1,0 +1,116 @@
+/* ============================================================
+   killer.css — 9×9 sudoku grid carved into summed cages
+   Reuses tokens, fonts and chrome from styles.css
+   ============================================================ */
+
+.kl-board {
+  --cell: 54px;
+  display: grid;
+  grid-template-columns: repeat(9, var(--cell));
+  grid-template-rows: repeat(9, var(--cell));
+  margin: 0 auto;
+  background: var(--panel);
+  border: 2.5px solid var(--isl-border);
+  border-radius: 8px;
+  overflow: hidden;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.kl-cell {
+  position: relative;
+  display: grid; place-items: center;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  cursor: pointer;
+  background: var(--panel);
+  transition: background .12s ease;
+}
+.kl-cell.box-r { border-right: 2.5px solid var(--isl-border); }
+.kl-cell.box-b { border-bottom: 2.5px solid var(--isl-border); }
+
+.kl-cell.peer { background: #eef3fb; }
+.kl-cell.same { background: #d7e4ff; }
+.kl-cell.sel  { background: var(--accent-tint); box-shadow: inset 0 0 0 2.5px var(--accent); z-index: 4; }
+.kl-cell.err  { background: var(--error-tint); }
+.kl-cell.err.sel { box-shadow: inset 0 0 0 2.5px var(--error); }
+
+/* dashed cage outline, inset from the cell edges */
+.kl-cage {
+  position: absolute; inset: 3px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* cage sum, tucked into the anchor cell's corner */
+.kl-sum {
+  position: absolute; top: 2px; left: 4px;
+  font-family: "Nunito", sans-serif;
+  font-weight: 900;
+  font-size: calc(var(--cell) * 0.225);
+  line-height: 1;
+  color: var(--accent-deep);
+  background: var(--panel);
+  padding: 0 1px;
+  pointer-events: none;
+  z-index: 3;
+}
+.kl-cell.sel .kl-sum, .kl-cell.peer .kl-sum, .kl-cell.same .kl-sum { background: transparent; }
+
+.kl-val {
+  font-family: "Spectral", serif;
+  font-weight: 700;
+  font-size: calc(var(--cell) * 0.54);
+  line-height: 1;
+  color: var(--accent-deep);
+  font-variant-numeric: tabular-nums;
+  z-index: 2;
+  animation: kl-pop .18s cubic-bezier(.2,.9,.3,1.5);
+}
+.kl-cell.given .kl-val { color: var(--ink); font-weight: 800; }
+.kl-cell.given { cursor: default; }
+.kl-cell.err .kl-val { color: var(--error-deep); }
+@keyframes kl-pop { from { transform: scale(.55); opacity: .3; } to { transform: scale(1); opacity: 1; } }
+
+/* pencil candidates */
+.kl-marks {
+  position: absolute; inset: 14% 8% 6%;
+  display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr);
+  place-items: center;
+  pointer-events: none; z-index: 2;
+}
+.kl-marks span {
+  font-family: "Nunito", sans-serif; font-weight: 800;
+  font-size: calc(var(--cell) * 0.2); line-height: 1;
+  color: var(--ink-soft); font-variant-numeric: tabular-nums;
+}
+
+.win .kl-cell .kl-val { animation: kl-bob 2s ease-in-out infinite; }
+@keyframes kl-bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
+
+/* ---------- number pad ---------- */
+.kl-pad {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
+  margin-top: 18px; max-width: 470px;
+}
+.kl-key {
+  width: 48px; height: 48px; border-radius: 12px;
+  border: 1.5px solid var(--line); background: var(--panel);
+  font-family: "Spectral", serif; font-weight: 800; font-size: 21px;
+  color: var(--ink); cursor: pointer; box-shadow: var(--shadow);
+  display: grid; place-items: center;
+  transition: transform .1s, background .14s, border-color .14s, color .14s, opacity .14s;
+}
+.kl-key:hover:not(:disabled) { transform: translateY(-2px); border-color: #b9c6da; }
+.kl-key:active { transform: translateY(0); }
+.kl-key:disabled { opacity: .42; cursor: not-allowed; }
+.kl-key.full { color: #aeb8c8; background: var(--bg); }
+.kl-key.erase { color: var(--ink-soft); }
+.kl-key.erase svg { display: block; }
+.kl-pad.pencil .kl-key:not(.erase) {
+  color: var(--accent-deep); border-color: #bcd0ff; background: var(--accent-tint);
+}
+
+@media (max-width: 600px) {
+  .kl-key { width: 42px; height: 42px; font-size: 18px; }
+}

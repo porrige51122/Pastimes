@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Place &amp; Connect — Pastimes</title>
+<link rel="icon" type="image/svg+xml" href="../shared/favicon.svg" />
+<link rel="icon" type="image/png" sizes="32x32" href="../shared/favicon-32.png" />
+<link rel="apple-touch-icon" href="../shared/favicon-180.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@600;700;800&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../shared/styles.css" />
+<link rel="stylesheet" href="../shared/splash.css" />
+</head>
+<body>
+<template id="__bundler_thumbnail">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <rect width="100" height="100" fill="#e7ebf1"/>
+    <line x1="30" y1="40" x2="70" y2="40" stroke="#2b3550" stroke-width="3.5" stroke-linecap="round"/>
+    <line x1="30" y1="48" x2="70" y2="48" stroke="#2b3550" stroke-width="3.5" stroke-linecap="round"/>
+    <circle cx="30" cy="44" r="11" fill="#fff" stroke="#283353" stroke-width="3"/>
+    <circle cx="70" cy="44" r="11" fill="#2f6bff" stroke="#283353" stroke-width="3"/>
+  </svg>
+</template>
+
+<div class="wrap hub">
+  <header class="cat-page-head">
+    <a class="cat-eyebrow" href="../index.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></svg> All categories</a>
+    <h1 class="cat-page-title">Place &amp; Connect</h1>
+    <p class="cat-page-sub">Arrange things across a map — pitch a tent beside every tree, or link the islands with bridges.</p>
+  </header>
+
+  <div class="game-grid">
+
+<a class="game-card" href="../games/tents/Tents.html">
+      <div class="card-art">
+        <svg class="mini" width="200" height="158" viewBox="0 0 200 158" aria-hidden="true">
+          <!-- grid -->
+          <g stroke="#cdd6e2" stroke-width="1.2">
+            <line x1="66" y1="40" x2="66" y2="116"/><line x1="85" y1="40" x2="85" y2="116"/><line x1="104" y1="40" x2="104" y2="116"/><line x1="123" y1="40" x2="123" y2="116"/><line x1="142" y1="40" x2="142" y2="116"/>
+            <line x1="66" y1="40" x2="142" y2="40"/><line x1="66" y1="59" x2="142" y2="59"/><line x1="66" y1="78" x2="142" y2="78"/><line x1="66" y1="97" x2="142" y2="97"/><line x1="66" y1="116" x2="142" y2="116"/>
+          </g>
+          <!-- trees (trunk + canopy) -->
+          <g>
+            <g transform="translate(75.5,68.5)">
+              <rect x="-1.6" y="2" width="3.2" height="6" fill="#8a5a2b"/>
+              <circle cx="0" cy="-1.5" r="6.5" fill="#15a05a"/>
+            </g>
+            <g transform="translate(132.5,49.5)">
+              <rect x="-1.6" y="2" width="3.2" height="6" fill="#8a5a2b"/>
+              <circle cx="0" cy="-1.5" r="6.5" fill="#15a05a"/>
+            </g>
+          </g>
+          <!-- tents (triangles), each pitched directly beside a tree -->
+          <g fill="#2f6bff">
+            <polygon points="75.5,80 70,94 81,94"/>
+            <polygon points="132.5,61 127,75 138,75"/>
+          </g>
+          <!-- clues: tents per column (top) and per row (left) -->
+          <g font-family="Nunito, sans-serif" font-weight="900" font-size="13" fill="#66718c" text-anchor="middle">
+            <text x="75.5" y="32">1</text><text x="132.5" y="32">1</text>
+            <text x="56" y="72">1</text><text x="56" y="91">1</text>
+          </g>
+        </svg>
+      </div>
+      <div class="card-body">
+        <div class="card-kicker">Trees &amp; Tents · Logic</div>
+        <h2 class="card-title">Tents</h2>
+        <p class="card-desc">Pitch one tent beside every tree. Tents never touch — not even diagonally — and the clues count the tents in each line.</p>
+        <div class="card-foot">
+          <span class="play">Play <span class="arrow">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+          </span></span>
+          <span class="card-meta"><span class="chip">3 sizes</span></span>
+        </div>
+      </div>
+    </a>
+
+<a class="game-card" href="../games/crossings/Crossings.html">
+      <div class="card-art">
+        <svg class="mini" width="200" height="150" viewBox="0 0 200 158" aria-hidden="true">
+          <!-- bridges (drawn under islands) -->
+          <!-- top double -->
+          <line x1="34" y1="36" x2="166" y2="36" stroke="#2b3550" stroke-width="3.4" stroke-linecap="round"/>
+          <line x1="34" y1="44" x2="166" y2="44" stroke="#2b3550" stroke-width="3.4" stroke-linecap="round"/>
+          <!-- left double -->
+          <line x1="30" y1="40" x2="30" y2="118" stroke="#2b3550" stroke-width="3.4" stroke-linecap="round"/>
+          <line x1="38" y1="40" x2="38" y2="118" stroke="#2b3550" stroke-width="3.4" stroke-linecap="round"/>
+          <!-- right single -->
+          <line x1="166" y1="40" x2="166" y2="118" stroke="#2b3550" stroke-width="3.4" stroke-linecap="round"/>
+          <!-- bottom single -->
+          <line x1="34" y1="118" x2="166" y2="118" stroke="#2b3550" stroke-width="3.4" stroke-linecap="round"/>
+          <!-- islands -->
+          <g font-family="Nunito, sans-serif" font-weight="900" font-size="18" text-anchor="middle" fill="#1d2740">
+            <circle cx="34" cy="40" r="17" fill="#fff" stroke="#283353" stroke-width="3"/><text x="34" y="41" dominant-baseline="central">4</text>
+            <circle cx="166" cy="40" r="17" fill="#fff" stroke="#283353" stroke-width="3"/><text x="166" y="41" dominant-baseline="central">3</text>
+            <circle cx="166" cy="118" r="17" fill="#fff" stroke="#283353" stroke-width="3"/><text x="166" y="119" dominant-baseline="central">2</text>
+            <circle cx="34" cy="118" r="17" fill="#fff" stroke="#283353" stroke-width="3"/><text x="34" y="119" dominant-baseline="central">3</text>
+          </g>
+        </svg>
+      </div>
+      <div class="card-body">
+        <div class="card-kicker">Bridges · Logic</div>
+        <h2 class="card-title">Crossings</h2>
+        <p class="card-desc">Link every island with the right number of bridges, until the whole map joins into one connected network.</p>
+        <div class="card-foot">
+          <span class="play">Play <span class="arrow">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+          </span></span>
+          <span class="card-meta"><span class="chip">3 sizes</span></span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="hub-foot">More place & connect puzzles will appear here as they're added.</div>
+</div>
+</body>
+</html>

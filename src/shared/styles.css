@@ -297,8 +297,25 @@ body {
 .mote { position: fixed; top: -16px; z-index: 55; pointer-events: none; border-radius: 2px; animation: fall linear forwards; }
 @keyframes fall { to { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
 
+/* ---------- back link (shared across all game pages) ---------- */
+.backlink {
+  position: absolute;
+  top: 22px; left: 22px;
+  display: inline-flex; align-items: center; gap: 6px;
+  font-weight: 800; font-size: 13.5px; color: var(--ink-soft);
+  text-decoration: none;
+  background: var(--panel);
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  padding: 7px 14px 7px 11px;
+  box-shadow: var(--shadow);
+  transition: transform .12s ease, color .16s, border-color .16s;
+}
+.backlink:hover { color: var(--ink); border-color: #b9c6da; transform: translateX(-2px); }
+
 @media (max-width: 600px) {
   .wordmark { font-size: 36px; }
   .wrap { padding: 18px 12px 48px; }
   .statsbar { gap: 16px; }
+  .backlink { position: static; margin-bottom: 14px; align-self: flex-start; }
 }
