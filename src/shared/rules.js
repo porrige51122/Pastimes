@@ -139,6 +139,26 @@
         ] },
       ],
     },
+    sudoku: {
+      kicker: "Number placement · Logic",
+      title: "How to play Sudoku",
+      blocks: [
+        { h: "The goal", p: "Fill every empty cell so that each <b>row</b>, each <b>column</b> and each <b>3×3 box</b> contains the digits 1 to 9 exactly once." },
+        { h: "The rules", list: [
+          "No digit may repeat within a <b>row</b>.",
+          "No digit may repeat within a <b>column</b>.",
+          "No digit may repeat within a <b>3×3 box</b>.",
+          "The starting clues are fixed — every puzzle has <b>one</b> solution reachable by logic alone.",
+        ] },
+        { h: "Controls", p: "Click a cell, then type a digit or tap the keypad. Turn on <b>Pencil</b> (or press Space) to jot small candidate notes; placing a real number clears the notes around it. Arrow keys move, Backspace clears." },
+        { tips: true, h: "Tips & tricks", list: [
+          "<b>Scan for singles:</b> a cell whose row, column and box already show eight different digits can only be the ninth.",
+          "Work a digit at a time — find rows, columns and boxes where a number has just <b>one</b> place left.",
+          "<b>Pencil in candidates</b> for the tight cells, then watch for a digit that appears only once in a line or box.",
+          "When two cells in a unit share the same two candidates, those digits are <b>locked</b> to that pair — erase them elsewhere in the unit.",
+        ] },
+      ],
+    },
     mastermind: {
       kicker: "Code-breaker · Deduction",
       title: "How to play Mastermind",
