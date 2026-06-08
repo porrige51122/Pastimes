@@ -1,0 +1,53 @@
+/* ============================================================
+   Galaxies — board styling
+   Reuses tokens + fonts + chrome from styles.css
+   ============================================================ */
+
+.gx-board-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.gx-grid { stroke: var(--line); stroke-width: 1.1; pointer-events: none; }
+
+.gx-hit { fill: transparent; cursor: crosshair; }
+
+/* region outlines */
+.gx-border {
+  stroke-width: 3.2;
+  stroke-linecap: round;
+  pointer-events: none;
+}
+
+/* galaxy dots */
+.gx-dot-core {
+  fill: #fff;
+  stroke-width: 2.6;
+  transition: r .15s ease;
+}
+.gx-dot-ring {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.4;
+  opacity: .9;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: gx-sel 1.5s ease-in-out infinite;
+}
+@keyframes gx-sel {
+  0%, 100% { transform: scale(1);    opacity: .9; }
+  50%      { transform: scale(1.18); opacity: .4; }
+}
+.gx-dot.sel .gx-dot-core { stroke-width: 3; }
+
+/* win shimmer */
+.gx-board-svg.won .gx-border { animation: gx-glow 2.1s ease-in-out infinite; }
+@keyframes gx-glow { 0%, 100% { opacity: 1; } 50% { opacity: .45; } }
+
+@media (max-width: 600px) {
+  .gx-border { stroke-width: 2.8; }
+}

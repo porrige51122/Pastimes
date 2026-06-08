@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Deduction — Pastimes</title>
+<link rel="icon" type="image/svg+xml" href="../shared/favicon.svg" />
+<link rel="icon" type="image/png" sizes="32x32" href="../shared/favicon-32.png" />
+<link rel="apple-touch-icon" href="../shared/favicon-180.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@600;700;800&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../shared/styles.css" />
+<link rel="stylesheet" href="../shared/splash.css" />
+</head>
+<body>
+<template id="__bundler_thumbnail">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <rect width="100" height="100" fill="#e7ebf1"/>
+    <line x1="30" y1="40" x2="70" y2="40" stroke="#2b3550" stroke-width="3.5" stroke-linecap="round"/>
+    <line x1="30" y1="48" x2="70" y2="48" stroke="#2b3550" stroke-width="3.5" stroke-linecap="round"/>
+    <circle cx="30" cy="44" r="11" fill="#fff" stroke="#283353" stroke-width="3"/>
+    <circle cx="70" cy="44" r="11" fill="#2f6bff" stroke="#283353" stroke-width="3"/>
+  </svg>
+</template>
+
+<div class="wrap hub">
+  <header class="cat-page-head">
+    <a class="cat-eyebrow" href="../index.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></svg> All categories</a>
+    <h1 class="cat-page-title">Deduction</h1>
+    <p class="cat-page-sub">Read the clues, rule things out, and crack what's hidden behind them.</p>
+  </header>
+
+  <div class="game-grid">
+
+<a class="game-card" href="../games/sweep/Sweep.html">
+      <div class="card-art">
+        <svg class="mini" width="200" height="158" viewBox="0 0 200 158" aria-hidden="true">
+          <!-- revealed (light) background, boom cell, and a few covered tiles -->
+          <rect x="62" y="46" width="76" height="76" fill="#eef2f8"/>
+          <rect x="62" y="103" width="19" height="19" fill="#fdeae8"/>
+          <g fill="#fff" stroke="#d2dae5" stroke-width="1.4">
+            <rect x="62" y="46" width="19" height="19"/>
+            <rect x="119" y="46" width="19" height="19"/>
+            <rect x="81" y="103" width="19" height="19"/>
+          </g>
+          <!-- grid lines (even 4×4) -->
+          <g stroke="#cdd6e2" stroke-width="1.2">
+            <line x1="62" y1="46" x2="62" y2="122"/><line x1="81" y1="46" x2="81" y2="122"/><line x1="100" y1="46" x2="100" y2="122"/><line x1="119" y1="46" x2="119" y2="122"/><line x1="138" y1="46" x2="138" y2="122"/>
+            <line x1="62" y1="46" x2="138" y2="46"/><line x1="62" y1="65" x2="138" y2="65"/><line x1="62" y1="84" x2="138" y2="84"/><line x1="62" y1="103" x2="138" y2="103"/><line x1="62" y1="122" x2="138" y2="122"/>
+          </g>
+          <!-- numbers — each counts the mines around it (flagged cell + the two by the 2s) -->
+          <g font-family="Nunito, sans-serif" font-weight="900" font-size="14" text-anchor="middle" dominant-baseline="central">
+            <text x="109.5" y="55.5" fill="#2f6bff">1</text>
+            <text x="128.5" y="74.5" fill="#2f6bff">1</text>
+            <text x="71.5" y="93.5" fill="#15a05a">2</text>
+            <text x="90.5" y="93.5" fill="#15a05a">2</text>
+            <text x="109.5" y="93.5" fill="#2f6bff">1</text>
+            <text x="109.5" y="112.5" fill="#2f6bff">1</text>
+          </g>
+          <!-- a flag on a covered tile (centred in its cell) -->
+          <g transform="translate(128.5,55.5)">
+            <line x1="2" y1="-7" x2="2" y2="8" stroke="#283353" stroke-width="2" stroke-linecap="round"/>
+            <polygon points="2,-7 -6,-4.5 2,-2" fill="#e23b2e"/>
+            <rect x="-2" y="7" width="8" height="2.4" rx="0.6" fill="#283353"/>
+          </g>
+          <!-- a revealed mine -->
+          <g transform="translate(71.5,112.5)" stroke="#283353" stroke-width="1.8" stroke-linecap="round">
+            <line x1="-8" y1="0" x2="8" y2="0"/>
+            <line x1="0" y1="-8" x2="0" y2="8"/>
+            <line x1="-5.6" y1="-5.6" x2="5.6" y2="5.6"/>
+            <line x1="-5.6" y1="5.6" x2="5.6" y2="-5.6"/>
+            <circle r="5.5" fill="#283353" stroke="none"/>
+            <circle cx="-1.8" cy="-1.8" r="1.5" fill="#fff" stroke="none"/>
+          </g>
+        </svg>
+      </div>
+      <div class="card-body">
+        <div class="card-kicker">Minesweeper · Logic</div>
+        <h2 class="card-title">Sweep</h2>
+        <p class="card-desc">Clear every safe square using the number clues — flag the hidden mines and never click one. Middle-click to chord.</p>
+        <div class="card-foot">
+          <span class="play">Play <span class="arrow">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+          </span></span>
+          <span class="card-meta"><span class="chip">3 sizes</span></span>
+        </div>
+      </div>
+    </a>
+
+<a class="game-card" href="../games/mastermind/Mastermind.html">
+      <div class="card-art">
+        <svg class="mini" width="200" height="158" viewBox="0 0 200 158" aria-hidden="true">
+          <!-- secret row -->
+          <g>
+            <circle cx="64" cy="40" r="9" fill="#2b3550"/><circle cx="86" cy="40" r="9" fill="#2b3550"/>
+            <circle cx="108" cy="40" r="9" fill="#2b3550"/><circle cx="130" cy="40" r="9" fill="#2b3550"/>
+            <g font-family="Nunito, sans-serif" font-weight="900" font-size="11" fill="#8693b8" text-anchor="middle" dominant-baseline="central">
+              <text x="64" y="40">?</text><text x="86" y="40">?</text><text x="108" y="40">?</text><text x="130" y="40">?</text>
+            </g>
+          </g>
+          <!-- guess rows -->
+          <g>
+            <circle cx="64" cy="78" r="9" fill="#2f6bff"/><circle cx="86" cy="78" r="9" fill="#f5a623"/>
+            <circle cx="108" cy="78" r="9" fill="#e23b2e"/><circle cx="130" cy="78" r="9" fill="#15a05a"/>
+            <circle cx="152" cy="74" r="3.4" fill="#2b3550"/><circle cx="161" cy="74" r="3.4" fill="#fff" stroke="#66718c" stroke-width="1.2"/>
+            <circle cx="152" cy="83" r="3.4" fill="#fff" stroke="#66718c" stroke-width="1.2"/>
+          </g>
+          <g>
+            <circle cx="64" cy="112" r="9" fill="#15a05a"/><circle cx="86" cy="112" r="9" fill="#2f6bff"/>
+            <circle cx="108" cy="112" r="9" fill="#f5a623"/><circle cx="130" cy="112" r="9" fill="#7a5af0"/>
+            <circle cx="152" cy="108" r="3.4" fill="#2b3550"/><circle cx="161" cy="108" r="3.4" fill="#2b3550"/>
+            <circle cx="152" cy="117" r="3.4" fill="#fff" stroke="#66718c" stroke-width="1.2"/>
+          </g>
+        </svg>
+      </div>
+      <div class="card-body">
+        <div class="card-kicker">Code-breaker · Deduction</div>
+        <h2 class="card-title">Mastermind</h2>
+        <p class="card-desc">Crack the hidden colour code from the peg clues — a dark peg for a perfect match, a light one for the right colour astray.</p>
+        <div class="card-foot">
+          <span class="play">Play <span class="arrow">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+          </span></span>
+          <span class="card-meta"><span class="chip">4–6 pegs</span></span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="hub-foot">More deduction puzzles will appear here as they're added.</div>
+</div>
+</body>
+</html>

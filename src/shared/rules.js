@@ -159,6 +159,25 @@
         ] },
       ],
     },
+    galaxies: {
+      kicker: "Spiral Galaxies · Logic",
+      title: "How to play Galaxies",
+      blocks: [
+        { h: "The goal", p: "Divide the whole grid into regions — one per dot. Each region must look exactly the same when you spin it half a turn (180°) around its dot." },
+        { h: "The rules", list: [
+          "Every region contains <b>exactly one dot</b>, sitting at its centre of rotation.",
+          "Each region is <b>180°-symmetric</b> about that dot — every cell has a matching partner on the opposite side.",
+          "Regions are <b>single connected shapes</b> and never overlap; together they fill the whole grid.",
+        ] },
+        { h: "Controls", p: "Tap a dot to choose its galaxy, then click or drag across cells to paint them in — the symmetric half fills in automatically. Tap a painted cell (or right-click) to clear it." },
+        { tips: true, h: "Tips & tricks", list: [
+          "Cells in the <b>corners and along the edges</b> usually belong to the nearest dot — start there.",
+          "A dot sitting <b>on an edge or corner</b> between cells owns all the cells it touches; pencil those in first.",
+          "Every cell you add must have its <b>mirror partner</b> across the dot — if that partner is off the grid, the cell can't belong to that galaxy.",
+          "When two dots compete for a cell, the one that keeps both regions <b>connected</b> usually wins.",
+        ] },
+      ],
+    },
     mastermind: {
       kicker: "Code-breaker · Deduction",
       title: "How to play Mastermind",
@@ -176,6 +195,86 @@
           "The <b>total pegs</b> (dark + light) tells you how many of your colours belong in the code.",
           "A colour that earns <b>zero pegs</b> isn't in the code — rule it out entirely.",
           "Once you know the colour set, <b>change one peg at a time</b> to learn where each belongs.",
+        ] },
+      ],
+    },
+    kenken: {
+      kicker: "Latin square · Arithmetic",
+      title: "How to play KenKen",
+      blocks: [
+        { h: "The goal", p: "Fill the grid so every row and column holds each number from <b>1 to N</b> once — and every bold-outlined <b>cage</b> reaches its target using the shown operation." },
+        { h: "The rules", list: [
+          "Each row and column contains <b>1 to N</b>, no repeats (N is the grid size).",
+          "A cage clue like <b>6×</b>, <b>3−</b>, <b>8+</b> or <b>2÷</b> is the result of combining its cells with that operation.",
+          "For <b>+</b> and <b>×</b> the order doesn't matter; for <b>−</b> and <b>÷</b> (always two cells) it's the larger combined with the smaller.",
+          "A cage may <b>repeat a number</b>, as long as the row/column rule is never broken.",
+        ] },
+        { h: "Controls", p: "Click a cell, then type a number or tap the keypad. Turn on <b>Pencil</b> (or press Space) to jot candidates. Arrow keys move; Backspace clears." },
+        { tips: true, h: "Tips & tricks", list: [
+          "Start with <b>single-cell cages</b> — the clue is the answer.",
+          "List the number pairs that make a two-cell cage: a <b>3−</b> is {1,4}, {2,5}, {3,6}… ; a small <b>+</b> or large <b>×</b> has few options.",
+          "Use the <b>row/column rule</b> to rule combinations out — a pair that repeats a digit in a line is impossible.",
+          "Big <b>×</b> targets often force the high numbers; tiny <b>+</b> targets force the low ones.",
+        ] },
+      ],
+    },
+    futoshiki: {
+      kicker: "Latin square · Logic",
+      title: "How to play Futoshiki",
+      blocks: [
+        { h: "The goal", p: "Fill the grid so each row and column holds every number from <b>1 to N</b> once, while honouring every <b>greater-than</b> sign between cells." },
+        { h: "The rules", list: [
+          "Each row and column contains <b>1 to N</b>, no repeats.",
+          "A sign always points from the <b>larger</b> number to the smaller — <b>&gt;</b> and <b>&lt;</b> between side-by-side cells, <b>∨</b> and <b>∧</b> between stacked ones.",
+          "Some cells start with a <b>given</b> number; these are fixed.",
+          "Every puzzle has <b>one</b> solution reachable by logic alone.",
+        ] },
+        { h: "Controls", p: "Click a cell, then type a number or tap the keypad. Turn on <b>Pencil</b> (or press Space) to jot candidates. Arrow keys move; Backspace clears." },
+        { tips: true, h: "Tips & tricks", list: [
+          "The cell at the open end of a chain like <b>a&gt;b&gt;c</b> can't be too small — and the pointed end can't be too big.",
+          "In an N-grid, a cell that must be <b>greater than</b> two others is at least 3; one smaller than two others is at most N−2.",
+          "Combine a sign with the <b>row/column rule</b> — often only one number satisfies both.",
+          "Pencil in candidates, then prune them with each inequality you pass.",
+        ] },
+      ],
+    },
+    killer: {
+      kicker: "Number placement · Logic",
+      title: "How to play Killer Sudoku",
+      blocks: [
+        { h: "The goal", p: "Fill every cell so each <b>row</b>, <b>column</b> and <b>3×3 box</b> holds 1–9 once — and every dashed <b>cage</b> adds up to the small number in its corner." },
+        { h: "The rules", list: [
+          "Standard sudoku: no digit repeats in a <b>row</b>, <b>column</b> or <b>3×3 box</b>.",
+          "The cells of a dashed <b>cage</b> must <b>sum</b> to its corner total.",
+          "A digit may <b>not repeat inside a cage</b>.",
+          "Every puzzle has <b>one</b> solution reachable by logic alone.",
+        ] },
+        { h: "Controls", p: "Click a cell, then type a digit or tap the keypad. Turn on <b>Pencil</b> (or press Space) to jot candidates. Arrow keys move; Backspace clears." },
+        { tips: true, h: "Tips & tricks", list: [
+          "Learn the <b>fixed splits</b>: a two-cell cage of 3 is {1,2}; of 17 is {8,9}; a three-cell cage of 6 is {1,2,3}.",
+          "<b>Rule of 45:</b> each row, column and box totals 45 — a cage poking just one cell out of a box pins that cell's value.",
+          "Where cages sit fully inside a box, subtract their sums from 45 to find what's left.",
+          "Combine cage maths with normal sudoku scanning — each feeds the other.",
+        ] },
+      ],
+    },
+    mosaic: {
+      kicker: "Fill-a-Pix · Logic",
+      title: "How to play Mosaic",
+      blocks: [
+        { h: "The goal", p: "Shade cells so that every numbered cell ends up with exactly that many shaded cells in the <b>3×3 block</b> centred on it — itself included." },
+        { h: "The rules", list: [
+          "A clue counts the shaded cells in its own cell plus the (up to) eight around it.",
+          "A <b>0</b> means none of those nine cells are shaded; a <b>9</b> means all of them are.",
+          "Edge and corner clues count a smaller block (6 or 4 cells).",
+          "Every puzzle has <b>one</b> solution reachable by logic alone.",
+        ] },
+        { h: "Controls", p: "<b>Click or drag</b> to shade cells; <b>right-click</b> (or Ctrl-click) to mark a cell empty. Marking empties helps you keep track." },
+        { tips: true, h: "Tips & tricks", list: [
+          "Act on the extremes first: a <b>0</b> clears its whole block, a <b>9</b> fills it.",
+          "Near an edge, a clue equal to its block size (6 on a side, 4 in a corner) fills that block.",
+          "When a clue's shaded count is already met, mark its <b>remaining</b> neighbours empty.",
+          "Overlap two nearby clues — the difference between them often forces a single cell.",
         ] },
       ],
     },

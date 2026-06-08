@@ -1,0 +1,99 @@
+/* ============================================================
+   futoshiki.css — Latin-square board with inequality signs
+   Reuses tokens, fonts and chrome from styles.css
+   ============================================================ */
+
+.ft-board {
+  --cell: 64px;
+  --gap: 26px;
+  display: grid;
+  margin: 0 auto;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+/* playable cell */
+.ft-cell {
+  width: var(--cell); height: var(--cell);
+  border-radius: 10px;
+  border: 1.5px solid var(--line);
+  background: var(--panel);
+  display: grid; place-items: center;
+  position: relative; overflow: hidden;
+  cursor: pointer;
+  transition: border-color .14s, background .14s, box-shadow .14s;
+}
+.ft-cell:hover { border-color: #b9c6da; }
+.ft-cell.peer { background: #f3f6fc; }
+.ft-cell.same { background: #d7e4ff; }
+.ft-cell.sel  { border-color: var(--accent); background: var(--accent-tint); box-shadow: 0 0 0 3px rgba(47,107,255,.18); z-index: 2; }
+.ft-cell.err  { border-color: var(--error); background: var(--error-tint); }
+.ft-cell.err.sel { box-shadow: 0 0 0 3px rgba(226,59,46,.22); }
+.ft-cell.given { cursor: default; background: #eef1f6; border-color: #cfd6e2; }
+
+.ft-val {
+  font-family: "Spectral", serif; font-weight: 700;
+  font-size: calc(var(--cell) * 0.5);
+  color: var(--accent-deep);
+  font-variant-numeric: tabular-nums;
+  animation: ft-pop .2s cubic-bezier(.2,.9,.3,1.5);
+}
+.ft-cell.given .ft-val { color: var(--ink); font-weight: 800; }
+.ft-cell.err .ft-val { color: var(--error-deep); }
+@keyframes ft-pop { from { transform: scale(.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+/* pencil candidates */
+.ft-marks {
+  position: absolute; inset: 9%;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  align-content: center; justify-items: center; align-items: center;
+  pointer-events: none;
+}
+.ft-marks span {
+  font-family: "Nunito", sans-serif; font-weight: 800;
+  font-size: calc(var(--cell) * 0.2); line-height: 1;
+  color: var(--ink-soft); font-variant-numeric: tabular-nums;
+}
+
+/* inequality signs sitting in the gap slots */
+.ft-sign {
+  display: grid; place-items: center;
+  font-family: "Nunito", sans-serif;
+  font-weight: 900;
+  font-size: calc(var(--gap) * 0.92);
+  line-height: 0.7;
+  color: var(--ink-soft);
+  pointer-events: none;
+}
+.ft-sign.bad { color: var(--error); }
+.ft-slot { display: grid; place-items: center; }
+
+.win .ft-cell { animation: ft-bob 2s ease-in-out infinite; }
+@keyframes ft-bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+
+/* ---------- number pad ---------- */
+.ft-pad {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
+  margin-top: 18px; max-width: 460px;
+}
+.ft-key {
+  width: 50px; height: 50px; border-radius: 12px;
+  border: 1.5px solid var(--line); background: var(--panel);
+  font-family: "Spectral", serif; font-weight: 800; font-size: 22px;
+  color: var(--ink); cursor: pointer; box-shadow: var(--shadow);
+  display: grid; place-items: center;
+  transition: transform .1s, background .14s, border-color .14s, color .14s;
+}
+.ft-key:hover:not(:disabled) { transform: translateY(-2px); border-color: #b9c6da; }
+.ft-key:active { transform: translateY(0); }
+.ft-key:disabled { opacity: .42; cursor: not-allowed; }
+.ft-key.erase { color: var(--ink-soft); }
+.ft-key.erase svg { display: block; }
+.ft-pad.pencil .ft-key:not(.erase) {
+  color: var(--accent-deep); border-color: #bcd0ff; background: var(--accent-tint);
+}
+
+@media (max-width: 600px) {
+  .ft-board { --cell: 50px; --gap: 22px; }
+  .ft-key { width: 44px; height: 44px; font-size: 19px; }
+}

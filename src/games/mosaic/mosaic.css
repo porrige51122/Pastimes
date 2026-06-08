@@ -1,0 +1,66 @@
+/* ============================================================
+   mosaic.css — Fill-a-Pix board: shade cells to match 3×3 clues
+   Reuses tokens, fonts and chrome from styles.css
+   ============================================================ */
+
+.mo-board {
+  --cell: 46px;
+  display: grid;
+  margin: 0 auto;
+  background: var(--panel);
+  border: 2.5px solid var(--isl-border);
+  border-radius: 8px;
+  overflow: hidden;
+  user-select: none;
+  touch-action: none;            /* allow drag-painting on touch */
+}
+
+.mo-cell {
+  position: relative;
+  width: var(--cell); height: var(--cell);
+  display: grid; place-items: center;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: var(--panel);
+  cursor: pointer;
+  transition: background .1s ease;
+}
+/* a touch thicker line every 5 cells helps the eye on big grids */
+.mo-cell.major-r { border-right: 2px solid #b9c2d2; }
+.mo-cell.major-b { border-bottom: 2px solid #b9c2d2; }
+
+.mo-cell.shaded { background: var(--isl-border); }
+.mo-cell.blank  { background: var(--panel); }
+
+/* the little mark on a "definitely empty" cell */
+.mo-x {
+  width: 26%; height: 26%; border-radius: 50%;
+  background: #c2ccda;
+  pointer-events: none;
+}
+
+/* clue number */
+.mo-clue {
+  font-family: "Nunito", sans-serif;
+  font-weight: 800;
+  font-size: calc(var(--cell) * 0.42);
+  line-height: 1;
+  color: var(--ink);
+  pointer-events: none;
+  font-variant-numeric: tabular-nums;
+}
+.mo-cell.shaded .mo-clue { color: #fff; }
+.mo-clue.done { color: #aeb8c8; }
+.mo-cell.shaded .mo-clue.done { color: #8493ab; }
+.mo-clue.err {
+  color: #fff; background: var(--error);
+  width: 76%; height: 76%; border-radius: 7px;
+  display: grid; place-items: center;
+}
+
+.win .mo-cell.shaded { animation: mo-bob 2.2s ease-in-out infinite; }
+@keyframes mo-bob { 0%,100% { transform: scale(1); } 50% { transform: scale(0.9); } }
+
+@media (max-width: 600px) {
+  .mo-board { --cell: 34px; }
+}
