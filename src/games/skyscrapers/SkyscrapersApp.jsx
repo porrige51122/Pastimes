@@ -22,11 +22,16 @@ const SKIcon = {
 function skFmt(s) { const m = Math.floor(s / 60), ss = s % 60; return m + ":" + (ss < 10 ? "0" : "") + ss; }
 const skBlank = (n) => Array.from({ length: n }, () => new Array(n).fill(0));
 const skClone = (g) => g.map((r) => r.slice());
+// pencil marks: an n×n grid where each cell holds a length-n boolean list (index v-1)
+const skBlankMarks = (n) => Array.from({ length: n }, () => Array.from({ length: n }, () => new Array(n).fill(false)));
+const skCloneMarks = (m) => m.map((row) => row.map((cell) => cell.slice()));
 
 function SkyscrapersApp() {
   const [difficulty, setDifficulty] = skS("easy");
   const [puzzle, setPuzzle] = skS(null);
   const [grid, setGrid] = skS([]);
+  const [marks, setMarks] = skS([]);        // pencil candidates per cell
+  const [pencil, setPencil] = skS(false);   // pencil (notes) mode
   const [sel, setSel] = skS(null);          // {r,c}
   const [seconds, setSeconds] = skS(0);
   const [running, setRunning] = skS(false);
@@ -39,10 +44,13 @@ function SkyscrapersApp() {
   const [cell, setCell] = skS(64);
 
   const gridRef = skR([]); const wonRef = skR(false); const selRef = skR(null);
+  const marksRef = skR([]); const pencilRef = skR(false);
   const toastTimer = skR(null);
   skE(() => { gridRef.current = grid; }, [grid]);
   skE(() => { wonRef.current = won; }, [won]);
   skE(() => { selRef.current = sel; }, [sel]);
+  skE(() => { marksRef.current = marks; }, [marks]);
+  skE(() => { pencilRef.current = pencil; }, [pencil]);
 
   const showToast = skC((msg, warn) => {
     setToast({ id: Date.now() + Math.random(), msg, warn: !!warn });
@@ -55,8 +63,9 @@ function SkyscrapersApp() {
     setTimeout(() => {
       const p = SK.generate(SKDIFF[diff].n, SKDIFF[diff].remove);
       const blank = skBlank(p.n);
-      gridRef.current = blank;
-      setPuzzle(p); setGrid(blank); setSel(null);
+      const blankM = skBlankMarks(p.n);
+      gridRef.current = blank; marksRef.current = blankM;
+      setPuzzle(p); setGrid(blank); setMarks(blankM); setSel(null);
       setSeconds(0); setRunning(false); setWon(false); setMotes([]); setLoading(false);
     }, 20);
   }, []);
@@ -95,8 +104,38 @@ function SkyscrapersApp() {
     if (cur[r][c] === nv) return;
     const n = skClone(cur); n[r][c] = nv;
     gridRef.current = n; setGrid(n);
+    // placing a real value clears that cell's pencil marks
+    if (nv !== 0) {
+      const mm = skCloneMarks(marksRef.current);
+      mm[r][c] = mm[r][c].map(() => false);
+      marksRef.current = mm; setMarks(mm);
+    }
     if (!running) setRunning(true);
   }, [running]);
+
+  // toggle a pencil candidate in a cell (only meaningful while the cell is empty)
+  const toggleMark = skC((r, c, v) => {
+    if (wonRef.current) return;
+    if (gridRef.current[r][c] !== 0) return; // a placed value owns the cell
+    const mm = skCloneMarks(marksRef.current);
+    mm[r][c][v - 1] = !mm[r][c][v - 1];
+    marksRef.current = mm; setMarks(mm);
+    if (!running) setRunning(true);
+  }, [running]);
+
+  // route a keypad / keyboard digit through the active mode
+  const enterDigit = skC((r, c, v) => {
+    if (pencilRef.current) toggleMark(r, c, v);
+    else setCellVal(r, c, v);
+  }, [toggleMark, setCellVal]);
+
+  const clearCell = skC((r, c) => {
+    if (wonRef.current) return;
+    const g = skClone(gridRef.current); g[r][c] = 0;
+    const mm = skCloneMarks(marksRef.current); mm[r][c] = mm[r][c].map(() => false);
+    gridRef.current = g; setGrid(g);
+    marksRef.current = mm; setMarks(mm);
+  }, []);
 
   // keyboard
   skE(() => {
@@ -104,8 +143,9 @@ function SkyscrapersApp() {
     const onKey = (e) => {
       const s = selRef.current; if (!s) return;
       const n = puzzle.n;
-      if (e.key >= "1" && e.key <= String(n)) { setCellVal(s.r, s.c, +e.key); e.preventDefault(); }
-      else if (e.key === "Backspace" || e.key === "Delete" || e.key === "0") { setCellVal(s.r, s.c, gridRef.current[s.r][s.c]); /*toggle off*/ const g = skClone(gridRef.current); g[s.r][s.c] = 0; gridRef.current = g; setGrid(g); e.preventDefault(); }
+      if (e.key >= "1" && e.key <= String(n)) { enterDigit(s.r, s.c, +e.key); e.preventDefault(); }
+      else if (e.key === "Backspace" || e.key === "Delete" || e.key === "0") { clearCell(s.r, s.c); e.preventDefault(); }
+      else if (e.key === " " || e.key.toLowerCase() === "p") { setPencil((p) => !p); e.preventDefault(); }
       else if (e.key === "ArrowUp") { setSel({ r: Math.max(0, s.r - 1), c: s.c }); e.preventDefault(); }
       else if (e.key === "ArrowDown") { setSel({ r: Math.min(n - 1, s.r + 1), c: s.c }); e.preventDefault(); }
       else if (e.key === "ArrowLeft") { setSel({ r: s.r, c: Math.max(0, s.c - 1) }); e.preventDefault(); }
@@ -114,12 +154,14 @@ function SkyscrapersApp() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [puzzle, setCellVal]);
+  }, [puzzle, enterDigit, clearCell]);
 
   const clearAll = skC(() => {
     if (!puzzle) return;
     const blank = skBlank(puzzle.n);
+    const blankM = skBlankMarks(puzzle.n);
     gridRef.current = blank; setGrid(blank);
+    marksRef.current = blankM; setMarks(blankM);
   }, [puzzle]);
 
   const runCheck = skC(() => {
@@ -190,12 +232,19 @@ function SkyscrapersApp() {
           const isSel = sel && sel.r === r && sel.c === c;
           const isPeer = sel && !isSel && (sel.r === r || sel.c === c);
           const err = showErrors && validation.errRow[r] && validation.errRow[r][c];
+          const cm = marks[r] && marks[r][c];
+          const hasMarks = v === 0 && cm && cm.some(Boolean);
           return (
             <div className="sk-slot" key={"c" + c}>
               <div className={"sk-cell" + (isSel ? " sel" : "") + (isPeer ? " peer" : "") + (err ? " err" : "")}
                 onClick={() => setSel({ r, c })}>
                 {v > 0 && <div className="sk-bar" style={{ height: (12 + (v / n) * 78) + "%" }} />}
                 {v > 0 && <span className="sk-val">{v}</span>}
+                {hasMarks && (
+                  <div className="sk-marks">
+                    {cm.map((on, i) => <span key={i}>{on ? i + 1 : ""}</span>)}
+                  </div>
+                )}
               </div>
             </div>
           );
@@ -242,6 +291,10 @@ function SkyscrapersApp() {
         </div>
         <button className="btn primary" onClick={() => newPuzzle(difficulty)} disabled={loading}>{SKIcon.refresh} New</button>
         <button className="btn" onClick={clearAll}>{SKIcon.reset} Clear</button>
+        <div className={"toggle" + (pencil ? " on" : "")} onClick={() => setPencil((p) => !p)}
+             title="Pencil in candidates instead of placing a final number (Space or P)">
+          <span className="switch"></span> Pencil
+        </div>
         <div className={"toggle" + (autoCheck ? " on" : "")} onClick={() => setAutoCheck((a) => !a)}>
           <span className="switch"></span> Auto-check
         </div>
@@ -263,19 +316,19 @@ function SkyscrapersApp() {
         </div>
       </div>
 
-      <div className="sk-pad">
+      <div className={"sk-pad" + (pencil ? " pencil" : "")}>
         {[...Array(n)].map((_, i) => (
           <button key={i} className="sk-key" disabled={!sel || won}
-            onClick={() => sel && setCellVal(sel.r, sel.c, i + 1)}>{i + 1}</button>
+            onClick={() => sel && enterDigit(sel.r, sel.c, i + 1)}>{i + 1}</button>
         ))}
         <button className="sk-key erase" disabled={!sel || won}
-          onClick={() => { if (!sel) return; const g = skClone(gridRef.current); g[sel.r][sel.c] = 0; gridRef.current = g; setGrid(g); }}>
+          onClick={() => { if (sel) clearCell(sel.r, sel.c); }}>
           {SKIcon.erase}
         </button>
       </div>
 
       <div className="helpline">
-        Fill each row and column with <b>1–{n}</b>, no repeats. A clue counts how many buildings are <b>visible</b> from that edge — taller ones hide shorter ones behind them. <b>Click</b> a cell, then type or tap a number.
+        Fill each row and column with <b>1–{n}</b>, no repeats. A clue counts how many buildings are <b>visible</b> from that edge — taller ones hide shorter ones behind them. <b>Click</b> a cell, then type or tap a number. Switch on <b>Pencil</b> (or press <b>Space</b>) to jot possible numbers while you work.
       </div>
 
       {toast && (

@@ -1,0 +1,105 @@
+/* ============================================================
+   sudoku.css — classic 9x9 board
+   Reuses tokens, fonts and chrome from styles.css
+   ============================================================ */
+
+.su-board {
+  --cell: 58px;
+  display: grid;
+  grid-template-columns: repeat(9, var(--cell));
+  grid-template-rows: repeat(9, var(--cell));
+  margin: 0 auto;
+  background: var(--panel);
+  border: 2.5px solid var(--isl-border);
+  border-radius: 8px;
+  overflow: hidden;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.su-cell {
+  position: relative;
+  display: grid;
+  place-items: center;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  cursor: pointer;
+  background: var(--panel);
+  transition: background .12s ease;
+}
+/* thick 3x3 box separators */
+.su-cell.box-r { border-right: 2.5px solid var(--isl-border); }
+.su-cell.box-b { border-bottom: 2.5px solid var(--isl-border); }
+
+.su-cell.peer { background: #eef3fb; }
+.su-cell.same { background: #d7e4ff; }
+.su-cell.sel  { background: var(--accent-tint); box-shadow: inset 0 0 0 2.5px var(--accent); z-index: 2; }
+.su-cell.err  { background: var(--error-tint); }
+.su-cell.err.sel { box-shadow: inset 0 0 0 2.5px var(--error); }
+
+/* placed value */
+.su-val {
+  font-family: "Spectral", serif;
+  font-weight: 700;
+  font-size: calc(var(--cell) * 0.56);
+  line-height: 1;
+  color: var(--accent-deep);            /* player entries in blue */
+  font-variant-numeric: tabular-nums;
+  animation: su-pop .18s cubic-bezier(.2,.9,.3,1.5);
+}
+.su-cell.given .su-val { color: var(--ink); font-weight: 800; } /* clues in ink */
+.su-cell.given { cursor: default; }
+.su-cell.err .su-val { color: var(--error-deep); }
+@keyframes su-pop { from { transform: scale(.55); opacity: .3; } to { transform: scale(1); opacity: 1; } }
+
+/* pencil candidates */
+.su-marks {
+  position: absolute; inset: 6%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  place-items: center;
+  pointer-events: none;
+}
+.su-marks span {
+  font-family: "Nunito", sans-serif;
+  font-weight: 800;
+  font-size: calc(var(--cell) * 0.21);
+  line-height: 1;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+/* winning shimmer */
+.win .su-cell .su-val { animation: su-bob 2s ease-in-out infinite; }
+@keyframes su-bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
+
+/* ---------- number pad ---------- */
+.su-pad {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
+  margin-top: 18px; max-width: 460px;
+}
+.su-key {
+  width: 50px; height: 50px; border-radius: 12px;
+  border: 1.5px solid var(--line); background: var(--panel);
+  font-family: "Spectral", serif; font-weight: 800; font-size: 22px;
+  color: var(--ink); cursor: pointer; box-shadow: var(--shadow);
+  display: grid; place-items: center;
+  transition: transform .1s, background .14s, border-color .14s, color .14s, opacity .14s;
+}
+.su-key:hover:not(:disabled) { transform: translateY(-2px); border-color: #b9c6da; }
+.su-key:active { transform: translateY(0); }
+.su-key:disabled { opacity: .42; cursor: not-allowed; }
+.su-key.full { color: #aeb8c8; background: var(--bg); }   /* digit fully placed */
+.su-key.erase { color: var(--ink-soft); }
+.su-key.erase svg { display: block; }
+/* pencil mode recolours the digit keys */
+.su-pad.pencil .su-key:not(.erase) {
+  color: var(--accent-deep);
+  border-color: #bcd0ff;
+  background: var(--accent-tint);
+}
+
+@media (max-width: 600px) {
+  .su-key { width: 44px; height: 44px; font-size: 19px; }
+}

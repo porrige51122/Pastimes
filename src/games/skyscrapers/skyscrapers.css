@@ -70,6 +70,31 @@
 /* highlight the row/col of the selected cell faintly */
 .sk-cell.peer { background: #f3f6fc; }
 
+/* pencil candidates */
+.sk-marks {
+  position: absolute; inset: 9%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-content: center; justify-items: center; align-items: center;
+  gap: 0;
+  pointer-events: none;
+}
+.sk-marks span {
+  font-family: "Nunito", sans-serif;
+  font-weight: 800;
+  font-size: calc(var(--cell) * 0.2);
+  line-height: 1;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+/* keypad reflects the active mode */
+.sk-pad.pencil .sk-key:not(.erase) {
+  color: var(--accent-deep);
+  border-color: #bcd0ff;
+  background: var(--accent-tint);
+}
+
 /* ---------- number pad ---------- */
 .sk-pad {
   display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;

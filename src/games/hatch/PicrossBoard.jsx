@@ -6,7 +6,8 @@ const { useState: usePBState } = React;
 
 function PicrossBoard(props) {
   const { puzzle, state, errGrid, showErrors, won,
-          rowDone, colDone, onBeginDrag, onDragOver, onEndDrag } = props;
+          rowDone, colDone, rowClueMarks, colClueMarks,
+          onToggleRowClue, onToggleColClue, onBeginDrag, onDragOver, onEndDrag } = props;
   const { rows, cols, rowClues, colClues } = puzzle;
 
   const [hover, setHover] = usePBState(null); // {r,c}
@@ -109,6 +110,7 @@ function PicrossBoard(props) {
   }
 
   // ---- clues ----
+  const HALF = CLUE * 0.34; // half-width of a strike line
   const clueEls = [];
   rowClues.forEach((cl, r) => {
     const list = cl.length ? cl : [0];
@@ -116,9 +118,15 @@ function PicrossBoard(props) {
     list.forEach((n, j) => {
       const fromRight = list.length - j; // 1 = adjacent to grid
       const x = leftG - (fromRight - 0.5) * CLUE;
+      const struck = rowClueMarks && rowClueMarks[r] && rowClueMarks[r][j];
       clueEls.push(
-        <text key={"rc" + r + "_" + j} className={"pic-clue" + (rowDone[r] ? " done" : "")}
-          x={x} y={y} dominantBaseline="central" textAnchor="middle">{n}</text>
+        <g key={"rc" + r + "_" + j} className="pic-clue-g"
+           onClick={() => !won && onToggleRowClue && onToggleRowClue(r, j)}>
+          <rect className="pic-clue-hit" x={x - CLUE / 2} y={y - CLUE / 2} width={CLUE} height={CLUE} />
+          <text className={"pic-clue" + (rowDone[r] ? " done" : "") + (struck ? " struck" : "")}
+            x={x} y={y} dominantBaseline="central" textAnchor="middle">{n}</text>
+          {struck && <line className="pic-clue-strike" x1={x - HALF} y1={y} x2={x + HALF} y2={y} />}
+        </g>
       );
     });
   });
@@ -128,9 +136,15 @@ function PicrossBoard(props) {
     list.forEach((n, j) => {
       const fromBottom = list.length - j;
       const y = topG - (fromBottom - 0.5) * CLUE;
+      const struck = colClueMarks && colClueMarks[c] && colClueMarks[c][j];
       clueEls.push(
-        <text key={"cc" + c + "_" + j} className={"pic-clue" + (colDone[c] ? " done" : "")}
-          x={x} y={y} dominantBaseline="central" textAnchor="middle">{n}</text>
+        <g key={"cc" + c + "_" + j} className="pic-clue-g"
+           onClick={() => !won && onToggleColClue && onToggleColClue(c, j)}>
+          <rect className="pic-clue-hit" x={x - CLUE / 2} y={y - CLUE / 2} width={CLUE} height={CLUE} />
+          <text className={"pic-clue" + (colDone[c] ? " done" : "") + (struck ? " struck" : "")}
+            x={x} y={y} dominantBaseline="central" textAnchor="middle">{n}</text>
+          {struck && <line className="pic-clue-strike" x1={x - HALF} y1={y} x2={x + HALF} y2={y} />}
+        </g>
       );
     });
   });

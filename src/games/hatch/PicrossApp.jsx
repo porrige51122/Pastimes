@@ -48,6 +48,9 @@ function PicrossApp() {
   const [won, setWon] = useState(false);
   const [motes, setMotes] = useState([]);
   const [loading, setLoading] = useState(false);
+  // manual strike-off of edge clue numbers (player working notes)
+  const [rowClueMarks, setRowClueMarks] = useState([]);
+  const [colClueMarks, setColClueMarks] = useState([]);
 
   const stateRef = useRef([]);
   const dragRef = useRef(null);
@@ -73,6 +76,8 @@ function PicrossApp() {
       stateRef.current = blank;
       setPuzzle(p);
       setState(blank);
+      setRowClueMarks(p.rowClues.map((cl) => new Array(Math.max(1, cl.length)).fill(false)));
+      setColClueMarks(p.colClues.map((cl) => new Array(Math.max(1, cl.length)).fill(false)));
       setHistory([]);
       setMoves(0);
       setSeconds(0);
@@ -158,6 +163,15 @@ function PicrossApp() {
   }, [applyCell]);
 
   const onEndDrag = useCallback(() => { dragRef.current = null; }, []);
+
+  const toggleRowClue = useCallback((r, j) => {
+    if (wonRef.current) return;
+    setRowClueMarks((prev) => { const n = prev.map((a) => a.slice()); if (n[r]) n[r][j] = !n[r][j]; return n; });
+  }, []);
+  const toggleColClue = useCallback((c, j) => {
+    if (wonRef.current) return;
+    setColClueMarks((prev) => { const n = prev.map((a) => a.slice()); if (n[c]) n[c][j] = !n[c][j]; return n; });
+  }, []);
 
   const undo = useCallback(() => {
     setHistory((h) => {
@@ -293,6 +307,10 @@ function PicrossApp() {
             won={won}
             rowDone={rowDone}
             colDone={colDone}
+            rowClueMarks={rowClueMarks}
+            colClueMarks={colClueMarks}
+            onToggleRowClue={toggleRowClue}
+            onToggleColClue={toggleColClue}
             onBeginDrag={onBeginDrag}
             onDragOver={onDragOver}
             onEndDrag={onEndDrag}
@@ -301,7 +319,7 @@ function PicrossApp() {
       </div>
 
       <div className="helpline">
-        Clues give the lengths of the filled runs in each line, in order. <b>Click or drag</b> to fill cells; <b>right-click</b> to mark a blank with ×.
+        Clues give the lengths of the filled runs in each line, in order. <b>Click or drag</b> to fill cells; <b>right-click</b> to mark a blank with ×. <b>Tap a clue number</b> to cross it off as you place its run.
       </div>
 
       {toast && (

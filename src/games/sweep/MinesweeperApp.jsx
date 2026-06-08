@@ -129,10 +129,15 @@ function MinesApp() {
     if (flagRef.current[r][c] === 1) return; // can't dig a flag
 
     let b = boardRef.current;
-    // first click → generate a safe board
-    if (statusRef.current === "ready") {
+    // The board is generated on the first *reveal*, not the first action.
+    // Guard on the board itself (mineCount === 0 means "not built yet") rather
+    // than status — otherwise planting then clearing a flag flips status to
+    // "playing" and we'd dig an empty board: instant 0-second "win", no mines.
+    if (b.mineCount === 0) {
       b = Mines.generate(cfg.rows, cfg.cols, cfg.mines, r, c);
       boardRef.current = b; setBoard(b);
+    }
+    if (statusRef.current !== "playing") {
       statusRef.current = "playing"; setStatus("playing"); setRunning(true);
     }
     if (revRef.current[r][c]) return;

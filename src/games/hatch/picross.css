@@ -57,6 +57,19 @@
   transition: fill .2s ease;
 }
 .pic-clue.done { fill: #b4bfd0; }
+.pic-clue.struck { fill: #aab4c6; }
+
+/* clue numbers are tappable to cross off as you work */
+.pic-clue-g { cursor: pointer; }
+.pic-clue-hit { fill: transparent; }
+.pic-clue-g:hover .pic-clue:not(.done):not(.struck) { fill: var(--accent); }
+.pic-clue-strike {
+  stroke: var(--ink-soft);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  opacity: .7;
+  pointer-events: none;
+}
 
 @media (max-width: 600px) {
   .pic-clue { font-size: 15px; }
