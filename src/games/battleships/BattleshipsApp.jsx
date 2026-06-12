@@ -148,6 +148,60 @@ function BattleshipsApp() {
   const totalShip = puzzle.fleet.reduce((a, b) => a + b, 0);
   const placedShip = grid.flat().filter(c => c === 1).length;
 
+  /* ---- Error detection ---- */
+  const errSet = new Set();
+  const _orth = [[0,1],[0,-1],[1,0],[-1,0]];
+  const _diag = [[-1,-1],[-1,1],[1,-1],[1,1]];
+
+  /* diagonal adjacency */
+  for (let r = 0; r < n; r++)
+    for (let c = 0; c < n; c++) {
+      if (grid[r][c] !== 1) continue;
+      for (const [dr, dc] of _diag) {
+        const nr = r + dr, nc = c + dc;
+        if (nr >= 0 && nr < n && nc >= 0 && nc < n && grid[nr][nc] === 1) {
+          errSet.add(r + "," + c); errSet.add(nr + "," + nc);
+        }
+      }
+    }
+
+  /* invalid shape: cell has both horizontal AND vertical ship neighbours (bend) */
+  for (let r = 0; r < n; r++)
+    for (let c = 0; c < n; c++) {
+      if (grid[r][c] !== 1) continue;
+      const hasV = (r > 0 && grid[r-1][c] === 1) || (r < n-1 && grid[r+1][c] === 1);
+      const hasH = (c > 0 && grid[r][c-1] === 1) || (c < n-1 && grid[r][c+1] === 1);
+      if (hasV && hasH) errSet.add(r + "," + c);
+    }
+
+  /* ship group too long */
+  const _vis = {};
+  const maxLen = puzzle.fleet[0];
+  for (let r = 0; r < n; r++)
+    for (let c = 0; c < n; c++) {
+      const k = r + "," + c;
+      if (grid[r][c] !== 1 || _vis[k]) continue;
+      const q = [[r,c]], grp = []; _vis[k] = true;
+      while (q.length) {
+        const [cr, cc] = q.shift(); grp.push([cr, cc]);
+        for (const [dr, dc] of _orth) {
+          const nr = cr+dr, nc = cc+dc, nk = nr+","+nc;
+          if (nr >= 0 && nr < n && nc >= 0 && nc < n && grid[nr][nc] === 1 && !_vis[nk]) {
+            _vis[nk] = true; q.push([nr, nc]);
+          }
+        }
+      }
+      if (grp.length > maxLen) for (const [cr, cc] of grp) errSet.add(cr + "," + cc);
+    }
+
+  /* row / col overflow */
+  for (let r = 0; r < n; r++)
+    if (rowNow[r] > puzzle.rowCounts[r])
+      for (let c = 0; c < n; c++) if (grid[r][c] === 1) errSet.add(r + "," + c);
+  for (let c = 0; c < n; c++)
+    if (colNow[c] > puzzle.colCounts[c])
+      for (let r = 0; r < n; r++) if (grid[r][c] === 1) errSet.add(r + "," + c);
+
   /* Build flat grid children */
   const cells = [];
   cells.push(<div key="corner" className="bs-corner" style={{ width: cs, height: cs }}></div>);
@@ -163,13 +217,14 @@ function BattleshipsApp() {
       const val = grid[r][c];
       const locked = !!hint;
       const seg = val === 1 ? (hint || dynSeg(grid, r, c, n)) : null;
+      const hasErr = val === 1 && errSet.has(r + "," + c);
       cells.push(
         <div key={r + "-" + c}
-          className={"bs-cell" + (locked ? " locked" : "")}
+          className={"bs-cell" + (locked ? " locked" : "") + (hasErr ? " bs-err" : "")}
           style={{ width: cs, height: cs }}
           onClick={() => handleCell(r, c, false)}
           onContextMenu={(e) => { e.preventDefault(); handleCell(r, c, true); }}>
-          {val === 1 && <div className={"bs-seg " + (seg || "mid") + (locked ? " hint" : "")} />}
+          {val === 1 && <div className={"bs-seg " + (seg || "mid") + (locked ? " hint" : "") + (hasErr ? " error" : "")} />}
           {val === 2 && <span className={"bs-water" + (locked ? " hint" : "")}>~</span>}
         </div>
       );

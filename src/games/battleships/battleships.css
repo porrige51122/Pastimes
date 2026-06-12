@@ -104,6 +104,22 @@
   font-size: 11px; font-weight: 800; color: var(--ink-soft); margin-left: 2px;
 }
 
+/* ---------- error states ---------- */
+.bs-cell.bs-err {
+  background: rgba(226,59,46,.08);
+}
+.bs-seg.error {
+  background: var(--error) !important;
+  animation: bs-shake .35s ease;
+}
+@keyframes bs-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-3px); }
+  40% { transform: translateX(3px); }
+  60% { transform: translateX(-2px); }
+  80% { transform: translateX(2px); }
+}
+
 @media (max-width: 600px) {
   .bs-board { padding: 6px; }
   .bs-clue { font-size: 12px; }

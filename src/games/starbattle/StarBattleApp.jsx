@@ -125,6 +125,27 @@ function StarBattleApp() {
   const totalStars = rowCnt.reduce((a, b) => a + b, 0);
   const targetStars = n * ns;
 
+  /* Error detection */
+  const errSet = new Set();
+  for (let r = 0; r < n; r++)
+    for (let c = 0; c < n; c++) {
+      if (grid[r][c] !== 1) continue;
+      /* adjacency conflict */
+      for (let dr = -1; dr <= 1; dr++)
+        for (let dc = -1; dc <= 1; dc++) {
+          if (!dr && !dc) continue;
+          const nr = r + dr, nc = c + dc;
+          if (nr >= 0 && nr < n && nc >= 0 && nc < n && grid[nr][nc] === 1) {
+            errSet.add(r + "," + c);
+            errSet.add(nr + "," + nc);
+          }
+        }
+      /* overflow: row / col / region */
+      if (rowCnt[r] > ns) errSet.add(r + "," + c);
+      if (colCnt[c] > ns) errSet.add(r + "," + c);
+      if (regCnt[puzzle.regions[r][c]] > ns) errSet.add(r + "," + c);
+    }
+
   /* Build cells */
   const cells = [];
   for (let r = 0; r < n; r++) {
@@ -137,13 +158,14 @@ function StarBattleApp() {
       if (c === 0 || puzzle.regions[r][c - 1] !== reg) borders += " bl";
       if (c === n - 1 || puzzle.regions[r][c + 1] !== reg) borders += " br";
       const val = grid[r][c];
+      const hasErr = val === 1 && errSet.has(r + "," + c);
       cells.push(
         <div key={r + "-" + c}
-          className={"sb-cell " + bc + borders}
+          className={"sb-cell " + bc + borders + (hasErr ? " sb-err" : "")}
           style={{ width: cs, height: cs }}
           onClick={() => handleCell(r, c, false)}
           onContextMenu={(e) => { e.preventDefault(); handleCell(r, c, true); }}>
-          {val === 1 && <span className="sb-star">★</span>}
+          {val === 1 && <span className={"sb-star" + (hasErr ? " error" : "")}>★</span>}
           {val === 2 && <span className="sb-mark">✕</span>}
         </div>
       );

@@ -44,6 +44,23 @@
   pointer-events: none;
 }
 
+/* ---------- error states ---------- */
+.sb-cell.sb-err {
+  background-image: linear-gradient(135deg, rgba(226,59,46,.12) 0%, rgba(226,59,46,.06) 100%);
+}
+.sb-star.error {
+  color: var(--error);
+  filter: drop-shadow(0 1px 3px rgba(226,59,46,.35));
+  animation: sb-shake .35s ease;
+}
+@keyframes sb-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-3px); }
+  40% { transform: translateX(3px); }
+  60% { transform: translateX(-2px); }
+  80% { transform: translateX(2px); }
+}
+
 /* ---------- region palette ---------- */
 .sb-r0 { background: #dce8ff; }
 .sb-r1 { background: #d8f0e2; }
