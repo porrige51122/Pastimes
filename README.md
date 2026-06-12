@@ -18,8 +18,8 @@
 ## About the project
 
 Pastimes is a set of classic pen-and-paper style puzzles — Sudoku, a bridges
-puzzle, a nonogram, Minesweeper and more — rebuilt as clean, self-contained web
-pages. Every puzzle runs entirely in your browser: there's nothing to install,
+puzzle, a nonogram, Minesweeper, Slitherlink, Masyu and more — rebuilt as clean,
+self-contained web pages. Every puzzle runs entirely in your browser: there's nothing to install,
 nothing to sign up for, and your progress never leaves your device.
 
 The goal is to be **calm and uncluttered**. Each game shares one visual language
@@ -33,7 +33,7 @@ Puzzles are organised into four categories by the kind of thinking they ask for:
 | --- | --- | --- |
 | [**Numbers**](src/categories/numbers.html) | Digits and arithmetic | [Sudoku](src/games/sudoku/Sudoku.html) · [Skyscrapers](src/games/skyscrapers/Skyscrapers.html) · [Countdown](src/games/countdown/Countdown.html) · [KenKen](src/games/kenken/KenKen.html) · [Futoshiki](src/games/futoshiki/Futoshiki.html) · [Killer Sudoku](src/games/killer/Killer.html) |
 | [**Pictures & Regions**](src/categories/pictures-regions.html) | Fill and carve the grid | [Hatch](src/games/hatch/Hatch.html) · [Shikaku](src/games/shikaku/Shikaku.html) · [Galaxies](src/games/galaxies/Galaxies.html) · [Mosaic](src/games/mosaic/Mosaic.html) |
-| [**Place & Connect**](src/categories/place-connect.html) | Arrange things across a map | [Tents](src/games/tents/Tents.html) · [Crossings](src/games/crossings/Crossings.html) |
+| [**Place & Connect**](src/categories/place-connect.html) | Arrange things across a map | [Tents](src/games/tents/Tents.html) · [Crossings](src/games/crossings/Crossings.html) · [Slitherlink](src/games/slitherlink/Slitherlink.html) · [Masyu](src/games/masyu/Masyu.html) |
 | [**Deduction**](src/categories/deduction.html) | Read clues, rule things out | [Sweep](src/games/sweep/Sweep.html) · [Mastermind](src/games/mastermind/Mastermind.html) |
 
 ## Getting started

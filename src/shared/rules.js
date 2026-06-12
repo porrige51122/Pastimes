@@ -258,6 +258,46 @@
         ] },
       ],
     },
+    slitherlink: {
+      kicker: "Loop · Logic",
+      title: "How to play Slitherlink",
+      blocks: [
+        { h: "The goal", p: "Draw a single, continuous, non-intersecting loop along cell edges. The numbers inside cells tell you exactly how many of that cell's four sides are part of the loop." },
+        { h: "The rules", list: [
+          "The loop runs along the <b>edges</b> of a grid of square cells.",
+          "A cell with the number <b>3</b> has exactly three of its four edges in the loop.",
+          "A cell with <b>no number</b> could have any count — zero to four.",
+          "The loop must be a <b>single closed path</b> — no branches, no crossings, no loose ends.",
+        ] },
+        { h: "Controls", p: "Click an edge between two dots to draw a line. Click again to remove it. Right-click to mark an edge as definitely empty (✕)." },
+        { tips: true, h: "Tips & tricks", list: [
+          "A <b>0</b> clue means none of its four edges are in the loop — mark them all ✕.",
+          "A <b>3</b> clue in a corner must use all three available edges.",
+          "Two adjacent <b>3</b> clues share an edge that must be part of the loop, plus the outer edges of both.",
+          "At every dot, the loop either <b>doesn't pass through</b> or passes through with <b>exactly two</b> edges — never one or three.",
+        ] },
+      ],
+    },
+    masyu: {
+      kicker: "Loop · Logic",
+      title: "How to play Masyu",
+      blocks: [
+        { h: "The goal", p: "Draw a single closed loop that passes through every pearl on the grid. White and black pearls impose different constraints on how the loop behaves." },
+        { h: "The rules", list: [
+          "The loop passes through <b>cell centres</b>, connecting adjacent cells horizontally or vertically.",
+          "<b>White pearl</b>: the loop goes <b>straight</b> through it, but must <b>turn</b> on at least one of its immediate neighbours in the direction of travel.",
+          "<b>Black pearl</b>: the loop <b>turns 90°</b> on it, and must go <b>straight</b> for at least one cell in both the entering and exiting directions.",
+          "The loop must be a <b>single closed path</b> — no branches, no crossings, no loose ends.",
+        ] },
+        { h: "Controls", p: "Click between two adjacent cells to draw or remove a line. Right-click to mark an edge as definitely empty (✕)." },
+        { tips: true, h: "Tips & tricks", list: [
+          "A <b>black pearl</b> near a corner or edge often has only one valid turn direction — work those out first.",
+          "A <b>white pearl</b> tells you the loop is straight here but <b>must bend nearby</b> — look at what forces the turn.",
+          "Two black pearls in a row often force a zigzag pattern between them.",
+          "If the loop <b>must</b> pass through a cell to stay connected, you can fill in those edges even without a pearl.",
+        ] },
+      ],
+    },
     mosaic: {
       kicker: "Fill-a-Pix · Logic",
       title: "How to play Mosaic",
