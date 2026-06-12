@@ -298,6 +298,46 @@
         ] },
       ],
     },
+    battleships: {
+      kicker: "Fleet · Deduction",
+      title: "How to play Battleships",
+      blocks: [
+        { h: "The goal", p: "Find every ship hidden in the grid. The numbers along each row and column tell you how many cells in that line are occupied by ship segments." },
+        { h: "The rules", list: [
+          "Ships are <b>straight lines</b> — horizontal or vertical. They never bend.",
+          "Ships <b>don't touch</b> each other, not even diagonally.",
+          "Some cells are revealed as hints: a <b>blue segment</b> is part of a ship, a <b>tilde ~</b> is water.",
+          "The fleet list shows the exact ships you need to place.",
+        ] },
+        { h: "Controls", p: "Click to place a ship cell; right-click (or use the Water toggle) to mark water. Click a placed cell again to clear it." },
+        { tips: true, h: "Tips & tricks", list: [
+          "A row or column clue of <b>0</b> means the whole line is water — mark every cell.",
+          "If a row's clue equals its <b>remaining empty cells</b>, they're all ship.",
+          "Once you place a ship cell, mark its <b>diagonal neighbours</b> as water — ships can't touch diagonally.",
+          "Place the <b>largest ships first</b>; they have the fewest valid positions.",
+        ] },
+      ],
+    },
+    starbattle: {
+      kicker: "Stars · Logic",
+      title: "How to play Star Battle",
+      blocks: [
+        { h: "The goal", p: "Place stars on the grid so that every <b>row</b>, <b>column</b> and <b>coloured region</b> contains exactly the required number of stars." },
+        { h: "The rules", list: [
+          "Each row must contain exactly <b>N</b> stars (shown in the stats bar).",
+          "Each column must contain exactly <b>N</b> stars.",
+          "Each coloured <b>region</b> must contain exactly <b>N</b> stars.",
+          "Stars <b>cannot touch</b> each other — not even diagonally.",
+        ] },
+        { h: "Controls", p: "Click to place a star; right-click (or use the Mark toggle) to mark a cell empty (✕). Click a star again to remove it." },
+        { tips: true, h: "Tips & tricks", list: [
+          "Start with the <b>smallest regions</b> — they have the fewest options.",
+          "Once a star is placed, mark all <b>eight surrounding cells</b> as empty — stars can't touch.",
+          "If a region has only <b>N cells left</b> that could hold stars, they must all be stars.",
+          "Cross-reference rows, columns and regions — a cell forced by two constraints is certain.",
+        ] },
+      ],
+    },
     mosaic: {
       kicker: "Fill-a-Pix · Logic",
       title: "How to play Mosaic",

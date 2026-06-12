@@ -1,0 +1,110 @@
+/* ============================================================
+   battleships.css — find the hidden fleet
+   ============================================================ */
+.bs-wrap { width: 100%; display: flex; flex-direction: column; align-items: center; }
+
+/* ---------- grid ---------- */
+.bs-board {
+  display: inline-grid;
+  gap: 0;
+  background: var(--panel);
+  border: 1.5px solid var(--line);
+  border-radius: 16px;
+  padding: 10px;
+  box-shadow: var(--shadow-card);
+}
+
+.bs-corner { }
+
+.bs-clue {
+  display: grid; place-items: center;
+  font-family: "Nunito", sans-serif; font-weight: 900; font-size: 14px;
+  color: var(--ink-soft);
+  user-select: none;
+  transition: color .15s;
+}
+.bs-clue.done { color: var(--done); }
+.bs-clue.over { color: var(--error); }
+
+.bs-cell {
+  border: 1px solid var(--line);
+  cursor: pointer;
+  position: relative;
+  display: grid;
+  place-items: center;
+  transition: background .1s;
+  user-select: none;
+}
+.bs-cell:hover { background: var(--accent-tint); }
+.bs-cell.locked { cursor: default; }
+.bs-cell.locked:hover { background: transparent; }
+
+/* ---------- ship segments ---------- */
+.bs-seg {
+  width: 78%; height: 78%;
+  background: var(--ink);
+  border-radius: 4px;
+  transition: transform .12s;
+  animation: bs-pop .18s cubic-bezier(.2,.9,.3,1.5);
+}
+@keyframes bs-pop { from { transform: scale(.3); } to { transform: scale(1); } }
+.bs-seg.sub { border-radius: 50%; }
+.bs-seg.top { border-radius: 40% 40% 4px 4px; }
+.bs-seg.bot { border-radius: 4px 4px 40% 40%; }
+.bs-seg.lft { border-radius: 40% 4px 4px 40%; }
+.bs-seg.rgt { border-radius: 4px 40% 40% 4px; }
+.bs-seg.mid { border-radius: 4px; }
+.bs-seg.hint { background: var(--accent-deep); }
+
+/* ---------- water mark ---------- */
+.bs-water {
+  font-size: 1.1em; color: var(--accent); font-weight: 900; opacity: 0.4;
+  user-select: none; line-height: 1;
+}
+.bs-water.hint { opacity: 0.6; color: var(--ink-soft); }
+
+/* ---------- mode toggle ---------- */
+.bs-mode {
+  display: inline-flex; gap: 0;
+  background: var(--panel);
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  padding: 4px;
+  box-shadow: var(--shadow);
+}
+.bs-mode button {
+  border: none; background: transparent;
+  font-family: inherit; font-weight: 800; font-size: 13px;
+  color: var(--ink-soft); padding: 7px 14px; border-radius: 9px;
+  cursor: pointer; transition: all .16s;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.bs-mode button:hover { color: var(--ink); background: var(--bg); }
+.bs-mode button.active { background: var(--ink); color: #fff; }
+.bs-mode svg { display: block; }
+
+/* ---------- fleet display ---------- */
+.bs-fleet {
+  display: flex; flex-wrap: wrap; gap: 14px; align-items: center;
+  justify-content: center; margin-top: 16px;
+}
+.bs-fleet-label {
+  font-size: 11px; font-weight: 800; color: var(--ink-soft);
+  letter-spacing: 1.4px; text-transform: uppercase;
+}
+.bs-fleet-group { display: flex; align-items: center; gap: 4px; }
+.bs-fleet-ship { display: flex; gap: 2px; }
+.bs-fleet-seg {
+  width: 13px; height: 13px; background: var(--ink); border-radius: 2px;
+}
+.bs-fleet-seg:first-child { border-radius: 5px 2px 2px 5px; }
+.bs-fleet-seg:last-child  { border-radius: 2px 5px 5px 2px; }
+.bs-fleet-seg:only-child  { border-radius: 50%; }
+.bs-fleet-count {
+  font-size: 11px; font-weight: 800; color: var(--ink-soft); margin-left: 2px;
+}
+
+@media (max-width: 600px) {
+  .bs-board { padding: 6px; }
+  .bs-clue { font-size: 12px; }
+}
