@@ -30,13 +30,18 @@
 .mo-cell.major-b { border-bottom: 2px solid #b9c2d2; }
 
 .mo-cell.shaded { background: var(--isl-border); }
-.mo-cell.blank  { background: var(--panel); }
+.mo-cell.blank  { background: color-mix(in oklch, var(--panel) 92%, #c2ccda); }
 
 /* the little mark on a "definitely empty" cell */
 .mo-x {
   width: 26%; height: 26%; border-radius: 50%;
   background: #c2ccda;
   pointer-events: none;
+}
+.mo-x.mo-x-corner {
+  position: absolute;
+  bottom: 3px; right: 3px;
+  width: 18%; height: 18%;
 }
 
 /* clue number */
