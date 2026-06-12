@@ -181,6 +181,7 @@ function MosaicApp() {
           onPointerEnter={() => onPointerEnter(r, c)}>
           {k != null && <span className={"mo-clue" + (err ? " err" : done ? " done" : "")}>{k}</span>}
           {st === 2 && k == null && <span className="mo-x" />}
+          {st === 2 && k != null && <span className="mo-x mo-x-corner" />}
         </div>
       );
     }
