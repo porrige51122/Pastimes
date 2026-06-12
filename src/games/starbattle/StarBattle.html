@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Star Battle — place stars in every region</title>
+<link rel="icon" type="image/svg+xml" href="../../shared/favicon.svg" />
+<link rel="icon" type="image/png" sizes="32x32" href="../../shared/favicon-32.png" />
+<link rel="apple-touch-icon" href="../../shared/favicon-180.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@600;700;800&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../../shared/styles.css" />
+<link rel="stylesheet" href="../../shared/rules.css" />
+<link rel="stylesheet" href="starbattle.css" />
+</head>
+<body>
+<template id="__bundler_thumbnail">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <rect width="100" height="100" fill="#e7ebf1"/>
+    <polygon points="50,20 56,38 75,38 60,48 66,66 50,55 34,66 40,48 25,38 44,38" fill="#f5a623" stroke="#283353" stroke-width="2.5"/>
+  </svg>
+</template>
+
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script src="../../shared/rules.js"></script>
+
+<script src="starbattle-logic.js"></script>
+<script type="text/babel" src="StarBattleApp.jsx"></script>
+</body>
+</html>

@@ -35,6 +35,27 @@
   color: var(--accent);
 }
 
+/* ---------- "all games" compact link ---------- */
+.all-games-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  align-self: flex-start;
+  font-weight: 800; font-size: 13.5px; color: var(--accent);
+  text-decoration: none;
+  background: var(--panel);
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  padding: 8px 16px 8px 13px;
+  box-shadow: var(--shadow);
+  margin-bottom: 6px;
+  transition: transform .12s ease, border-color .16s, box-shadow .16s;
+}
+.all-games-link:hover {
+  transform: translateY(-2px);
+  border-color: #b9c6da;
+  box-shadow: var(--shadow-card);
+}
+.all-games-link svg { display: block; }
+
 /* ---------- grid ---------- */
 .game-grid {
   display: grid;

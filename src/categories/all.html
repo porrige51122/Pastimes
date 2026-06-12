@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>All Games — Pastimes</title>
+<link rel="icon" type="image/svg+xml" href="../shared/favicon.svg" />
+<link rel="icon" type="image/png" sizes="32x32" href="../shared/favicon-32.png" />
+<link rel="apple-touch-icon" href="../shared/favicon-180.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@600;700;800&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../shared/styles.css" />
+<link rel="stylesheet" href="../shared/splash.css" />
+<style>
+  .all-section { width: 100%; margin-bottom: 8px; }
+  .all-section-head {
+    font-family: "Spectral", serif; font-weight: 700; font-size: 19px;
+    color: var(--ink); margin: 0 0 14px; padding-bottom: 10px;
+    border-bottom: 1.5px solid var(--line);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .all-section-head::before {
+    content: ""; width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent); flex: none;
+  }
+  .all-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .all-item {
+    display: flex; flex-direction: column;
+    background: var(--panel);
+    border: 1.5px solid var(--line);
+    border-radius: 14px;
+    padding: 16px 18px 14px;
+    text-decoration: none; color: inherit;
+    box-shadow: var(--shadow);
+    transition: transform .15s, box-shadow .15s, border-color .15s;
+  }
+  .all-item:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-card);
+    border-color: #b9c6da;
+  }
+  .all-item-kicker {
+    font-size: 10px; font-weight: 800; letter-spacing: 1.4px; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 5px;
+  }
+  .all-item-title {
+    font-family: "Spectral", serif; font-weight: 800; font-size: 20px;
+    color: var(--ink); margin: 0 0 6px; line-height: 1.1;
+  }
+  .all-item-desc {
+    font-size: 12.5px; font-weight: 600; color: var(--ink-soft);
+    line-height: 1.45; margin: 0 0 12px; flex: 1;
+  }
+  .all-item-play {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-weight: 800; font-size: 13px; color: var(--accent);
+  }
+  .all-item-play .arr { transition: transform .15s; display: inline-flex; }
+  .all-item:hover .all-item-play .arr { transform: translateX(3px); }
+</style>
+</head>
+<body>
+<template id="__bundler_thumbnail">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <rect width="100" height="100" fill="#e7ebf1"/>
+    <line x1="30" y1="40" x2="70" y2="40" stroke="#2b3550" stroke-width="3.5" stroke-linecap="round"/>
+    <line x1="30" y1="48" x2="70" y2="48" stroke="#2b3550" stroke-width="3.5" stroke-linecap="round"/>
+    <circle cx="30" cy="44" r="11" fill="#fff" stroke="#283353" stroke-width="3"/>
+    <circle cx="70" cy="44" r="11" fill="#2f6bff" stroke="#283353" stroke-width="3"/>
+  </svg>
+</template>
+
+<div class="wrap hub">
+  <header class="cat-page-head">
+    <a class="cat-eyebrow" href="../index.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></svg> All categories</a>
+    <h1 class="cat-page-title">All Games</h1>
+    <p class="cat-page-sub">Every puzzle in the collection — 18 logic games sorted by type of thinking.</p>
+  </header>
+
+  <!-- Numbers -->
+  <div class="all-section">
+    <h2 class="all-section-head">Numbers</h2>
+    <div class="all-list">
+      <a class="all-item" href="../games/sudoku/Sudoku.html">
+        <div class="all-item-kicker">Number placement · Logic</div>
+        <h3 class="all-item-title">Sudoku</h3>
+        <p class="all-item-desc">Fill every row, column and 3×3 box with the digits 1–9.</p>
+        <span class="all-item-play">Play <span class="arr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span></span>
+      </a>
+      <a class="all-item" href="../games/kenken/KenKen.html">
+        <div class="all-item-kicker">Latin square · Arithmetic</div>
+        <h3 class="all-item-title">KenKen</h3>
+        <p class="all-item-desc">Fill each row and column with 1–N, hitting every cage's arithmetic target.</p>
+        <span class="all-item-play">Play <span class="arr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span></span>
+      </a>
+      <a class="all-item" href="../games/killer/Killer.html">
+        <div class="all-item-kicker">Number placement · Logic</div>
+        <h3 class="all-item-title">Killer Sudoku</h3>
+        <p class="all-item-desc">Classic sudoku with dashed cages that must add up to their totals.</p>
+        <span class="all-item-play">Play <span class="arr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span></span>
+      </a>
+      <a class="all-item" href="../games/futoshiki/Futoshiki.html">
+        <div class="all-item-kicker">Latin square · Logic</div>
+        <h3 class="all-item-title">Futoshiki</h3>
+        <p class="all-item-desc">Place 1–N in every row and column, obeying the greater-than signs.</p>
+        <span class="all-item-play">Play <span class="arr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span></span>
+      </a>
+      <a class="all-item" href="../games/skyscrapers/Skyscrapers.html">
+        <div class="all-item-kicker">Latin square · Logic</div>
+        <h3 class="all-item-title">Skyscrapers</h3>
+        <p class="all-item-desc">Build a skyline where edge clues count the visible buildings.</p>
+        <span class="all-item-play">Play <span class="arr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span></span>
+      </a>
+      <a class="all-item" href="../games/countdown/Countdown.html">
+        <div class="all-item-kicker">Numbers · Arithmetic</div>
+        <h3 class="all-item-title">Countdown</h3>
+        <p class="all-item-desc">Combine six numbers with +, −, × and ÷ to reach the target.</p>
+        <span class="all-item-play">Play <span class="arr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span></span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Pictures & Regions -->
+  <div class="all-section">
+    <h2 class="all-section-head">Pictures &amp; Regions</h2>
+    <div class="all-list">
+      <a class="all-item" href="../games/hatch/Hatch.html">
+        <div class="all-item-kicker">Nonogram · Logic</div>
+        <h3 class="all-item-title">Hatch</h3>
+        <p class="all-item-desc">Fill runs of cells guided by number clues to reveal a hidden picture.</p>
+        <span class="all-item-play">Play <span class="arr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span></span>
+      </a>
+      <a class="all-item" href="../games/shikaku/Shikaku.html">
+        <div class="all-item-kicker">Rectangles · Logic</div>
+        <h3 class="all-item-title">Shikaku</h3>
+        <p class="all-item-desc">Divide the grid into rectangles, each covering exactly its number.</p>
+        <span class="all-item-play">Play <span class="arr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span></span>
+      </a>
+      <a class="all-item" href="../games/galaxies/Galaxies.html">
+        <div class="all-item-kicker">Spiral Galaxies · Logic</div>
+        <h3 class="all-item-title">Galaxies</h3>
+        <p class="all-item-desc">Split the grid into shapes that are 180°-symmetric about their dot.</p>
+        <span class="all-item-play">Play <span class="arr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span></span>
+      </a>
+      <a class="all-item" href="../games/mosaic/Mosaic.html">
+        <div class="all-item-kicker">Fill-a-Pix · Logic</div>
+        <h3 class="all-item-title">Mosaic</h3>
+        <p class="all-item-desc">Shade cells so every number matches its 3×3 block's filled count.</p>
+        <span class="all-item-play">Play <span class="arr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span></span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Place & Connect -->
+  <div class="all-section">
+    <h2 class="all-section-head">Place &amp; Connect</h2>
+    <div class="all-list">
+      <a class="all-item" href="../games/tents/Tents.html">
+        <div class="all-item-kicker">Trees &amp; Tents · Logic</div>
+        <h3 class="all-item-title">Tents</h3>
+        <p class="all-item-desc">Pitch one tent beside every tree. Tents never touch, even diagonally.</p>
+        <span class="all-item-play">Play <span class="arr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span></span>
+      </a>
+      <a class="all-item" href="../games/crossings/Crossings.html">
+        <div class="all-item-kicker">Bridges · Logic</div>
+        <h3 class="all-item-title">Crossings</h3>
+        <p class="all-item-desc">Link every island with the right number of bridges into one network.</p>
+        <span class="all-item-play">Play <span class="arr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span></span>
+      </a>
+      <a class="all-item" href="../games/slitherlink/Slitherlink.html">
+        <div class="all-item-kicker">Loop · Logic</div>
+        <h3 class="all-item-title">Slitherlink</h3>
+        <p class="all-item-desc">Draw a single loop around cell edges guided by the number clues.</p>
+        <span class="all-item-play">Play <span class="arr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span></span>
+      </a>
+      <a class="all-item" href="../games/masyu/Masyu.html">
+        <div class="all-item-kicker">Loop · Logic</div>
+        <h3 class="all-item-title">Masyu</h3>
+        <p class="all-item-desc">Thread a single loop through white and black pearls on the grid.</p>
+        <span class="all-item-play">Play <span class="arr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span></span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Deduction -->
+  <div class="all-section">
+    <h2 class="all-section-head">Deduction</h2>
+    <div class="all-list">
+      <a class="all-item" href="../games/sweep/Sweep.html">
+        <div class="all-item-kicker">Minesweeper · Logic</div>
+        <h3 class="all-item-title">Sweep</h3>
+        <p class="all-item-desc">Clear every safe square using number clues — flag the hidden mines.</p>
+        <span class="all-item-play">Play <span class="arr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span></span>
+      </a>
+      <a class="all-item" href="../games/mastermind/Mastermind.html">
+        <div class="all-item-kicker">Code-breaker · Deduction</div>
+        <h3 class="all-item-title">Mastermind</h3>
+        <p class="all-item-desc">Crack the hidden colour code using peg feedback after each guess.</p>
+        <span class="all-item-play">Play <span class="arr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span></span>
+      </a>
+      <a class="all-item" href="../games/battleships/Battleships.html">
+        <div class="all-item-kicker">Fleet · Deduction</div>
+        <h3 class="all-item-title">Battleships</h3>
+        <p class="all-item-desc">Find the hidden fleet using row and column counts as clues.</p>
+        <span class="all-item-play">Play <span class="arr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span></span>
+      </a>
+      <a class="all-item" href="../games/starbattle/StarBattle.html">
+        <div class="all-item-kicker">Stars · Logic</div>
+        <h3 class="all-item-title">Star Battle</h3>
+        <p class="all-item-desc">Place stars in every row, column and region — no two may touch.</p>
+        <span class="all-item-play">Play <span class="arr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="hub-foot">18 puzzles and counting. Pick one and start solving.</div>
+</div>
+</body>
+</html>
