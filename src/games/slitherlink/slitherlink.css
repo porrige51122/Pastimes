@@ -1,0 +1,62 @@
+/* ============================================================
+   slitherlink.css — loop-drawing board
+   Reuses tokens + fonts + chrome from styles.css
+   ============================================================ */
+
+.sl-board {
+  display: block;
+  width: 100%;
+  height: auto;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* grid dots at vertices */
+.sl-dot { fill: var(--ink); opacity: 0.18; }
+
+/* clue numbers in cell centres */
+.sl-clue {
+  font-family: "Nunito", sans-serif;
+  font-weight: 900;
+  text-anchor: middle;
+  dominant-baseline: central;
+  fill: var(--ink);
+  pointer-events: none;
+  user-select: none;
+  transition: fill .15s;
+}
+.sl-clue.done { fill: var(--done-deep); }
+.sl-clue.error { fill: var(--error-deep); }
+
+/* edge hit targets (invisible but clickable) */
+.sl-hit { stroke: transparent; cursor: pointer; fill: none; }
+.sl-hit:hover + .sl-vis line { stroke: var(--accent); opacity: 1; }
+
+/* edge visuals */
+.sl-vis { pointer-events: none; }
+.sl-line {
+  stroke: var(--bridge);
+  stroke-width: 4;
+  stroke-linecap: round;
+  transition: stroke .12s;
+}
+.sl-x {
+  font-family: "Nunito", sans-serif;
+  font-weight: 800;
+  text-anchor: middle;
+  dominant-baseline: central;
+  fill: #b2bdd0;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* win animation */
+.sl-board.won .sl-line { animation: sl-glow 2s ease-in-out infinite; }
+@keyframes sl-glow { 0%,100% { stroke: var(--bridge); } 50% { stroke: var(--accent); } }
+.sl-board.won .sl-dot { animation: sl-pop 2.2s ease-in-out infinite; }
+@keyframes sl-pop { 0%,100% { r: 3; } 50% { r: 4.5; } }
+
+@media (max-width: 600px) {
+  .sl-line { stroke-width: 3.5; }
+}
