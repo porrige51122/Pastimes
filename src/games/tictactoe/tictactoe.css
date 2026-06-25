@@ -1,0 +1,102 @@
+/* ============================================================
+   tictactoe.css — Binary puzzle board
+   Reuses tokens and chrome from styles.css
+   ============================================================ */
+
+:root {
+  --tt-x: #2f6bff;   /* X circle colour  */
+  --tt-o: #e8820c;   /* O circle colour  */
+}
+
+/* ── Board grid ─────────────────────────────────────────────── */
+.tt-board {
+  display: grid;
+  width: fit-content;
+  margin: 0 auto;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+/* ── Individual cell ────────────────────────────────────────── */
+.tt-cell {
+  border-radius: 10px;
+  border: 1.5px solid var(--line);
+  background: var(--panel);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  position: relative;
+  transition: border-color .14s, background .14s, box-shadow .14s;
+}
+
+.tt-cell:hover:not(.given):not(.has-x):not(.has-o) { border-color: #b9c6da; }
+.tt-cell.peer:not(.has-x):not(.has-o)  { background: #f3f6fc; }
+.tt-cell.sel   {
+  border-color: var(--accent);
+  background: var(--accent-tint);
+  box-shadow: 0 0 0 3px rgba(47,107,255,.18);
+  z-index: 2;
+}
+.tt-cell.err   { border-color: var(--error); background: var(--error-tint); }
+.tt-cell.given { cursor: default; background: #eef1f6; border-color: #cfd6e2; }
+
+/* ── Filled cell colours ─────────────────────────────────── */
+/* Declared after .err so equal-specificity cascade gives colour wins */
+.tt-cell.has-x { background: #2f6bff; border-color: #2460e8; }
+.tt-cell.has-o { background: #e8820c; border-color: #cf7308; }
+.tt-cell.given.has-x { background: #1a3eb0; border-color: #1533a0; }
+.tt-cell.given.has-o { background: #b86200; border-color: #a05400; }
+/* White ring on selection */
+.tt-cell.sel.has-x { background: #2f6bff; border-color: white; box-shadow: 0 0 0 3px rgba(255,255,255,.5), 0 0 0 5.5px rgba(40,51,83,.4); }
+.tt-cell.sel.has-o { background: #e8820c; border-color: white; box-shadow: 0 0 0 3px rgba(255,255,255,.5), 0 0 0 5.5px rgba(40,51,83,.4); }
+.tt-cell.sel.given.has-x { background: #1a3eb0; }
+.tt-cell.sel.given.has-o { background: #b86200; }
+/* Error: keep colour, red border ring */
+.tt-cell.err.has-x,
+.tt-cell.err.has-o { border-color: var(--error); border-width: 2.5px; box-shadow: 0 0 0 2px rgba(226,59,46,.35); } ──────────────────────────────────────── */
+.tt-sym-svg {
+  display: block;
+  pointer-events: none;
+  animation: tt-pop .18s cubic-bezier(.2,.9,.3,1.5);
+}
+.tt-cell.given .tt-sym-svg { animation: none; }
+
+@keyframes tt-pop {
+  from { transform: scale(.35); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+/* ── Win animation ───────────────────────────────────────────── */
+.win .tt-cell {
+  animation: tt-bob 2s ease-in-out infinite;
+}
+@keyframes tt-bob {
+  0%,100% { transform: translateY(0);    }
+  50%     { transform: translateY(-3px); }
+}
+
+/* ── Row / column progress strip ────────────────────────────── */
+.tt-strips {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  margin-top: 14px;
+}
+.tt-strip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+.tt-pip {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--line);
+  transition: background .2s;
+}
+.tt-pip.x { background: var(--tt-x); }
+.tt-pip.o { background: var(--tt-o); }
+
+@media (max-width: 600px) {
+  .tt-strips { margin-top: 10px; }
+}

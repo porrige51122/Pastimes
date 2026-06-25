@@ -358,6 +358,25 @@
         ] },
       ],
     },
+    binary: {
+      kicker: "Binary · Logic",
+      title: "How to play Binary",
+      blocks: [
+        { h: "The goal", p: "Fill every cell with an X or an O so the board satisfies three constraints at once." },
+        { h: "The rules", list: [
+          "No <b>run of N or more</b> identical symbols in any row or column — N scales with grid size (3 on a 6×6, 4 on an 8×8).",
+          "Every row and every column contains <b>equal numbers</b> of X's and O's.",
+          "No two rows are <b>identical</b>; no two columns are identical.",
+        ] },
+        { h: "Controls", p: "<b>Click</b> a cell to cycle it through empty → X → O → empty. Press <b>X</b> to set X, <b>O</b> to set O, and <b>Delete</b> to clear. Arrow keys move between cells." },
+        { tips: true, h: "Tips & tricks", list: [
+          "Two of the same symbol side by side force the neighbours: <b>_ X X _</b> → the blanks must be O.",
+          "When a row or column already has its full quota of one symbol, all remaining empty cells must be the other.",
+          "Work both constraints together: a row's count <i>and</i> the no-three rule often pin a cell to one value.",
+          "No duplicate rows: once a row is complete, any other row that matches it so far must differ in the cells still empty.",
+        ] },
+      ],
+    },
     nurikabe: {
       kicker: "Islands · Logic",
       title: "How to play Nurikabe",
