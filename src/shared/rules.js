@@ -358,6 +358,27 @@
         ] },
       ],
     },
+    nurikabe: {
+      kicker: "Islands · Logic",
+      title: "How to play Nurikabe",
+      blocks: [
+        { h: "The goal", p: "Paint cells black or white. White cells form numbered islands; black cells form a single connected river with no 2×2 lakes." },
+        { h: "The rules", list: [
+          "Each number is the size of its <b>white island</b> — an orthogonally connected group of that many white cells.",
+          "Every island has <b>exactly one number</b>; no island may contain two.",
+          "Islands <b>cannot touch</b> each other orthogonally — black cells must always separate them.",
+          "All black cells form <b>one connected group</b> (the nurikabe / river).",
+          "Black cells may <b>never form a 2×2</b> square — that would create a forbidden pool.",
+        ] },
+        { h: "Controls", p: "<b>Left-click</b> (or drag) to paint a cell black. <b>Right-click</b> to mark it white with a dot. Click a marked cell again to clear it. Number cells are fixed and cannot be changed." },
+        { tips: true, h: "Tips & tricks", list: [
+          "A <b>'1'</b> island is a single cell — all four of its neighbours must be black.",
+          "Islands can never touch: whenever two numbered cells are two steps apart in the same direction, the cell between them must be <b>black</b>.",
+          "Any <b>2×2 block</b> must contain at least one white cell — use this to break potential pools early.",
+          "Think about <b>black connectivity</b>: if painting a cell black would sever the river into two parts, it must be white.",
+        ] },
+      ],
+    },
   };
 
   const X_ICON = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>';

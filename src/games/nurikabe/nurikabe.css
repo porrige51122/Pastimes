@@ -1,0 +1,94 @@
+/* ============================================================
+   nurikabe.css — paint cells black to form one connected stream
+   Reuses tokens + fonts + chrome from styles.css
+   ============================================================ */
+
+/* Board: dark background bleeds through gaps — black cells
+   match it and visually merge into a single stream. */
+.nk-board {
+  display: grid;
+  background: var(--ink);
+  padding: 2px;
+  gap: 2px;
+  border-radius: 4px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+/* Every cell */
+.nk-cell {
+  width: var(--cell);
+  height: var(--cell);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--panel); /* default white — player paints black */
+  cursor: pointer;
+  position: relative;
+  transition: background 0.08s;
+}
+
+/* Number cell: always white, player cannot mark */
+.nk-cell.nk-num {
+  background: #f2f4f8;
+  cursor: default;
+}
+
+/* Player-marked black — matches board background → merges into stream */
+.nk-cell.nk-black {
+  background: var(--ink);
+}
+
+/* Player-marked white / dot */
+.nk-cell.nk-dot {
+  background: var(--panel);
+}
+.nk-cell.nk-dot::after {
+  content: "";
+  position: absolute;
+  width: 24%;
+  height: 24%;
+  border-radius: 50%;
+  background: var(--ink-soft);
+  opacity: 0.38;
+  pointer-events: none;
+}
+
+/* 2×2 pool error: red flash on the guilty black cells */
+.nk-cell.nk-black.nk-pool {
+  background: var(--error-deep);
+}
+
+/* Number-cell feedback */
+.nk-cell.nk-num.nk-done { background: var(--done-tint); }
+.nk-cell.nk-num.nk-err  { background: var(--error-tint); }
+
+/* The clue number */
+.nk-clue {
+  font-family: "Nunito", sans-serif;
+  font-weight: 900;
+  font-size: calc(var(--cell) * 0.44);
+  color: var(--ink);
+  line-height: 1;
+  user-select: none;
+  pointer-events: none;
+  position: relative;
+  z-index: 1;
+  transition: color 0.12s;
+}
+.nk-cell.nk-num.nk-done .nk-clue { color: var(--done-deep); }
+.nk-cell.nk-num.nk-err  .nk-clue { color: var(--error-deep); }
+
+/* Win: the whole stream ripples with colour */
+.nk-board.won .nk-cell.nk-black {
+  animation: nk-river 2.8s ease-in-out infinite;
+}
+@keyframes nk-river {
+  0%, 100% { background: var(--ink);   }
+  50%       { background: var(--accent); }
+}
+
+@media (max-width: 600px) {
+  .nk-clue { font-size: calc(var(--cell) * 0.40); }
+}

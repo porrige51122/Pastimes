@@ -93,6 +93,11 @@ const STATIC_ASSETS = [
   '/games/mosaic/mosaic-logic.js',
   '/games/mosaic/mosaic.css',
 
+  '/games/nurikabe/Nurikabe.html',
+  '/games/nurikabe/NurikabeApp.jsx',
+  '/games/nurikabe/nurikabe-logic.js',
+  '/games/nurikabe/nurikabe.css',
+
   '/games/shikaku/Shikaku.html',
   '/games/shikaku/ShikakuApp.jsx',
   '/games/shikaku/ShikakuBoard.jsx',
