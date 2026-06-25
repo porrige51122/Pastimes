@@ -47,6 +47,7 @@ function BattleshipsApp() {
   const [toast, setToast] = bS(null);
   const [motes, setMotes] = bS([]);
   const toastT = bR(null);
+  const bsDragRef = bR({ active: false, target: 0, visited: null });
 
   const showToast = bC((msg, w) => {
     setToast({ id: Date.now(), msg, warn: !!w });
@@ -101,16 +102,51 @@ function BattleshipsApp() {
     return () => window.removeEventListener("resize", fit);
   }, [puzzle]);
 
-  const handleCell = bC((r, c, right) => {
-    if (over || !puzzle || puzzle.hints[r][c]) return;
+  const bsCellFromPoint = (e) => {
+    let el = document.elementFromPoint(e.clientX, e.clientY);
+    while (el) {
+      if (el.classList && el.classList.contains('bs-board')) return null;
+      const r = el.getAttribute && el.getAttribute('data-r');
+      const c = el.getAttribute && el.getAttribute('data-c');
+      if (r != null && c != null) return { r: +r, c: +c };
+      el = el.parentElement;
+    }
+    return null;
+  };
+  const onBoardDown = bC((e) => {
+    if (over || !puzzle) return;
+    if (e.button !== 0 && e.button !== 2) return;
+    const cell = bsCellFromPoint(e);
+    if (!cell || puzzle.hints[cell.r][cell.c]) return;
+    e.preventDefault();
+    try { e.currentTarget.setPointerCapture(e.pointerId); } catch (_) {}
+    const right = e.button === 2;
+    const curVal = grid[cell.r][cell.c];
+    const target = (right || mode === 'water') ? (curVal === 2 ? 0 : 2) : (curVal === 1 ? 0 : 1);
+    bsDragRef.current = { active: true, target, visited: new Set([cell.r + ',' + cell.c]) };
     if (!running) setRunning(true);
     setGrid(prev => {
       const next = prev.map(row => row.slice());
-      if (right || mode === "water") next[r][c] = next[r][c] === 2 ? 0 : 2;
-      else next[r][c] = next[r][c] === 1 ? 0 : 1;
+      next[cell.r][cell.c] = target;
       return next;
     });
-  }, [over, puzzle, running, mode]);
+  }, [over, puzzle, running, mode, grid]);
+  const onBoardMove = bC((e) => {
+    if (!bsDragRef.current.active || over) return;
+    const cell = bsCellFromPoint(e);
+    if (!cell) return;
+    const key = cell.r + ',' + cell.c;
+    if (bsDragRef.current.visited.has(key)) return;
+    if (!puzzle || puzzle.hints[cell.r][cell.c]) return;
+    bsDragRef.current.visited.add(key);
+    const tgt = bsDragRef.current.target;
+    setGrid(prev => {
+      const next = prev.map(row => row.slice());
+      next[cell.r][cell.c] = tgt;
+      return next;
+    });
+  }, [over, puzzle]);
+  const onBoardUp = bC(() => { bsDragRef.current.active = false; }, []);
 
   /* Win check */
   bE(() => {
@@ -222,8 +258,7 @@ function BattleshipsApp() {
         <div key={r + "-" + c}
           className={"bs-cell" + (locked ? " locked" : "") + (hasErr ? " bs-err" : "")}
           style={{ width: cs, height: cs }}
-          onClick={() => handleCell(r, c, false)}
-          onContextMenu={(e) => { e.preventDefault(); handleCell(r, c, true); }}>
+          data-r={r} data-c={c}>
           {val === 1 && <div className={"bs-seg " + (seg || "mid") + (locked ? " hint" : "") + (hasErr ? " error" : "")} />}
           {val === 2 && <span className={"bs-water" + (locked ? " hint" : "")}>~</span>}
         </div>
@@ -276,7 +311,10 @@ function BattleshipsApp() {
         <div className="bs-board" style={{
           gridTemplateColumns: cs + "px repeat(" + n + ", " + cs + "px)",
           gridTemplateRows: cs + "px repeat(" + n + ", " + cs + "px)",
-        }}>
+        }}
+          onPointerDown={onBoardDown} onPointerMove={onBoardMove}
+          onPointerUp={onBoardUp} onPointerCancel={onBoardUp}
+          onContextMenu={(e) => e.preventDefault()}>
           {cells}
         </div>
 
