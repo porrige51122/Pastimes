@@ -7,9 +7,9 @@ const GPAL = window.GALAXY_PALETTE;
 const { useState: useGS, useEffect: useGE, useRef: useGR, useCallback: useGC, useLayoutEffect: useGLE } = React;
 
 const GDIFFS = {
-  easy:   { label: "Small",  rows: 5, cols: 5, maxW: 460 },
-  medium: { label: "Medium", rows: 6, cols: 6, maxW: 540 },
-  hard:   { label: "Large",  rows: 7, cols: 7, maxW: 620 },
+  easy:   { label: "Small",  rows: 6, cols: 6, maxW: 540 },
+  medium: { label: "Medium", rows: 8, cols: 8, maxW: 700 },
+  hard:   { label: "Large",  rows: 10, cols: 10, maxW: 860 },
 };
 
 const GIcon = {
