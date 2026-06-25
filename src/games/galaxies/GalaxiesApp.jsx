@@ -122,6 +122,18 @@ function GalaxiesApp() {
       const g = selRef.current;
       const [pr, pc] = GLogic.partner(p.centers[g], r, c);
       if (!GLogic.inGrid(p.rows, p.cols, pr, pc)) return; // can't belong to this galaxy
+      // If (r,c) is stolen from another galaxy, also clear that galaxy's symmetric partner
+      const g0 = grid[r][c];
+      if (g0 >= 0 && g0 !== g) {
+        const [xr, xc] = GLogic.partner(p.centers[g0], r, c);
+        if (GLogic.inGrid(p.rows, p.cols, xr, xc)) grid[xr][xc] = -1;
+      }
+      // If (pr,pc) is stolen from another galaxy, also clear that galaxy's symmetric partner
+      const g1 = grid[pr][pc];
+      if (g1 >= 0 && g1 !== g) {
+        const [xr, xc] = GLogic.partner(p.centers[g1], pr, pc);
+        if (GLogic.inGrid(p.rows, p.cols, xr, xc)) grid[xr][xc] = -1;
+      }
       grid[r][c] = g; grid[pr][pc] = g;
     } else {
       const g0 = grid[r][c];
