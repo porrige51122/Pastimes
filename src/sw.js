@@ -8,7 +8,7 @@
    caches are cleaned up on the next visit.
    ============================================================ */
 
-const CACHE_VERSION = 'v1';
+const CACHE_VERSION = 'v2';
 const STATIC_CACHE  = `pastimes-static-${CACHE_VERSION}`;
 const CDN_CACHE     = 'pastimes-cdn'; /* no version — CDN URLs are already versioned */
 
@@ -135,6 +135,11 @@ const STATIC_ASSETS = [
   '/games/tents/TentsBoard.jsx',
   '/games/tents/tents-logic.js',
   '/games/tents/tents.css',
+
+  '/games/tictactoe/TicTacToe.html',
+  '/games/tictactoe/TicTacToeApp.jsx',
+  '/games/tictactoe/tictactoe-logic.js',
+  '/games/tictactoe/tictactoe.css',
 ];
 
 /* ── Install: pre-cache all local assets ─────────────────── */
