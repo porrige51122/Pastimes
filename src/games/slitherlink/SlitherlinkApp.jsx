@@ -41,6 +41,7 @@ function SlitherlinkApp() {
   const [loading, setLoading] = slS(false);
 
   const toastTimer = slR(null);
+  const dragRef = slR({ active: false, target: 0, visited: null });
 
   const showToast = slC((msg, warn) => {
     setToast({ id: Date.now() + Math.random(), msg, warn: !!warn });
@@ -90,20 +91,40 @@ function SlitherlinkApp() {
     }
   }, [edges, puzzle, won]);
 
-  const onEdgeClick = slC((ei, ev) => {
+  const slEdgeFromPoint = (e) => {
+    let el = document.elementFromPoint(e.clientX, e.clientY);
+    while (el && el.tagName !== 'svg') {
+      const v = el.getAttribute && el.getAttribute('data-ei');
+      if (v != null) return +v;
+      el = el.parentElement;
+    }
+    return -1;
+  };
+  const onSvgDown = slC((e) => {
     if (won) return;
-    ev.preventDefault();
-    const right = ev.type === "contextmenu";
+    if (e.button !== 0 && e.button !== 2) return;
+    const ei = slEdgeFromPoint(e);
+    if (ei < 0) return;
+    e.preventDefault();
+    try { e.currentTarget.setPointerCapture(e.pointerId); } catch (_) {}
+    const right = e.button === 2;
+    const curVal = edges[ei];
+    const target = right ? (curVal === 2 ? 0 : 2) : (curVal === 1 ? 0 : 1);
+    dragRef.current = { active: true, target, visited: new Set([ei]) };
     setHistory((h) => [...h, edges.slice()]);
-    setEdges((es) => {
-      const n = es.slice();
-      if (right) n[ei] = n[ei] === 2 ? 0 : 2;
-      else n[ei] = n[ei] === 1 ? 0 : 1;
-      return n;
-    });
+    setEdges((es) => { const n = es.slice(); n[ei] = target; return n; });
     setMoves((m) => m + 1);
-    if (!running && !won) setRunning(true);
+    if (!running) setRunning(true);
   }, [won, edges, running]);
+  const onSvgMove = slC((e) => {
+    if (!dragRef.current.active || won) return;
+    const ei = slEdgeFromPoint(e);
+    if (ei < 0 || dragRef.current.visited.has(ei)) return;
+    dragRef.current.visited.add(ei);
+    const tgt = dragRef.current.target;
+    setEdges((es) => { const n = es.slice(); n[ei] = tgt; return n; });
+  }, [won]);
+  const onSvgUp = slC(() => { dragRef.current.active = false; }, []);
 
   const undo = slC(() => {
     setHistory((h) => {
@@ -199,10 +220,8 @@ function SlitherlinkApp() {
     const mx = (x1 + x2) / 2, my = (y1 + y2) / 2;
     const st = edges[ei];
     edgeEls.push(
-      <g key={"e" + ei}>
-        <line className="sl-hit" x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth={18}
-          onClick={(ev) => onEdgeClick(ei, ev)}
-          onContextMenu={(ev) => onEdgeClick(ei, ev)} />
+      <g key={"e" + ei} data-ei={ei}>
+        <line className="sl-hit" x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth={18} />
         <g className="sl-vis">
           {st === 1 && <line className="sl-line" x1={x1} y1={y1} x2={x2} y2={y2} />}
           {st === 2 && <text className="sl-x" x={mx} y={my} fontSize={CELL * 0.28}>✕</text>}
@@ -261,6 +280,8 @@ function SlitherlinkApp() {
       <div className="board-frame" style={{ width: frameW + "px" }}>
         <div className="board-inner">
           <svg className={"sl-board" + (won ? " won" : "")} viewBox={"0 0 " + W + " " + H}
+            onPointerDown={onSvgDown} onPointerMove={onSvgMove}
+            onPointerUp={onSvgUp} onPointerCancel={onSvgUp}
             onContextMenu={(e) => e.preventDefault()}>
             <g>{dots}</g>
             <g>{edgeEls}</g>

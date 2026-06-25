@@ -34,6 +34,7 @@ function StarBattleApp() {
   const [motes, setMotes] = sS([]);
   const [loading, setLoading] = sS(false);
   const toastT = sR(null);
+  const sbDragRef = sR({ active: false, target: 0, visited: null });
 
   const showToast = sC((msg, w) => {
     setToast({ id: Date.now(), msg, warn: !!w });
@@ -87,16 +88,50 @@ function StarBattleApp() {
     return () => window.removeEventListener("resize", fit);
   }, [puzzle]);
 
-  const handleCell = sC((r, c, right) => {
+  const sbCellFromPoint = (e) => {
+    let el = document.elementFromPoint(e.clientX, e.clientY);
+    while (el) {
+      if (el.classList && el.classList.contains('sb-board')) return null;
+      const r = el.getAttribute && el.getAttribute('data-r');
+      const c = el.getAttribute && el.getAttribute('data-c');
+      if (r != null && c != null) return { r: +r, c: +c };
+      el = el.parentElement;
+    }
+    return null;
+  };
+  const onBoardDown = sC((e) => {
     if (over || !puzzle) return;
+    if (e.button !== 0 && e.button !== 2) return;
+    const cell = sbCellFromPoint(e);
+    if (!cell) return;
+    e.preventDefault();
+    try { e.currentTarget.setPointerCapture(e.pointerId); } catch (_) {}
+    const right = e.button === 2;
+    const curVal = grid[cell.r][cell.c];
+    const target = (right || mode === 'mark') ? (curVal === 2 ? 0 : 2) : (curVal === 1 ? 0 : 1);
+    sbDragRef.current = { active: true, target, visited: new Set([cell.r + ',' + cell.c]) };
     if (!running) setRunning(true);
     setGrid(prev => {
       const next = prev.map(row => row.slice());
-      if (right || mode === "mark") next[r][c] = next[r][c] === 2 ? 0 : 2;
-      else next[r][c] = next[r][c] === 1 ? 0 : 1;
+      next[cell.r][cell.c] = target;
       return next;
     });
-  }, [over, puzzle, running, mode]);
+  }, [over, puzzle, running, mode, grid]);
+  const onBoardMove = sC((e) => {
+    if (!sbDragRef.current.active || over) return;
+    const cell = sbCellFromPoint(e);
+    if (!cell) return;
+    const key = cell.r + ',' + cell.c;
+    if (sbDragRef.current.visited.has(key)) return;
+    sbDragRef.current.visited.add(key);
+    const tgt = sbDragRef.current.target;
+    setGrid(prev => {
+      const next = prev.map(row => row.slice());
+      next[cell.r][cell.c] = tgt;
+      return next;
+    });
+  }, [over]);
+  const onBoardUp = sC(() => { sbDragRef.current.active = false; }, []);
 
   /* Win check */
   sE(() => {
@@ -163,8 +198,7 @@ function StarBattleApp() {
         <div key={r + "-" + c}
           className={"sb-cell " + bc + borders + (hasErr ? " sb-err" : "")}
           style={{ width: cs, height: cs }}
-          onClick={() => handleCell(r, c, false)}
-          onContextMenu={(e) => { e.preventDefault(); handleCell(r, c, true); }}>
+          data-r={r} data-c={c}>
           {val === 1 && <span className={"sb-star" + (hasErr ? " error" : "")}>★</span>}
           {val === 2 && <span className="sb-mark">✕</span>}
         </div>
@@ -219,7 +253,10 @@ function StarBattleApp() {
           : <div className="sb-board" style={{
               gridTemplateColumns: "repeat(" + n + ", " + cs + "px)",
               gridTemplateRows: "repeat(" + n + ", " + cs + "px)",
-            }}>
+            }}
+              onPointerDown={onBoardDown} onPointerMove={onBoardMove}
+              onPointerUp={onBoardUp} onPointerCancel={onBoardUp}
+              onContextMenu={(e) => e.preventDefault()}>
               {cells}
             </div>
         }
