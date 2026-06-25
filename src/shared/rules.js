@@ -423,3 +423,11 @@
 
   window.PastimesRules = { open: open, close: close };
 })();
+
+/* ── Service worker registration (runs on every game page) ── */
+(function () {
+  if (!('serviceWorker' in navigator)) return;
+  navigator.serviceWorker.register('/sw.js').catch(function (err) {
+    console.warn('[Pastimes] Service worker registration failed:', err);
+  });
+})();
