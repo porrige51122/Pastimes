@@ -1,0 +1,104 @@
+/* ============================================================
+   meander.css — river path board
+   Reuses tokens + fonts + chrome from styles.css
+   ============================================================ */
+
+.lr-board {
+  display: block;
+  width: 100%;
+  height: auto;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* lattice tracks — the grid the river runs ON */
+.lr-track {
+  stroke: var(--line);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  pointer-events: none;
+}
+
+/* lattice node dots */
+.lr-node {
+  fill: #c4cedb;
+  pointer-events: none;
+}
+.lr-node.on {
+  fill: #1d6c8a;
+}
+
+/* edge hit targets (invisible, clickable) */
+.lr-hit {
+  stroke: transparent;
+  cursor: pointer;
+  fill: none;
+}
+
+/* fixed river segments — given by the puzzle */
+.lr-line-fixed {
+  stroke: #1d6c8a;
+  stroke-width: 8.5;
+  stroke-linecap: round;
+  pointer-events: none;
+}
+
+/* player-drawn river segments */
+.lr-line-player {
+  stroke: var(--accent);
+  stroke-width: 6.5;
+  stroke-linecap: round;
+  pointer-events: none;
+  transition: stroke .12s;
+}
+
+/* hover hint when dragging over an empty edge */
+.lr-hit:hover ~ .lr-line-player {
+  stroke: var(--accent-deep);
+}
+
+/* the river covers the faint track beneath it */
+.lr-board.won .lr-node.on {
+  fill: var(--accent);
+}
+
+/* X gap markers */
+.lr-x {
+  font-family: "Nunito", sans-serif;
+  font-weight: 800;
+  text-anchor: middle;
+  dominant-baseline: central;
+  fill: #b2bdd0;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* IN / OUT label text */
+.lr-ep {
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ---- win animations ---- */
+.lr-board.won .lr-line-fixed {
+  animation: lr-shimmer-fixed 2.6s ease-in-out infinite;
+}
+.lr-board.won .lr-line-player {
+  animation: lr-shimmer-player 2.6s ease-in-out infinite;
+  animation-delay: 0.35s;
+}
+
+@keyframes lr-shimmer-fixed {
+  0%,100% { stroke: #1d6c8a; }
+  50%     { stroke: var(--accent); }
+}
+@keyframes lr-shimmer-player {
+  0%,100% { stroke: var(--accent); }
+  50%     { stroke: #0ea5c4; }
+}
+
+@media (max-width: 600px) {
+  .lr-line-fixed  { stroke-width: 6.5; }
+  .lr-line-player { stroke-width: 5; }
+}
