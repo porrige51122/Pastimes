@@ -398,6 +398,26 @@
         ] },
       ],
     },
+    "meander": {
+      kicker: "Path · Logic",
+      title: "How to play Meander",
+      blocks: [
+        { h: "The goal", p: "Route a river from the <b>IN</b> cell to the <b>OUT</b> cell, passing through <b>every cell</b> on the grid exactly once. The river is a single unbroken path — no forks, no gaps." },
+        { h: "The rules", list: [
+          "The path must start at <b>IN</b> and end at <b>OUT</b>.",
+          "Every cell must be visited <b>exactly once</b> — none skipped, none revisited.",
+          "<b>Dark teal segments</b> are fixed and cannot be removed — they show where the river is already flowing.",
+          "Use the fixed segments as logical clues to deduce where the river must flow through the remaining cells.",
+        ] },
+        { h: "Controls", p: "Click or drag between adjacent cells to draw a river segment. Click an existing segment to remove it. Right-click to mark a gap (✕) as a personal reminder that the river doesn't pass there." },
+        { tips: true, h: "Tips & tricks", list: [
+          "Every interior cell needs <b>exactly two</b> connections — one entering, one leaving. When a cell already has two, all other edges from it are empty.",
+          "Every cell with only <b>one possible connection remaining</b> must use it — look for cells boxed in by borders or satisfied neighbours.",
+          "Follow a fixed segment to its cell: that cell needs <b>one more connection</b> going somewhere. If only one direction is open, it's forced.",
+          "Work from both <b>IN</b> and <b>OUT</b> inward — each endpoint has exactly one segment, which immediately constrains its two adjacent cells.",
+        ] },
+      ],
+    },
   };
 
   const X_ICON = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>';
