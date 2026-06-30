@@ -418,6 +418,26 @@
         ] },
       ],
     },
+    "scurry": {
+      kicker: "Place & Repel · Logic",
+      title: "How to play Scurry",
+      blocks: [
+        { h: "The goal", p: "Settle one bug on <b>every yellow square</b> — and leave a bug on <b>no other square</b>. You win the moment the bugs cover the targets exactly." },
+        { h: "The rules", list: [
+          "Click any <b>empty</b> square to drop a new bug there.",
+          "Every bug in the <b>eight squares around</b> the one you just placed is shoved <b>one step directly away</b> from it.",
+          "A shove is a <b>chain</b>: if a bug would land on another bug, that one is pushed along too, in the same direction.",
+          "The grid <b>edges are walls</b> — if a row of bugs is backed against the edge, none of them move. Bugs are never removed once placed.",
+        ] },
+        { h: "Controls", p: "<b>Click</b> an empty square to place a bug and trigger the scurry. <b>Undo</b> takes back your last placement; <b>Clear</b> sweeps the board so you can start the order over." },
+        { tips: true, h: "Tips & tricks", list: [
+          "Bugs always flee the square you click, so you can rarely just click the targets directly — place to the <b>far side</b> of a bug to nudge it the way you want.",
+          "Use the <b>walls</b>: a bug pinned against an edge won't budge, which makes corners a handy place to park bugs you've finished with.",
+          "Because a placement can shove a whole row at once, <b>order matters</b> — sketch which square to seed last so nothing gets knocked off a target.",
+          "Stuck with a bug in the wrong place? You can't pick it up, but you can <b>place another</b> to scurry it along — or Undo and try a different sequence.",
+        ] },
+      ],
+    },
   };
 
   const X_ICON = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>';

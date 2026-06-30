@@ -8,7 +8,7 @@
    caches are cleaned up on the next visit.
    ============================================================ */
 
-const CACHE_VERSION = 'v2';
+const CACHE_VERSION = 'v3';
 const STATIC_CACHE  = `pastimes-static-${CACHE_VERSION}`;
 const CDN_CACHE     = 'pastimes-cdn'; /* no version — CDN URLs are already versioned */
 
@@ -118,6 +118,11 @@ const STATIC_ASSETS = [
   '/games/starbattle/StarBattleApp.jsx',
   '/games/starbattle/starbattle-logic.js',
   '/games/starbattle/starbattle.css',
+
+  '/games/scurry/Scurry.html',
+  '/games/scurry/ScurryApp.jsx',
+  '/games/scurry/scurry-logic.js',
+  '/games/scurry/scurry.css',
 
   '/games/sudoku/Sudoku.html',
   '/games/sudoku/SudokuApp.jsx',

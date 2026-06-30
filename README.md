@@ -33,7 +33,7 @@ Puzzles are organised into four categories by the kind of thinking they ask for:
 | --- | --- | --- |
 | [**Numbers**](src/categories/numbers.html) | Digits and arithmetic | [Sudoku](src/games/sudoku/Sudoku.html) · [Skyscrapers](src/games/skyscrapers/Skyscrapers.html) · [Countdown](src/games/countdown/Countdown.html) · [KenKen](src/games/kenken/KenKen.html) · [Futoshiki](src/games/futoshiki/Futoshiki.html) · [Killer Sudoku](src/games/killer/Killer.html) |
 | [**Pictures & Regions**](src/categories/pictures-regions.html) | Fill and carve the grid | [Hatch](src/games/hatch/Hatch.html) · [Shikaku](src/games/shikaku/Shikaku.html) · [Galaxies](src/games/galaxies/Galaxies.html) · [Mosaic](src/games/mosaic/Mosaic.html) |
-| [**Place & Connect**](src/categories/place-connect.html) | Arrange things across a map | [Tents](src/games/tents/Tents.html) · [Crossings](src/games/crossings/Crossings.html) · [Slitherlink](src/games/slitherlink/Slitherlink.html) · [Masyu](src/games/masyu/Masyu.html) |
+| [**Place & Connect**](src/categories/place-connect.html) | Arrange things across a map | [Tents](src/games/tents/Tents.html) · [Crossings](src/games/crossings/Crossings.html) · [Slitherlink](src/games/slitherlink/Slitherlink.html) · [Masyu](src/games/masyu/Masyu.html) · [Scurry](src/games/scurry/Scurry.html) |
 | [**Deduction**](src/categories/deduction.html) | Read clues, rule things out | [Sweep](src/games/sweep/Sweep.html) · [Mastermind](src/games/mastermind/Mastermind.html) |
 
 ## Getting started

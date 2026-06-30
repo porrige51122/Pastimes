@@ -1,0 +1,105 @@
+/* ============================================================
+   scurry.css — place-and-repel board
+   Reuses tokens + fonts + chrome from styles.css
+   ============================================================ */
+
+.sc-of { font-size: 14px; color: var(--ink-soft); font-weight: 800; }
+
+.sc-board {
+  position: relative;
+  margin: 0 auto;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+/* ---------- cells ---------- */
+.sc-cells {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  border: 1.5px solid var(--isl-border);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--panel);
+}
+.sc-cell {
+  position: relative;
+  box-shadow: inset -1px 0 0 var(--line), inset 0 -1px 0 var(--line);
+  cursor: pointer;
+  transition: background .18s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sc-cell:hover { background: var(--accent-tint); }
+
+/* target (yellow) squares */
+.sc-cell.target {
+  background: #fdedd0;
+}
+.sc-cell.target:hover { background: #fbe4ba; }
+.sc-mark {
+  width: 34%;
+  height: 34%;
+  border-radius: 50%;
+  border: 2.4px dashed var(--gold);
+  opacity: .85;
+  transition: opacity .18s, transform .18s;
+}
+/* a bug has settled on this target */
+.sc-cell.target.filled {
+  background: var(--done-tint);
+}
+.sc-cell.target.filled .sc-mark { opacity: 0; transform: scale(.4); }
+
+/* ---------- bugs ---------- */
+.sc-bugs {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.sc-bug {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: left .26s cubic-bezier(.34,1.2,.5,1), top .26s cubic-bezier(.34,1.2,.5,1);
+  animation: sc-pop .32s cubic-bezier(.2,.9,.3,1.5);
+}
+.sc-bug-svg {
+  width: 66%;
+  height: 66%;
+  color: var(--ink);
+  filter: drop-shadow(0 2px 2px rgba(29,39,64,.28));
+  transition: color .22s ease;
+}
+.sc-bug-svg .sc-seam { stroke: rgba(255,255,255,.35); }
+.sc-bug-svg.settled { color: var(--done-deep); }
+
+@keyframes sc-pop {
+  0%   { transform: scale(0) rotate(-18deg); opacity: 0; }
+  60%  { transform: scale(1.12); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+/* a tiny scuttle while a bug is being shoved */
+.sc-bug { will-change: left, top; }
+
+/* ---------- win flourish ---------- */
+.sc-board.won .sc-bug-svg { animation: sc-bob 1.8s ease-in-out infinite; }
+.sc-board.won .sc-bug:nth-child(2n) .sc-bug-svg { animation-delay: .25s; }
+.sc-board.won .sc-bug:nth-child(3n) .sc-bug-svg { animation-delay: .5s; }
+@keyframes sc-bob {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  50%      { transform: translateY(-3px) rotate(3deg); }
+}
+.sc-board.won .sc-cell.target.filled { animation: sc-glow 1.8s ease-in-out infinite; }
+@keyframes sc-glow {
+  0%, 100% { background: var(--done-tint); }
+  50%      { background: #cdeed9; }
+}
+
+@media (max-width: 600px) {
+  .wordmark { font-size: 34px; }
+}
